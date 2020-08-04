@@ -18,8 +18,8 @@ function WelcomeScreen({ navigation }) {
     >
       {/* Top Half */}
       <View style={styles.heading}>
-        <Text style={styles.text}>Steps:</Text>
-        <Text style={styles.text}>0</Text>
+        <Text style={{ fontSize: 50, color: colors.primary }}>0</Text>
+        <Text style={{ fontSize: 30, color: colors.primary }}>Steps</Text>
       </View>
 
       {/* Bottom Half */}
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
-    bottom: 60
+    bottom: 90
   },
   buttonText: {
     color: colors.white,
@@ -65,10 +65,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
-  },
-  text: {
-    color: colors.primary,
-    fontSize: 40
   }
 });
 
