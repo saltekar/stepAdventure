@@ -7,7 +7,8 @@ import {
   Text,
   Button,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -20,13 +21,15 @@ function StoryScreen({ navigation }) {
       style={styles.background}
       source={require("../assets/forest.jpg")}
     >
+      {/* Sets status bar to white */}
+      <StatusBar barStyle="light-content" />
+
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.navigate("Home")}
       >
         <Text style={{ color: colors.white }}>Back</Text>
       </TouchableOpacity>
-
       <View style={styles.story}>
         <Text style={styles.storyText}>...You're finally awake.</Text>
         <Text style={styles.storyText}>
@@ -34,12 +37,10 @@ function StoryScreen({ navigation }) {
         </Text>
         <Text style={styles.storyText}>How long have I been out for?</Text>
       </View>
-
       <View style={styles.stepCounter}>
         <Text style={{ fontSize: 50, color: colors.white }}> 22</Text>
         <Text style={{ fontSize: 30, color: colors.white }}> Steps</Text>
       </View>
-
       <View style={styles.buttons}>
         <View style={styles.button} />
         <View style={styles.button} />
