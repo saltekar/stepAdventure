@@ -5,7 +5,8 @@ import {
   Text,
   Button,
   ImageBackground,
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from "react-native";
 
 import colors from "../config/colors";
@@ -16,6 +17,9 @@ function WelcomeScreen({ navigation }) {
       source={require("../assets/creepy.jpg")}
       style={styles.background}
     >
+      {/* Sets status bar to black */}
+      <StatusBar barStyle="dark-content"></StatusBar>
+
       {/* Top Half */}
       <View style={styles.heading}>
         <Text style={{ fontSize: 50, color: colors.primary }}>0</Text>
