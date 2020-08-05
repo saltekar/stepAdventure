@@ -28,6 +28,6 @@ export default BlinkCursor;
 const styles = StyleSheet.create({
   storyText: {
     color: colors.white,
-    fontSize: 20
+    fontSize: 25
   }
 });
