@@ -13,7 +13,7 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import BlinkCursor from "../components/BlinkCursor";
+import StoryView from "../components/StoryView";
 import colors from "../config/colors";
 
 function StoryScreen({ navigation }) {
@@ -33,9 +33,7 @@ function StoryScreen({ navigation }) {
         <Text style={{ color: colors.white }}>Back</Text>
       </TouchableOpacity>
 
-      <View style={styles.story}>
-        <BlinkCursor content="|" />
-      </View>
+      <StoryView />
 
       <View style={styles.buttons}>
         <View style={styles.button} />
@@ -74,15 +72,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center"
-  },
-  story: {
-    flex: 2,
-    top: 80,
-    left: 20
-  },
-  storyText: {
-    color: colors.white,
-    fontSize: 20
   },
   text: {
     color: colors.white,
