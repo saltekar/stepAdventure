@@ -13,35 +13,42 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import { continueStory } from "../components/StoryView";
 import StoryView from "../components/StoryView";
 import colors from "../config/colors";
+import {
+  TouchableWithoutFeedback,
+  TouchableHighlight,
+  TouchableNativeFeedback
+} from "react-native-gesture-handler";
 
 function StoryScreen({ navigation }) {
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/forest.jpg")}
-      onPress={() => continueStory()}
+    <TouchableOpacity
+      activeOpacity={1}
+      style={{ flex: 1 }}
+      onPress={() => console.log("1")}
     >
-      {/* Sets status bar to white */}
-      <StatusBar barStyle="light-content" />
-
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.navigate("Home")}
+      <ImageBackground
+        style={styles.background}
+        source={require("../assets/forest.jpg")}
       >
-        <Text style={{ color: colors.white }}>Back</Text>
-      </TouchableOpacity>
+        {/* Sets status bar to white */}
+        <StatusBar barStyle="light-content" />
 
-      <StoryView />
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Text style={{ color: colors.white }}>Back</Text>
+        </TouchableOpacity>
 
-      <View style={styles.buttons}>
-        <View style={styles.button} />
-        <View style={styles.button} />
-        <View style={styles.button} />
-        <View style={styles.button} />
-      </View>
-    </ImageBackground>
+        {/* Text for the story */}
+        <StoryView />
+
+        <View style={styles.buttons}></View>
+      </ImageBackground>
+    </TouchableOpacity>
   );
 }
 
@@ -72,10 +79,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center"
-  },
-  text: {
-    color: colors.white,
-    fontSize: 18
   }
 });
 

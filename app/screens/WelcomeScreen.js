@@ -29,13 +29,14 @@ function WelcomeScreen({ navigation }) {
       {/* Bottom Half */}
       <View style={styles.buttons}>
         <TouchableOpacity
+          activeOpacity={0.7}
           onPress={() => navigation.navigate("StoryScreen")}
           style={styles.actionButton}
         >
           <Text style={styles.buttonText}>New Game</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionButton}>
+        <TouchableOpacity activeOpacity={0.5} style={styles.actionButton}>
           <Text style={styles.buttonText}>Continue Game</Text>
         </TouchableOpacity>
       </View>
