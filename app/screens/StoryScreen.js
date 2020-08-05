@@ -13,6 +13,7 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import BlinkCursor from "../components/BlinkCursor";
 import colors from "../config/colors";
 
 function StoryScreen({ navigation }) {
@@ -20,6 +21,7 @@ function StoryScreen({ navigation }) {
     <ImageBackground
       style={styles.background}
       source={require("../assets/forest.jpg")}
+      onPress={() => continueStory()}
     >
       {/* Sets status bar to white */}
       <StatusBar barStyle="light-content" />
@@ -30,17 +32,11 @@ function StoryScreen({ navigation }) {
       >
         <Text style={{ color: colors.white }}>Back</Text>
       </TouchableOpacity>
+
       <View style={styles.story}>
-        <Text style={styles.storyText}>...You're finally awake.</Text>
-        <Text style={styles.storyText}>
-          How did it become night time already?
-        </Text>
-        <Text style={styles.storyText}>How long have I been out for?</Text>
+        <BlinkCursor content="|" />
       </View>
-      <View style={styles.stepCounter}>
-        <Text style={{ fontSize: 50, color: colors.white }}> 22</Text>
-        <Text style={{ fontSize: 30, color: colors.white }}> Steps</Text>
-      </View>
+
       <View style={styles.buttons}>
         <View style={styles.button} />
         <View style={styles.button} />
@@ -79,13 +75,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  stepCounter: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
   story: {
-    flex: 1,
+    flex: 2,
     top: 80,
     left: 20
   },
