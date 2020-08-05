@@ -8,7 +8,7 @@ import {
   Button,
   TextInput,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -19,36 +19,28 @@ import colors from "../config/colors";
 import {
   TouchableWithoutFeedback,
   TouchableHighlight,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
 } from "react-native-gesture-handler";
 
 function StoryScreen({ navigation }) {
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={{ flex: 1 }}
-      onPress={() => console.log("1")}
+    <ImageBackground
+      style={styles.background}
+      source={require("../assets/forest.jpg")}
     >
-      <ImageBackground
-        style={styles.background}
-        source={require("../assets/forest.jpg")}
+      {/* Sets status bar to white */}
+      <StatusBar barStyle="light-content" />
+      <StoryView />
+
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.navigate("Home")}
       >
-        {/* Sets status bar to white */}
-        <StatusBar barStyle="light-content" />
+        <Text style={{ color: colors.white }}>Back</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Text style={{ color: colors.white }}>Back</Text>
-        </TouchableOpacity>
-
-        {/* Text for the story */}
-        <StoryView />
-
-        <View style={styles.buttons}></View>
-      </ImageBackground>
-    </TouchableOpacity>
+      {/* Text for the story */}
+    </ImageBackground>
   );
 }
 
@@ -62,15 +54,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     top: 40,
     left: 10,
-    position: "absolute"
+    position: "absolute",
   },
   background: {
-    flex: 1
+    flex: 1,
   },
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   button: {
     width: "80%",
@@ -78,8 +70,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 
 export default StoryScreen;
