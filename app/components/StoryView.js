@@ -4,12 +4,14 @@ import { StyleSheet, View, Text } from "react-native";
 import BlinkCursor from "../components/BlinkCursor";
 import colors from "../config/colors";
 
-export default function StoryView() {
-  return (
-    <View style={styles.story}>
-      <BlinkCursor content="|" />
-    </View>
-  );
+export default class StoryView extends React.Component {
+  render() {
+    return (
+      <View style={styles.story}>
+        <Text style={styles.text}>Hello</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -17,5 +19,9 @@ const styles = StyleSheet.create({
     flex: 2,
     top: 80,
     left: 20
+  },
+  text: {
+    color: colors.white,
+    fontSize: 20
   }
 });
