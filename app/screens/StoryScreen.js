@@ -30,16 +30,14 @@ function StoryScreen({ navigation }) {
     >
       {/* Sets status bar to white */}
       <StatusBar barStyle="light-content" />
+      {/* Text for the story */}
       <StoryView />
-
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.navigate("Home")}
       >
         <Text style={{ color: colors.white }}>Back</Text>
       </TouchableOpacity>
-
-      {/* Text for the story */}
     </ImageBackground>
   );
 }
@@ -58,19 +56,6 @@ const styles = StyleSheet.create({
   },
   background: {
     flex: 1,
-  },
-  buttons: {
-    flex: 2,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  button: {
-    width: "80%",
-    height: 45,
-    backgroundColor: colors.primary,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
 
