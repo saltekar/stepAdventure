@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Button } from "react-native";
 
 import { story } from "../assets/story";
-import DecisionButton from "../components/DecisionButton";
 import BlinkCursor from "../components/BlinkCursor";
 import colors from "../config/colors";
 
@@ -42,9 +41,8 @@ export default class StoryView extends React.Component {
 
   // Creates val number of buttons on screen for decisions
   buttonsCreate = val => {
-    for (let i = 1; i < val + 1; i++) {
-      //et curButton = eval("button" + i + "Visible");
-      this.setState({ button1Visible: true });
+    for (let i = 1; i < parseInt(val) + 1; i++) {
+      this.setState({ ["button" + i + "Visible"]: true });
     }
   };
 
