@@ -24,31 +24,21 @@ import {
 
 function StoryScreen({ navigation }) {
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={{ flex: 1 }}
-      onPress={() => console.log("1")}
+    <ImageBackground
+      style={styles.background}
+      source={require("../assets/forest.jpg")}
     >
-      <ImageBackground
-        style={styles.background}
-        source={require("../assets/forest.jpg")}
+      {/* Sets status bar to white */}
+      <StatusBar barStyle="light-content" />
+      {/* Text for the story */}
+      <StoryView />
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.navigate("Home")}
       >
-        {/* Sets status bar to white */}
-        <StatusBar barStyle="light-content" />
-
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Text style={{ color: colors.white }}>Back</Text>
-        </TouchableOpacity>
-
-        {/* Text for the story */}
-        <StoryView />
-
-        <View style={styles.buttons}></View>
-      </ImageBackground>
-    </TouchableOpacity>
+        <Text style={{ color: colors.white }}>Back</Text>
+      </TouchableOpacity>
+    </ImageBackground>
   );
 }
 
@@ -66,19 +56,6 @@ const styles = StyleSheet.create({
   },
   background: {
     flex: 1
-  },
-  buttons: {
-    flex: 2,
-    alignItems: "center",
-    justifyContent: "space-evenly"
-  },
-  button: {
-    width: "80%",
-    height: 45,
-    backgroundColor: colors.primary,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center"
   }
 });
 
