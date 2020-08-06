@@ -8,7 +8,7 @@ import {
   Button,
   TextInput,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -19,7 +19,7 @@ import colors from "../config/colors";
 import {
   TouchableWithoutFeedback,
   TouchableHighlight,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
 } from "react-native-gesture-handler";
 
 function StoryScreen({ navigation }) {
@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     top: 40,
     left: 10,
-    position: "absolute"
+    position: "absolute",
   },
   background: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 export default StoryScreen;
