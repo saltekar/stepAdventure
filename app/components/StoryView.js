@@ -9,9 +9,9 @@ import colors from "../config/colors";
 export default class StoryView extends React.Component {
   constructor() {
     super();
+    global.line = 0;
     this.state = {
       text: "|",
-      line: 0,
       button1Visible: false,
       button2Visible: false,
       button3Visible: false,
@@ -25,12 +25,12 @@ export default class StoryView extends React.Component {
 
   setText = () => {
     // Stops when story ends (for testing)
-    if (this.state.line >= story.length) return;
-    let line = story[this.state.line];
+    if (global.line >= story.length) return;
+    let line = story[global.line];
 
     // Adds lines to story view component
-    if (this.state.line == 0) {
-      this.setState({ text: story[this.state.line] });
+    if (global.line == 0) {
+      this.setState({ text: story[global.line] });
       this.incrementLine();
     } else if (line.startsWith("DECISION")) {
       let decisions = line.split(" ")[1];
@@ -39,28 +39,30 @@ export default class StoryView extends React.Component {
       // Create 'decisions' number of buttons
       this.buttonsCreate(decisions);
     } else {
-      this.setState({ text: this.state.text + "\n" + story[this.state.line] });
+      this.setState({ text: this.state.text + "\n" + story[global.line] });
 
       // Counts line number
       this.incrementLine();
-      console.log("diff" + this.state.line);
     }
   };
 
   incrementLine = () => {
-    this.setState({
-      line: this.state.line + 1,
-    });
+    global.line += 1;
   };
 
   // Creates val number of buttons on screen for decisions
   buttonsCreate = (val) => {
     for (let i = 1; i < parseInt(val) + 1; i++) {
-      this.incrementLine();
       this.setState({ ["button" + i + "Visible"]: true });
-      this.setState({ ["button" + i + "Text"]: story[this.state.line] });
+      this.setState({ ["button" + i + "Text"]: story[global.line] });
       this.incrementLine();
-      console.log(this.state.line);
+      console.log(global.line);
+    }
+  };
+
+  hideButtons = () => {
+    for (let i = 1; i < 5; i++) {
+      this.setState({ ["button" + i + "Visible"]: false });
     }
   };
 
@@ -78,22 +80,34 @@ export default class StoryView extends React.Component {
         <View style={styles.buttons}>
           {/* Button 1 */}
           {this.state.button1Visible ? (
-            <DecisionButton decisionText={this.state.button1Text} />
+            <DecisionButton
+              decisionText={this.state.button1Text}
+              onPress={() => this.hideButtons()}
+            />
           ) : null}
 
           {/* Button 2 */}
           {this.state.button2Visible ? (
-            <DecisionButton decisionText={this.state.button2Text} />
+            <DecisionButton
+              decisionText={this.state.button2Text}
+              onPress={() => this.hideButtons()}
+            />
           ) : null}
 
           {/* Button 3 */}
           {this.state.button3Visible ? (
-            <DecisionButton decisionText={this.state.button3Text} />
+            <DecisionButton
+              decisionText={this.state.button3Text}
+              onPress={() => this.hideButtons()}
+            />
           ) : null}
 
           {/* Button 4 */}
           {this.state.button4Visible ? (
-            <DecisionButton decisionText={this.state.button4Text} />
+            <DecisionButton
+              decisionText={this.state.button4Text}
+              onPress={() => this.hideButtons()}
+            />
           ) : null}
         </View>
       </TouchableOpacity>
