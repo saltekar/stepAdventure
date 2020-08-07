@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Button } from "react-native";
 
-import { story } from "../assets/story";
+import { story } from "../assets/storyEngine";
 import BlinkCursor from "../components/BlinkCursor";
 import DecisionButton from "../components/DecisionButton";
 import colors from "../config/colors";
@@ -19,7 +19,7 @@ export default class StoryView extends React.Component {
       button1Text: "",
       button2Text: "",
       button3Text: "",
-      button4Text: "",
+      button4Text: ""
     };
   }
 
@@ -51,7 +51,7 @@ export default class StoryView extends React.Component {
   };
 
   // Creates val number of buttons on screen for decisions
-  buttonsCreate = (val) => {
+  buttonsCreate = val => {
     for (let i = 1; i < parseInt(val) + 1; i++) {
       this.setState({ ["button" + i + "Visible"]: true });
       this.setState({ ["button" + i + "Text"]: story[global.line] });
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-evenly"
   },
   button: {
     width: "80%",
@@ -127,16 +127,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   story: {
     flex: 2,
     top: 80,
-    left: 20,
+    left: 20
   },
   text: {
     color: colors.white,
     fontSize: 20,
-    lineHeight: 27,
-  },
+    lineHeight: 27
+  }
 });

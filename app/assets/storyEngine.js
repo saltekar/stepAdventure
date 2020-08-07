@@ -1,18 +1,6 @@
 import React from "react";
 import { thistle } from "color-name";
-
-let story = [
-  "Felix... Felix! Wake up!",
-  "We have to go NOW!",
-  "You wake up slowly in a daze.",
-  "DECISION 2",
-  "HEY. who's there?",
-  "Where am I?"
-];
-
-let d1 = ["Don't worry about who I am."];
-
-let d2 = ["We in the middle of the forest."];
+import storyMap from "./storyText";
 
 class Node {
   constructor(content, name) {
@@ -36,11 +24,14 @@ class Node {
   }
 }
 
-const A = new Node(story, "A");
-const B = new Node(d1, "B");
-const C = new Node(d2, "C");
+const D1 = new Node(storyMap["d1"], "d1");
+const S1 = new Node(storyMap["s1"], "s1");
+const S2 = new Node(storyMap["s2"], "s2");
+const D2 = new Node(storyMap["d2"], "d2");
 
-A.addNode(B);
-A.addNode(C);
+D1.addNode(S1);
+D1.addNode(S2);
+S1.addNode(D2);
+S2.addNode(D2);
 
-console.log(B.printNeigbors());
+console.log(D1.printNeigbors());
