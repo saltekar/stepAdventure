@@ -24,14 +24,4 @@ class Node {
   }
 }
 
-const D1 = new Node(storyMap["d1"], "d1");
-const S1 = new Node(storyMap["s1"], "s1");
-const S2 = new Node(storyMap["s2"], "s2");
-const D2 = new Node(storyMap["d2"], "d2");
-
-D1.addNode(S1);
-D1.addNode(S2);
-S1.addNode(D2);
-S2.addNode(D2);
-
 export default Node;
