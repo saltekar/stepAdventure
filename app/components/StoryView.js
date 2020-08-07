@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Button } from "react-native";
 
-import { story } from "../assets/storyEngine";
+import Node from "../assets/storyEngine";
+import storyMap from "../assets/storyText";
 import BlinkCursor from "../components/BlinkCursor";
 import DecisionButton from "../components/DecisionButton";
 import colors from "../config/colors";
@@ -9,7 +10,21 @@ import colors from "../config/colors";
 export default class StoryView extends React.Component {
   constructor() {
     super();
+
+    const D1 = new Node(storyMap["d1"], "d1");
+    const S1 = new Node(storyMap["s1"], "s1");
+    const S2 = new Node(storyMap["s2"], "s2");
+    const D2 = new Node(storyMap["d2"], "d2");
+
+    D1.addNode(S1);
+    D1.addNode(S2);
+    S1.addNode(D2);
+    S2.addNode(D2);
+
+    //global variables
     global.line = 0;
+    global.story = D1.content;
+
     this.state = {
       text: "|",
       button1Visible: false,
@@ -19,18 +34,18 @@ export default class StoryView extends React.Component {
       button1Text: "",
       button2Text: "",
       button3Text: "",
-      button4Text: ""
+      button4Text: "",
     };
   }
 
   setText = () => {
     // Stops when story ends (for testing)
-    if (global.line >= story.length) return;
-    let line = story[global.line];
+    if (global.line >= global.story.length) return;
+    let line = global.story[global.line];
 
     // Adds lines to story view component
     if (global.line == 0) {
-      this.setState({ text: story[global.line] });
+      this.setState({ text: global.story[global.line] });
       this.incrementLine();
     } else if (line.startsWith("DECISION")) {
       let decisions = line.split(" ")[1];
@@ -39,7 +54,9 @@ export default class StoryView extends React.Component {
       // Create 'decisions' number of buttons
       this.buttonsCreate(decisions);
     } else {
-      this.setState({ text: this.state.text + "\n" + story[global.line] });
+      this.setState({
+        text: this.state.text + "\n" + global.story[global.line],
+      });
 
       // Counts line number
       this.incrementLine();
@@ -51,12 +68,11 @@ export default class StoryView extends React.Component {
   };
 
   // Creates val number of buttons on screen for decisions
-  buttonsCreate = val => {
+  buttonsCreate = (val) => {
     for (let i = 1; i < parseInt(val) + 1; i++) {
       this.setState({ ["button" + i + "Visible"]: true });
-      this.setState({ ["button" + i + "Text"]: story[global.line] });
+      this.setState({ ["button" + i + "Text"]: global.story[global.line] });
       this.incrementLine();
-      console.log(global.line);
     }
   };
 
@@ -119,7 +135,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   button: {
     width: "80%",
@@ -127,16 +143,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   story: {
     flex: 2,
     top: 80,
-    left: 20
+    left: 20,
   },
   text: {
     color: colors.white,
     fontSize: 20,
-    lineHeight: 27
-  }
+    lineHeight: 27,
+  },
 });

@@ -34,4 +34,4 @@ D1.addNode(S2);
 S1.addNode(D2);
 S2.addNode(D2);
 
-console.log(D1.printNeigbors());
+export default Node;
