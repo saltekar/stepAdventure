@@ -26,7 +26,9 @@ export default class StoryView extends React.Component {
     global.story = D1.content;
 
     this.state = {
-      text: "|",
+      text: "",
+      textVisible: false,
+      blinkingCursor: true,
       button1Visible: false,
       button2Visible: false,
       button3Visible: false,
@@ -34,7 +36,7 @@ export default class StoryView extends React.Component {
       button1Text: "",
       button2Text: "",
       button3Text: "",
-      button4Text: "",
+      button4Text: ""
     };
   }
 
@@ -43,32 +45,43 @@ export default class StoryView extends React.Component {
     if (global.line >= global.story.length) return;
     let line = global.story[global.line];
 
+    // Text visible
+    this.setState({ textVisible: true });
+
     // Adds lines to story view component
     if (global.line == 0) {
       this.setState({ text: global.story[global.line] });
       this.incrementLine();
-    } else if (line.startsWith("DECISION")) {
-      let decisions = line.split(" ")[1];
-
-      this.incrementLine();
-      // Create 'decisions' number of buttons
-      this.buttonsCreate(decisions);
     } else {
       this.setState({
-        text: this.state.text + "\n" + global.story[global.line],
+        text: this.state.text + "\n" + global.story[global.line]
       });
 
-      // Counts line number
+      // Disable blinking cursor decision next
+      let nextLine = global.story[global.line + 1];
+      if (nextLine.startsWith("DECISION")) {
+        this.setState({ blinkingCursor: false });
+        let decisions = nextLine.split(" ")[1];
+
+        // Double skip because looking one ahead for DECISION
+        this.incrementLine();
+        this.incrementLine();
+
+        // Create 'decisions' number of buttons
+        this.buttonsCreate(decisions);
+      }
+
       this.incrementLine();
     }
   };
 
+  // Increments current line number
   incrementLine = () => {
     global.line += 1;
   };
 
   // Creates val number of buttons on screen for decisions
-  buttonsCreate = (val) => {
+  buttonsCreate = val => {
     for (let i = 1; i < parseInt(val) + 1; i++) {
       this.setState({ ["button" + i + "Visible"]: true });
       this.setState({ ["button" + i + "Text"]: global.story[global.line] });
@@ -76,7 +89,12 @@ export default class StoryView extends React.Component {
     }
   };
 
+  // Hides buttons after decision made
   hideButtons = () => {
+    this.setState({ text: "" });
+    this.setState({ blinkingCursor: true });
+    this.setState({ textVisible: false });
+
     for (let i = 1; i < 5; i++) {
       this.setState({ ["button" + i + "Visible"]: false });
     }
@@ -90,7 +108,11 @@ export default class StoryView extends React.Component {
         onPress={() => this.setText()}
       >
         <View style={styles.story}>
-          <Text style={styles.text}>{this.state.text}</Text>
+          {this.state.textVisible ? (
+            <Text style={styles.text}>{this.state.text}</Text>
+          ) : null}
+
+          {this.state.blinkingCursor ? <BlinkCursor content="|" /> : null}
         </View>
 
         <View style={styles.buttons}>
@@ -135,7 +157,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-evenly"
   },
   button: {
     width: "80%",
@@ -143,16 +165,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   story: {
     flex: 2,
     top: 80,
-    left: 20,
+    left: 20
   },
   text: {
     color: colors.white,
     fontSize: 20,
-    lineHeight: 27,
-  },
+    lineHeight: 27
+  }
 });
