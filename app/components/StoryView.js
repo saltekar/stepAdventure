@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Button } from "react-native";
 
 import Node from "../assets/storyWhackEngine";
-import Graph from "../assets/storyEngine";
+import Graph from "../storyMechanics/storyEngine";
 import storyMap from "../assets/storyText";
 import BlinkCursor from "../components/BlinkCursor";
 import DecisionButton from "../components/DecisionButton";
@@ -22,7 +22,7 @@ export default class StoryView extends React.Component {
     S1.addNode(D2);
     S2.addNode(D2);
 
-    let JSON = require("../assets/storyContent.json");
+    let JSON = require("../storyMechanics/storyContent.json");
     const graph = new Graph(JSON);
     console.log("\n\n\n\n\n\n\n\n");
     console.log(graph.getData());
