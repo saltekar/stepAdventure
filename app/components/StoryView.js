@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Button } from "react-native";
 
-import Node from "../assets/storyWhackEngine";
+import Node from "../storyMechanics/storyNode";
 import Graph from "../storyMechanics/storyEngine";
 import storyMap from "../assets/storyText";
 import BlinkCursor from "../components/BlinkCursor";
@@ -24,8 +24,8 @@ export default class StoryView extends React.Component {
 
     let JSON = require("../storyMechanics/storyContent.json");
     const graph = new Graph(JSON);
-    console.log("\n\n\n\n\n\n\n\n");
-    console.log(graph.getData());
+    console.log("\n\n\n\n\n");
+    graph.createMap();
 
     //global variables
     global.line = 0;
@@ -42,7 +42,7 @@ export default class StoryView extends React.Component {
       button1Text: "",
       button2Text: "",
       button3Text: "",
-      button4Text: ""
+      button4Text: "",
     };
   }
 
@@ -60,7 +60,7 @@ export default class StoryView extends React.Component {
       this.incrementLine();
     } else {
       this.setState({
-        text: this.state.text + "\n" + global.story[global.line]
+        text: this.state.text + "\n" + global.story[global.line],
       });
 
       // Disable blinking cursor decision next
@@ -87,7 +87,7 @@ export default class StoryView extends React.Component {
   };
 
   // Creates val number of buttons on screen for decisions
-  buttonsCreate = val => {
+  buttonsCreate = (val) => {
     for (let i = 1; i < parseInt(val) + 1; i++) {
       this.setState({ ["button" + i + "Visible"]: true });
       this.setState({ ["button" + i + "Text"]: global.story[global.line] });
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   button: {
     width: "80%",
@@ -171,16 +171,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   story: {
     flex: 2,
     top: 80,
-    left: 20
+    left: 20,
   },
   text: {
     color: colors.white,
     fontSize: 20,
-    lineHeight: 27
-  }
+    lineHeight: 27,
+  },
 });

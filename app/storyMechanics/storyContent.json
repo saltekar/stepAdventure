@@ -1,28 +1,28 @@
 {
-  "Node1": {
+  "root": {
     "type": "DECISION",
     "content": "Felix... Felix! Wake up!\nWe have to go NOW!\nYou wake up slowly in a daze.",
     "decisions": [
-      ["HEY. Who's there?", "Node2", 0],
-      ["Where am I?", "Node3", 0]
+      ["HEY. Who's there?", "s1", 0],
+      ["Where am I?", "s2", 0]
     ]
   },
-  "Node2": {
+  "s1": {
     "type": "CONTINUE",
     "content": "Don't worry about who I am.",
-    "nextNode": "Node4"
+    "nextNode": "s3"
   },
-  "Node3": {
+  "s2": {
     "type": "CONTINUE",
     "content": "Don't worry about who I am.",
-    "nextNode": "Node4"
+    "nextNode": "s3"
   },
-  "Node4": {
+  "s3": {
     "type": "DECISION",
     "content": "You reach a hill and see a bridge in the distance.\nCommon lets move, let's rest here.",
     "decisions": [
-      ["Insist on going to bridge", "Node5", 0],
-      ["Agree to rest", "Node6", 0]
+      ["Insist on going to bridge", "s4", 0],
+      ["Agree to rest", "s5", 0]
     ]
   }
 }

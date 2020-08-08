@@ -1,10 +1,9 @@
 import React from "react";
 import { thistle } from "color-name";
-import storyMap from "./storyText";
+import storyMap from "../assets/storyText";
 
 class Node {
-  constructor(content, name) {
-    this.name = name;
+  constructor(content) {
     this.content = content;
     this.nextNodes = [];
   }
