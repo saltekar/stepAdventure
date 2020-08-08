@@ -1,27 +1,16 @@
-import React from "react";
-import { thistle } from "color-name";
-import storyMap from "./storyText";
+import { createCoverageMap } from "istanbul-lib-coverage";
 
-class Node {
-  constructor(content, name) {
-    this.name = name;
-    this.content = content;
-    this.nextNodes = [];
+class Graph {
+  constructor(json) {
+    this.data = json;
+    createMap();
   }
 
-  addNode(node) {
-    this.nextNodes.push(node);
-  }
+  createMap() {}
 
-  printNeigbors() {
-    let arr = [];
-
-    for (let x = 0; x < this.nextNodes.length; x++) {
-      arr.push(this.nextNodes[x].name);
-    }
-
-    return this.name + " -> " + arr;
+  getData() {
+    return this.data;
   }
 }
 
-export default Node;
+export default Graph;
