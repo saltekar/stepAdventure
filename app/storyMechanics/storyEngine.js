@@ -8,8 +8,8 @@ class Graph {
   }
 
   createMap() {
-    let stack,
-      visited = [];
+    let stack = [];
+    let visited = [];
     console.log(this.data.root);
     stack.push(this.data.root);
 
@@ -20,7 +20,6 @@ class Graph {
       let node = stack.shift();
 
       // Check type
-
       if (node.type === "DECISION") {
         // Looping through decisions array
         for (let i = 0; i < stack.length; i++) {
