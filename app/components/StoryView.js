@@ -24,8 +24,8 @@ export default class StoryView extends React.Component {
 
     let JSON = require("../storyMechanics/storyContent.json");
     const graph = new Graph(JSON);
-    console.log("\n\n\n\n\n");
     graph.createMap();
+    console.log(graph.getRoot());
 
     //global variables
     global.line = 0;

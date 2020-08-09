@@ -10,40 +10,70 @@ class Graph {
   createMap() {
     let stack = [];
     let visited = [];
-    console.log(this.data.root);
-    stack.push(this.data.root);
 
-    this.root = new Node(this.data.root);
+    stack.push(this.data.root);
+    visited.push("root");
 
     while (stack.length > 0) {
       // Removes first element
-      let node = stack.shift();
+      let jsonStory = stack.shift();
+
+      let node = new Node(jsonStory.content);
 
       // Check type
-      if (node.type === "DECISION") {
+      if (jsonStory.type === "DECISION") {
         // Looping through decisions array
-        for (let i = 0; i < stack.length; i++) {
-          let nextName = node.decisions[i][1];
-          let nextNode = new Node(this.data.nextName); // MIGHT NOT WORK, using string to access json
+        for (let i = 0; i < jsonStory.decisions.length; i++) {
+          let nextName = jsonStory.decisions[i][1];
+          console.log(nextName);
 
-          node.addNode(nextNode);
+          // Check if nextName is in data
+          console.log("\n\n\n" + this.data[[nextName]]);
+          if (this.data[[nextName]] != undefined) {
+            let nextNode = new Node(this.data[[nextName]].content); // MIGHT NOT WORK, using string to access json
 
-          // Check if nextName is in visited array
+            node.addNode(nextNode);
 
-          // Push this.data.nextName onto stack
+            // Check if nextName is in visited array
+            if (!visited.includes(nextName)) {
+              // Push this.data.nextName onto stack
+              stack.push(this.data[[nextName]]);
+
+              // Add to visited
+              visited.push(nextName);
+            }
+          }
         }
-      } else if (node.type === "CONTINUE") {
+      } else if (
+        jsonStory.type === "CONTINUE" &&
+        this.data[[jsonStory.nextNode]] != undefined
+      ) {
         // Create connection to next node
+        let nextName = jsonStory.nextNode;
+        console.log(nextName);
+
+        let nextNode = new Node(this.data[[nextName]].content); // MIGHT NOT WORK, using string to access json
+
+        node.addNode(nextNode);
+
         // Check if nextName is in visited array
-        // Push this.data.nextName onto stack
-      } else {
-        console.error("type error: UNKNOWN TYPE");
+        if (!visited.includes(nextName)) {
+          // Push this.data.nextName onto stack
+          stack.push(this.data[[nextName]]);
+
+          // Add to visited
+          visited.push(nextName);
+        }
       }
     }
   }
 
   getData() {
     return this.data;
+  }
+
+  getRoot() {
+    return this.root;
   }
 }
 
