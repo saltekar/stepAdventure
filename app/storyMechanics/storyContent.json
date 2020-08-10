@@ -20,10 +20,49 @@
   },
   "s3": {
     "type": "DECISION",
-    "content": "You reach a hill and see a bridge in the distance.\nCommon lets move, let's rest here.",
+    "content": "You reach a hill and see a bridge in the distance.",
     "decisions": [
       ["Insist on going to bridge", "s4", 0],
       ["Agree to rest", "s5", 0]
     ]
+  },
+  "s4": {
+    "type": "DECISION",
+    "content": "You walk on the bridge and it starts to shake.\nYou hear a growling sound form underneath... ",
+    "decisions": [
+      ["Put your head down and run!", "s7", 0],
+      ["Look over the side and see whats underneath", "s8", 0],
+      ["Curl up into the fetile position and pray to JC", "s9", 0]
+    ]
+  },
+  "s5": {
+    "type": "CONTINUE",
+    "content": "While taking a seat you look up at the stars and doze off.",
+    "nextNode": "s6"
+  },
+  "s6": {
+    "type": "CONTINUE",
+    "content": "You suddenly wake up to the sound of a screeching troll?",
+    "nextNode": "s10"
+  },
+  "s7": {
+    "type": "CONTINUE",
+    "content": "You trip on a rock and gash your head on a branch.\nBlood is gushing from your skull.\nThis doesn't look good...",
+    "nextNode": "s11"
+  },
+  "s8": {
+    "type": "CONTINUE",
+    "content": "Right when you look over a arrow pierces your shoulder.\nThe troll is angry.",
+    "nextNode": "s10"
+  },
+  "s9": {
+    "type": "CONTINUE",
+    "content": "What's that smell?\nOh dear, you have shat your shorts.\nEven the troll is disgusted.",
+    "nextNode": "s11"
+  },
+  "s10": {
+    "type": "CONTINUE",
+    "content": "The wildabeast charges at full speed.\nThe troll takes a poop.",
+    "nextNode": "s12"
   }
 }

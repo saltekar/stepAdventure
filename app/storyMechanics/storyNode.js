@@ -1,3 +1,5 @@
+global.nodeMap = {};
+
 class Node {
   constructor(content, name, type, cost) {
     this.content = content;
@@ -5,10 +7,12 @@ class Node {
     this.name = name;
     this.type = type;
     this.decisions = [];
+    this.nodeMap = global.nodeMap;
   }
 
   addNode(node) {
     this.nextNodes.push(node);
+    global.nodeMap[node.name] = node;
   }
 
   addDecision(d) {

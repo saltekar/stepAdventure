@@ -75,7 +75,8 @@ export default class StoryView extends React.Component {
 
       if (
         global.node.type == "CONTINUE" &&
-        global.line == global.currentContent.length - 1
+        global.line == global.currentContent.length - 1 &&
+        global.node.nextNodes.length > 0
       ) {
         global.node = global.node.nextNodes[0];
         global.line = -1;
@@ -183,11 +184,14 @@ const styles = StyleSheet.create({
   story: {
     flex: 2,
     top: 80,
-    left: 20
+    left: 20,
+    paddingRight: 25,
+    flexDirection: "column"
   },
   text: {
     color: colors.white,
     fontSize: 20,
-    lineHeight: 27
+    lineHeight: 27,
+    flexWrap: "wrap"
   }
 });
