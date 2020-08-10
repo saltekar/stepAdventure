@@ -1,6 +1,7 @@
 {
   "root": {
     "type": "DECISION",
+    "first": true,
     "content": "Felix... Felix! Wake up!\nWe have to go NOW!\nYou wake up slowly in a daze.",
     "decisions": [
       ["HEY. Who's there?", "s1", 0],
@@ -14,7 +15,7 @@
   },
   "s2": {
     "type": "CONTINUE",
-    "content": "Don't worry about who I am.",
+    "content": "I know where we are, thats all that matters.",
     "nextNode": "s3"
   },
   "s3": {

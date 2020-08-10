@@ -10,34 +10,46 @@ class Graph {
   createMap() {
     let stack = [];
     let visited = [];
+    let nodes = [];
 
-    stack.push(this.data.root);
-    visited.push("root");
+    let rootNode = new Node(
+      this.data.root.content,
+      "root",
+      this.data.root.type
+    );
+    this.root = rootNode;
+
+    stack.push(rootNode);
+    visited.push(rootNode.name);
 
     while (stack.length > 0) {
       // Removes first element
-      let jsonStory = stack.shift();
-
-      let node = new Node(jsonStory.content);
+      let currentNode = stack.shift();
 
       // Check type
-      if (jsonStory.type === "DECISION") {
+      if (currentNode.type === "DECISION") {
         // Looping through decisions array
-        for (let i = 0; i < jsonStory.decisions.length; i++) {
-          let nextName = jsonStory.decisions[i][1];
-          console.log(nextName);
+        let currentDecisions = this.data[[currentNode.name]].decisions;
+
+        for (let i = 0; i < currentDecisions.length; i++) {
+          let nextName = currentDecisions[i][1];
 
           // Check if nextName is in data
-          console.log("\n\n\n" + this.data[[nextName]]);
           if (this.data[[nextName]] != undefined) {
-            let nextNode = new Node(this.data[[nextName]].content); // MIGHT NOT WORK, using string to access json
+            let nextNode = new Node(
+              this.data[[nextName]].content,
+              nextName,
+              this.data[[nextName]].type
+            ); // MIGHT NOT WORK, using string to access json
 
-            node.addNode(nextNode);
+            // content at index 0 in decision arr
+            currentNode.addDecision(currentDecisions[i][0]);
+            currentNode.addNode(nextNode);
 
             // Check if nextName is in visited array
             if (!visited.includes(nextName)) {
               // Push this.data.nextName onto stack
-              stack.push(this.data[[nextName]]);
+              stack.push(nextNode);
 
               // Add to visited
               visited.push(nextName);
@@ -45,21 +57,23 @@ class Graph {
           }
         }
       } else if (
-        jsonStory.type === "CONTINUE" &&
-        this.data[[jsonStory.nextNode]] != undefined
+        currentNode.type === "CONTINUE" &&
+        this.data[[currentNode.name]].nextNode != undefined
       ) {
         // Create connection to next node
-        let nextName = jsonStory.nextNode;
-        console.log(nextName);
+        let nextName = this.data[[currentNode.name]].nextNode; // String for next node name
+        let nextNode = new Node(
+          this.data[[nextName]].content,
+          nextName,
+          this.data[[nextName]].type
+        );
 
-        let nextNode = new Node(this.data[[nextName]].content); // MIGHT NOT WORK, using string to access json
-
-        node.addNode(nextNode);
+        currentNode.addNode(nextNode);
 
         // Check if nextName is in visited array
         if (!visited.includes(nextName)) {
           // Push this.data.nextName onto stack
-          stack.push(this.data[[nextName]]);
+          stack.push(nextNode);
 
           // Add to visited
           visited.push(nextName);

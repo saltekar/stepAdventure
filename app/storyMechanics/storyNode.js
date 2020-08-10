@@ -1,25 +1,18 @@
-import React from "react";
-import { thistle } from "color-name";
-import storyMap from "../assets/storyText";
-
 class Node {
-  constructor(content) {
+  constructor(content, name, type, cost) {
     this.content = content;
     this.nextNodes = [];
+    this.name = name;
+    this.type = type;
+    this.decisions = [];
   }
 
   addNode(node) {
     this.nextNodes.push(node);
   }
 
-  printNeigbors() {
-    let arr = [];
-
-    for (let x = 0; x < this.nextNodes.length; x++) {
-      arr.push(this.nextNodes[x].name);
-    }
-
-    return this.name + " -> " + arr;
+  addDecision(d) {
+    this.decisions.push(d);
   }
 }
 
