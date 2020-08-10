@@ -9,6 +9,7 @@ import {
   StatusBar
 } from "react-native";
 
+import StepCounter from "../components/Pedometer";
 import colors from "../config/colors";
 
 function WelcomeScreen({ navigation }) {
@@ -22,7 +23,7 @@ function WelcomeScreen({ navigation }) {
 
       {/* Top Half */}
       <View style={styles.heading}>
-        <Text style={{ fontSize: 50, color: colors.primary }}>0</Text>
+        <StepCounter />
         <Text style={{ fontSize: 30, color: colors.primary }}>Steps</Text>
       </View>
 
