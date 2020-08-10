@@ -32,7 +32,7 @@ export default class StoryView extends React.Component {
       button1Text: "",
       button2Text: "",
       button3Text: "",
-      button4Text: ""
+      button4Text: "",
     };
   }
 
@@ -56,7 +56,7 @@ export default class StoryView extends React.Component {
         this.setState({ text: global.currentContent[global.line] });
       } else {
         this.setState({
-          text: this.state.text + "\n" + global.currentContent[global.line]
+          text: this.state.text + "\n" + global.currentContent[global.line],
         });
       }
 
@@ -75,7 +75,8 @@ export default class StoryView extends React.Component {
 
       if (
         global.node.type == "CONTINUE" &&
-        global.line == global.currentContent.length - 1
+        global.line == global.currentContent.length - 1 &&
+        global.node.nextNodes.length > 0
       ) {
         global.node = global.node.nextNodes[0];
         global.line = -1;
@@ -91,7 +92,7 @@ export default class StoryView extends React.Component {
   };
 
   // Creates val number of buttons on screen for decisions
-  buttonsCreate = val => {
+  buttonsCreate = (val) => {
     for (let i = 0; i < val.length; i++) {
       this.setState({ ["button" + (i + 1) + "Visible"]: true });
       this.setState({ ["button" + (i + 1) + "Text"]: val[i] });
@@ -99,7 +100,7 @@ export default class StoryView extends React.Component {
   };
 
   // Hides buttons after decision made
-  hideButtons = val => {
+  hideButtons = (val) => {
     this.setState({ text: "" });
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   button: {
     width: "80%",
@@ -178,16 +179,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   story: {
     flex: 2,
     top: 80,
-    left: 20
+    left: 20,
+    paddingRight: 25,
+    flexDirection: "row",
   },
   text: {
     color: colors.white,
     fontSize: 20,
-    lineHeight: 27
-  }
+    lineHeight: 27,
+    flexWrap: "wrap",
+  },
 });

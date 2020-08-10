@@ -40,7 +40,7 @@ class Graph {
               this.data[[nextName]].content,
               nextName,
               this.data[[nextName]].type
-            ); // MIGHT NOT WORK, using string to access json
+            );
 
             // content at index 0 in decision arr
             currentNode.addDecision(currentDecisions[i][0]);
@@ -56,27 +56,27 @@ class Graph {
             }
           }
         }
-      } else if (
-        currentNode.type === "CONTINUE" &&
-        this.data[[currentNode.name]].nextNode != undefined
-      ) {
+      } else if (currentNode.type === "CONTINUE") {
         // Create connection to next node
         let nextName = this.data[[currentNode.name]].nextNode; // String for next node name
-        let nextNode = new Node(
-          this.data[[nextName]].content,
-          nextName,
-          this.data[[nextName]].type
-        );
 
-        currentNode.addNode(nextNode);
+        if (this.data[[nextName]] != undefined) {
+          let nextNode = new Node(
+            this.data[[nextName]].content,
+            nextName,
+            this.data[[nextName]].type
+          );
 
-        // Check if nextName is in visited array
-        if (!visited.includes(nextName)) {
-          // Push this.data.nextName onto stack
-          stack.push(nextNode);
+          currentNode.addNode(nextNode);
 
-          // Add to visited
-          visited.push(nextName);
+          // Check if nextName is in visited array
+          if (!visited.includes(nextName)) {
+            // Push this.data.nextName onto stack
+            stack.push(nextNode);
+
+            // Add to visited
+            visited.push(nextName);
+          }
         }
       }
     }
