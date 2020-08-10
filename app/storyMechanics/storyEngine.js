@@ -10,8 +10,8 @@ class Graph {
   createMap() {
     let stack = [];
     let visited = [];
-    let nodes = [];
 
+    // Create starting node
     let rootNode = new Node(
       this.data.root.content,
       "root",
@@ -36,23 +36,27 @@ class Graph {
 
           // Check if nextName is in data
           if (this.data[[nextName]] != undefined) {
-            let nextNode = new Node(
-              this.data[[nextName]].content,
-              nextName,
-              this.data[[nextName]].type
-            );
-
-            // content at index 0 in decision arr
-            currentNode.addDecision(currentDecisions[i][0]);
-            currentNode.addNode(nextNode);
-
             // Check if nextName is in visited array
             if (!visited.includes(nextName)) {
+              let nextNode = new Node(
+                this.data[[nextName]].content,
+                nextName,
+                this.data[[nextName]].type
+              );
+
+              // content at index 0 in decision arr
+              currentNode.addDecision(currentDecisions[i][0]);
+              currentNode.addNode(nextNode);
+
               // Push this.data.nextName onto stack
               stack.push(nextNode);
 
               // Add to visited
               visited.push(nextName);
+            } else {
+              // content at index 0 in decision arr
+              currentNode.addDecision(currentDecisions[i][0]);
+              currentNode.addNode(currentNode.nodeMap[nextNode]);
             }
           }
         }
@@ -61,21 +65,23 @@ class Graph {
         let nextName = this.data[[currentNode.name]].nextNode; // String for next node name
 
         if (this.data[[nextName]] != undefined) {
-          let nextNode = new Node(
-            this.data[[nextName]].content,
-            nextName,
-            this.data[[nextName]].type
-          );
-
-          currentNode.addNode(nextNode);
-
           // Check if nextName is in visited array
           if (!visited.includes(nextName)) {
+            let nextNode = new Node(
+              this.data[[nextName]].content,
+              nextName,
+              this.data[[nextName]].type
+            );
+
+            currentNode.addNode(nextNode);
+
             // Push this.data.nextName onto stack
             stack.push(nextNode);
 
             // Add to visited
             visited.push(nextName);
+          } else {
+            currentNode.addNode(currentNode.nodeMap[nextName]);
           }
         }
       }
