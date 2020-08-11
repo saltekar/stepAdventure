@@ -17,15 +17,13 @@ export default class StoryView extends React.Component {
     graph.createMap();
     let root = graph.getRoot();
 
-    this.initVariables();
-
     //global variables
     global.line = 0;
-    global.node = root;
     global.currentContent = [];
 
     this.state = {
       text: "",
+      node: root,
       textVisible: false,
       blinkingCursor: true,
       button1Visible: false,
@@ -35,92 +33,136 @@ export default class StoryView extends React.Component {
       button1Text: "",
       button2Text: "",
       button3Text: "",
-      button4Text: "",
+      button4Text: ""
     };
+
+    this.initialVals();
   }
 
-  initVariables = async () => {
+  clearStorage = async () => {
     try {
-      await AsyncStorage.setItem("line", "0");
+      const keys = await AsyncStorage.getAllKeys();
+      await AsyncStorage.multiRemove(keys);
+      console.log("CLEARNIGN");
+    } catch (error) {
+      console.error("Error clearing app data.");
+    }
+  };
+
+  initialVals = async () => {
+    try {
+      // intialize line number on
+
+      let ifLineIn = AsyncStorage.getAllKeys().then(arr => "line" in arr);
+      let ifNodeIn = AsyncStorage.getAllKeys().then(arr => "node" in arr);
+
+      if (ifLineIn && ifNodeIn) {
+        console.log("CHECKIGN STORAGE");
+        this.getData("line").then(currLine => (global.line = currLine));
+        this.getData("node").then(currNode =>
+          this.setState({ node: currNode })
+        );
+      } else {
+        await AsyncStorage.setItem("line", global.line + "");
+        await AsyncStorage.setItem("node", this.state.node.name);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
-  getData = async () => {
+  // add node
+  getData = async val => {
     try {
-      const data = await AsyncStorage.getItem("line");
-      return parseInt(data);
+      if (val == "line") {
+        const curLine = await AsyncStorage.getItem("line");
+        return parseInt(curLine);
+      } else if (val == "node") {
+        const curNodeName = await AsyncStorage.getItem("node");
+        return this.state.node.nodeMap[curNodeName];
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
   setText = () => {
-    global.currentContent = global.node.content.split("\n");
+    global.currentContent = this.state.node.content.split("\n");
 
-    let currline = this.getData();
+    console.log("\n" + this.state.node.type);
+    console.log(this.state.node.content);
+    console.log(global.line);
 
-    if (currline >= global.currentContent.length) return;
+    if (global.line >= global.currentContent.length) return;
 
     // Stops when story ends (for testing)
-    let line = global.currentContent[currline];
-    console.log(currline);
+    let line = global.currentContent[global.line];
 
     // Text visible
     this.setState({ textVisible: true });
 
     // Adds lines to story view component
-    if (currline == 0 && global.node.name == "root") {
-      this.setState({ text: global.currentContent[currline] });
+    if (global.line == 0 && this.state.node.name == "root") {
+      this.setState({ text: global.currentContent[global.line] });
       this.incrementLine();
     } else {
       if (this.state.text == "") {
-        this.setState({ text: global.currentContent[currline] });
+        this.setState({ text: global.currentContent[global.line] });
       } else {
         this.setState({
-          text: this.state.text + "\n" + global.currentContent[currline],
+          text: this.state.text + "\n" + global.currentContent[global.line]
         });
       }
 
       // Disable blinking cursor decision next
-      let nextLine = global.currentContent[currline + 1];
+      let nextLine = global.currentContent[global.line + 1];
       if (
-        global.node.type == "DECISION" &&
-        currline == global.currentContent.length - 1
+        this.state.node.type == "DECISION" &&
+        global.line == global.currentContent.length - 1
       ) {
         this.setState({ blinkingCursor: false });
-        let decisions = global.node.decisions;
+        let decisions = this.state.node.decisions;
 
         // Create 'decisions' number of buttons
         this.buttonsCreate(decisions);
       }
 
       if (
-        global.node.type == "CONTINUE" &&
+        this.state.node.type == "CONTINUE" &&
         global.line == global.currentContent.length - 1 &&
-        global.node.nextNodes.length > 0
+        this.state.node.nextNodes.length > 0
       ) {
-        global.node = global.node.nextNodes[0];
+        this.setState({ node: this.state.node.nextNodes[0] });
+        this.setStorage("node", this.state.node.nextNodes[0]);
+
         global.line = -1;
+        this.setStorage("line", global.line);
       }
 
       this.incrementLine();
     }
   };
 
-  // Increments current line number
-  incrementLine = async () => {
+  setStorage = async (type, val) => {
     try {
-      let newLine = this.getData() + 1;
-      await AsyncStorage.setItem("line", newLine.toString());
+      if (type == "line") {
+        await AsyncStorage.setItem("line", val + "");
+      } else if (type == "node") {
+        await AsyncStorage.setItem("node", val.name);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
+  // Increments current line number
+  incrementLine() {
+    global.line += 1;
+    this.setStorage("line", global.line);
+  }
+
   // Creates val number of buttons on screen for decisions
-  buttonsCreate = (val) => {
+  buttonsCreate = val => {
     for (let i = 0; i < val.length; i++) {
       this.setState({ ["button" + (i + 1) + "Visible"]: true });
       this.setState({ ["button" + (i + 1) + "Text"]: val[i] });
@@ -128,7 +170,7 @@ export default class StoryView extends React.Component {
   };
 
   // Hides buttons after decision made
-  hideButtons = (val) => {
+  hideButtons = val => {
     this.setState({ text: "" });
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
@@ -138,8 +180,12 @@ export default class StoryView extends React.Component {
     }
 
     // Set next node
-    global.node = global.node.nextNodes[val - 1];
+
+    this.setState({ node: this.state.node.nextNodes[val - 1] });
+    this.setStorage("node", this.state.node.nextNodes[val - 1]);
+
     global.line = 0;
+    this.setStorage("line", global.line);
   };
 
   render() {
@@ -190,6 +236,11 @@ export default class StoryView extends React.Component {
             />
           ) : null}
         </View>
+        <Button
+          title="press me"
+          color="white"
+          onPress={() => this.clearStorage()}
+        />
       </TouchableOpacity>
     );
   }
@@ -199,7 +250,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-evenly"
   },
   button: {
     width: "80%",
@@ -207,19 +258,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   story: {
     flex: 2,
     top: 80,
     left: 20,
     paddingRight: 25,
-    flexDirection: "column",
+    flexDirection: "column"
   },
   text: {
     color: colors.white,
     fontSize: 20,
     lineHeight: 27,
-    flexWrap: "wrap",
-  },
+    flexWrap: "wrap"
+  }
 });
