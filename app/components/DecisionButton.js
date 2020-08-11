@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   text: {
     color: colors.white,
-    fontSize: 20,
-  },
+    fontSize: 20
+  }
 });

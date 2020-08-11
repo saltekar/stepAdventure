@@ -6,14 +6,25 @@ import colors from "../config/colors";
 class BlinkCursor extends React.Component {
   constructor(props) {
     super(props);
+    this.mounted = true;
     this.state = {
       showText: true
     };
     setInterval(() => {
-      this.setState(previousState => {
-        return { showText: !previousState.showText };
-      });
+      if (this.mounted == true) {
+        this.setState(previousState => {
+          return { showText: !previousState.showText };
+        });
+      }
     }, 800);
+  }
+
+  async componentWillUnmount() {
+    this.mounted = false;
+  }
+
+  async componentDidMount() {
+    this.mounted = true;
   }
 
   render() {
