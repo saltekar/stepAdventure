@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Button } from "react-native";
+import { AsyncStorage } from "react-native";
 
 import Graph from "../storyMechanics/storyEngine";
 import BlinkCursor from "../components/BlinkCursor";
@@ -15,6 +16,8 @@ export default class StoryView extends React.Component {
     const graph = new Graph(JSON);
     graph.createMap();
     let root = graph.getRoot();
+
+    this.initVariables();
 
     //global variables
     global.line = 0;
@@ -32,39 +35,59 @@ export default class StoryView extends React.Component {
       button1Text: "",
       button2Text: "",
       button3Text: "",
-      button4Text: ""
+      button4Text: "",
     };
   }
+
+  initVariables = async () => {
+    try {
+      await AsyncStorage.setItem("line", "0");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  getData = async () => {
+    try {
+      const data = await AsyncStorage.getItem("line");
+      return parseInt(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   setText = () => {
     global.currentContent = global.node.content.split("\n");
 
-    if (global.line >= global.currentContent.length) return;
+    let currline = this.getData();
+
+    if (currline >= global.currentContent.length) return;
 
     // Stops when story ends (for testing)
-    let line = global.currentContent[global.line];
+    let line = global.currentContent[currline];
+    console.log(currline);
 
     // Text visible
     this.setState({ textVisible: true });
 
     // Adds lines to story view component
-    if (global.line == 0 && global.node.name == "root") {
-      this.setState({ text: global.currentContent[global.line] });
+    if (currline == 0 && global.node.name == "root") {
+      this.setState({ text: global.currentContent[currline] });
       this.incrementLine();
     } else {
       if (this.state.text == "") {
-        this.setState({ text: global.currentContent[global.line] });
+        this.setState({ text: global.currentContent[currline] });
       } else {
         this.setState({
-          text: this.state.text + "\n" + global.currentContent[global.line]
+          text: this.state.text + "\n" + global.currentContent[currline],
         });
       }
 
       // Disable blinking cursor decision next
-      let nextLine = global.currentContent[global.line + 1];
+      let nextLine = global.currentContent[currline + 1];
       if (
         global.node.type == "DECISION" &&
-        global.line == global.currentContent.length - 1
+        currline == global.currentContent.length - 1
       ) {
         this.setState({ blinkingCursor: false });
         let decisions = global.node.decisions;
@@ -87,12 +110,17 @@ export default class StoryView extends React.Component {
   };
 
   // Increments current line number
-  incrementLine = () => {
-    global.line += 1;
+  incrementLine = async () => {
+    try {
+      let newLine = this.getData() + 1;
+      await AsyncStorage.setItem("line", newLine.toString());
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // Creates val number of buttons on screen for decisions
-  buttonsCreate = val => {
+  buttonsCreate = (val) => {
     for (let i = 0; i < val.length; i++) {
       this.setState({ ["button" + (i + 1) + "Visible"]: true });
       this.setState({ ["button" + (i + 1) + "Text"]: val[i] });
@@ -100,7 +128,7 @@ export default class StoryView extends React.Component {
   };
 
   // Hides buttons after decision made
-  hideButtons = val => {
+  hideButtons = (val) => {
     this.setState({ text: "" });
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
@@ -171,7 +199,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   button: {
     width: "80%",
@@ -179,19 +207,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   story: {
     flex: 2,
     top: 80,
     left: 20,
     paddingRight: 25,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   text: {
     color: colors.white,
     fontSize: 20,
     lineHeight: 27,
-    flexWrap: "wrap"
-  }
+    flexWrap: "wrap",
+  },
 });
