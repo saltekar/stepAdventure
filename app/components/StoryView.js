@@ -20,10 +20,10 @@ export default class StoryView extends React.Component {
     //global variables
     global.line = 0;
     global.currentContent = [];
+    global.node = root;
 
     this.state = {
       text: "",
-      node: root,
       textVisible: false,
       blinkingCursor: true,
       button1Visible: false,
@@ -40,46 +40,70 @@ export default class StoryView extends React.Component {
   }
 
   clearStorage = async () => {
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-      await AsyncStorage.multiRemove(keys);
-      console.log("CLEARNIGN");
-    } catch (error) {
-      console.error("Error clearing app data.");
+    const asyncStorageKeys = await AsyncStorage.getAllKeys();
+    if (asyncStorageKeys.length > 0) {
+      AsyncStorage.clear();
     }
+
+    AsyncStorage.getAllKeys().then(arr => console.log(arr));
   };
 
   initialVals = async () => {
     try {
       // intialize line number on
 
-      let ifLineIn = AsyncStorage.getAllKeys().then(arr => "line" in arr);
-      let ifNodeIn = AsyncStorage.getAllKeys().then(arr => "node" in arr);
+      // Issue with this if statement
 
-      if (ifLineIn && ifNodeIn) {
-        console.log("CHECKIGN STORAGE");
-        this.getData("line").then(currLine => (global.line = currLine));
-        this.getData("node").then(currNode =>
-          this.setState({ node: currNode })
-        );
-      } else {
-        await AsyncStorage.setItem("line", global.line + "");
-        await AsyncStorage.setItem("node", this.state.node.name);
-      }
+      // let storageArr = Parse.Promise.when(this.getKeys());
+      // let ifLineIn = "line" in storageArr;
+      // let ifNodeIn = "node" in storageArr;
+
+      // console.log("storage: ");
+      // console.log(storageArr);
+      // console.log(ifLineIn);
+
+      this.getData("line").then(currLine => {
+        if (!isNaN(currLine)) {
+          global.line = currLine;
+        } else {
+          this.setStorage("line", global.line);
+        }
+      });
+
+      this.getData("node").then(currNode => {
+        if (!isNaN(currNode)) {
+          global.node = currNode;
+        } else {
+          this.setStorage("node", global.node);
+        }
+      });
+
+      // if (false) {
+      //   global.line = this.getData("line").then(currLine => {
+      //     return currLine;
+      //   });
+      //   this.getData("node").then(currNode =>
+      //     this.setState({ node: currNode })
+      //   );
+      //   console.log("line : " + global.line);
+      // } else {
+      //   await AsyncStorage.setItem("line", global.line + "");
+      //   await AsyncStorage.setItem("node", this.state.node.name);
+      // }
     } catch (err) {
       console.log(err);
     }
   };
 
-  // add node
   getData = async val => {
     try {
       if (val == "line") {
         const curLine = await AsyncStorage.getItem("line");
+        console.log("getData: " + curLine);
         return parseInt(curLine);
       } else if (val == "node") {
         const curNodeName = await AsyncStorage.getItem("node");
-        return this.state.node.nodeMap[curNodeName];
+        return global.node.nodeMap[curNodeName];
       }
     } catch (err) {
       console.log(err);
@@ -87,11 +111,7 @@ export default class StoryView extends React.Component {
   };
 
   setText = () => {
-    global.currentContent = this.state.node.content.split("\n");
-
-    console.log("\n" + this.state.node.type);
-    console.log(this.state.node.content);
-    console.log(global.line);
+    global.currentContent = global.node.content.split("\n");
 
     if (global.line >= global.currentContent.length) return;
 
@@ -102,7 +122,7 @@ export default class StoryView extends React.Component {
     this.setState({ textVisible: true });
 
     // Adds lines to story view component
-    if (global.line == 0 && this.state.node.name == "root") {
+    if (global.line == 0 && global.node.name == "root") {
       this.setState({ text: global.currentContent[global.line] });
       this.incrementLine();
     } else {
@@ -117,23 +137,23 @@ export default class StoryView extends React.Component {
       // Disable blinking cursor decision next
       let nextLine = global.currentContent[global.line + 1];
       if (
-        this.state.node.type == "DECISION" &&
+        global.node.type == "DECISION" &&
         global.line == global.currentContent.length - 1
       ) {
         this.setState({ blinkingCursor: false });
-        let decisions = this.state.node.decisions;
+        let decisions = global.node.decisions;
 
         // Create 'decisions' number of buttons
         this.buttonsCreate(decisions);
       }
 
       if (
-        this.state.node.type == "CONTINUE" &&
+        global.node.type == "CONTINUE" &&
         global.line == global.currentContent.length - 1 &&
-        this.state.node.nextNodes.length > 0
+        global.node.nextNodes.length > 0
       ) {
-        this.setState({ node: this.state.node.nextNodes[0] });
-        this.setStorage("node", this.state.node.nextNodes[0]);
+        this.setState({ node: global.node.nextNodes[0] });
+        this.setStorage("node", global.node.nextNodes[0]);
 
         global.line = -1;
         this.setStorage("line", global.line);
@@ -147,7 +167,9 @@ export default class StoryView extends React.Component {
     try {
       if (type == "line") {
         await AsyncStorage.setItem("line", val + "");
+        AsyncStorage.getItem("line").then(arr => console.log(arr));
       } else if (type == "node") {
+        console.log(val);
         await AsyncStorage.setItem("node", val.name);
       }
     } catch (err) {
@@ -180,9 +202,8 @@ export default class StoryView extends React.Component {
     }
 
     // Set next node
-
-    this.setState({ node: this.state.node.nextNodes[val - 1] });
-    this.setStorage("node", this.state.node.nextNodes[val - 1]);
+    global.node = global.node.nextNodes[val - 1];
+    this.setStorage("node", global.node.nextNodes[val - 1]);
 
     global.line = 0;
     this.setStorage("line", global.line);

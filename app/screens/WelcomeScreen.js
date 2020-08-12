@@ -11,7 +11,6 @@ import {
 
 import StepCounter from "../components/Pedometer";
 import colors from "../config/colors";
-import StoryView from "../components/StoryView";
 
 function WelcomeScreen({ navigation }) {
   return (
