@@ -21,9 +21,9 @@ export default class StoryView extends React.Component {
     global.line = 0;
     global.currentContent = [];
     global.node = root;
+    global.text = "";
 
     this.state = {
-      text: "",
       textVisible: false,
       blinkingCursor: true,
       button1Visible: false,
@@ -45,7 +45,7 @@ export default class StoryView extends React.Component {
       AsyncStorage.clear();
     }
 
-    AsyncStorage.getAllKeys().then(arr => console.log(arr));
+    console.log("cleared");
   };
 
   initialVals = async () => {
@@ -67,6 +67,30 @@ export default class StoryView extends React.Component {
           this.setStorage("node", global.node);
         }
       });
+
+      this.getData("screenText").then(currText => {
+        if (currText != null) {
+          // Display text on screen
+          global.text = currText;
+          this.setState({ textVisible: true });
+
+          global.currentContent = global.node.content.split("\n");
+
+          // Display buttons
+          if (
+            global.node.type == "DECISION" &&
+            global.line == global.currentContent.length
+          ) {
+            this.setState({ blinkingCursor: false });
+            let decisions = global.node.decisions;
+
+            // Create 'decisions' number of buttons
+            this.buttonsCreate(decisions);
+          }
+        } else {
+          this.setStorage("screenText", "");
+        }
+      });
     } catch (err) {
       console.log(err);
     }
@@ -80,6 +104,9 @@ export default class StoryView extends React.Component {
       } else if (val == "node") {
         const curNodeName = await AsyncStorage.getItem("node");
         return global.node.nodeMap[curNodeName];
+      } else if (val == "screenText") {
+        const currText = await AsyncStorage.getItem("screenText");
+        return currText;
       }
     } catch (err) {
       console.log(err);
@@ -99,16 +126,21 @@ export default class StoryView extends React.Component {
 
     // Adds lines to story view component
     if (global.line == 0 && global.node.name == "root") {
-      this.setState({ text: global.currentContent[global.line] });
+      global.text = global.currentContent[global.line];
       this.incrementLine();
     } else {
-      if (this.state.text == "") {
-        this.setState({ text: global.currentContent[global.line] });
+      if (global.text == "") {
+        global.text = global.currentContent[global.line];
       } else {
-        this.setState({
-          text: this.state.text + "\n" + global.currentContent[global.line]
-        });
+        global.text = global.text + "\n" + global.currentContent[global.line];
       }
+
+      // Save text
+      //console.log(global.currentContent[global.line]);
+      this.setStorage("screenText", global.text);
+      // this.getData("screenText").then(data => {
+      //   console.log(data);
+      // });
 
       // Disable blinking cursor decision next
       let nextLine = global.currentContent[global.line + 1];
@@ -145,6 +177,8 @@ export default class StoryView extends React.Component {
         await AsyncStorage.setItem("line", val + "");
       } else if (type == "node") {
         await AsyncStorage.setItem("node", val.name + "");
+      } else if (type == "screenText") {
+        await AsyncStorage.setItem("screenText", val);
       }
     } catch (err) {
       console.log(err);
@@ -167,7 +201,9 @@ export default class StoryView extends React.Component {
 
   // Hides buttons after decision made
   hideButtons = val => {
-    this.setState({ text: "" });
+    global.text = "";
+    this.setStorage("screenText", global.text);
+
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
 
@@ -193,7 +229,7 @@ export default class StoryView extends React.Component {
       >
         <View style={styles.story}>
           {this.state.textVisible ? (
-            <Text style={styles.text}>{this.state.text}</Text>
+            <Text style={styles.text}>{global.text}</Text>
           ) : null}
 
           {this.state.blinkingCursor ? <BlinkCursor content="|" /> : null}
