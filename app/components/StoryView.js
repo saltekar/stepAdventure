@@ -33,7 +33,7 @@ export default class StoryView extends React.Component {
       button1Text: "",
       button2Text: "",
       button3Text: "",
-      button4Text: "",
+      button4Text: ""
     };
 
     this.initialVals();
@@ -45,14 +45,14 @@ export default class StoryView extends React.Component {
       AsyncStorage.clear();
     }
 
-    AsyncStorage.getAllKeys().then((arr) => console.log(arr));
+    AsyncStorage.getAllKeys().then(arr => console.log(arr));
   };
 
   initialVals = async () => {
     try {
       // intialize line number on
 
-      this.getData("line").then((currLine) => {
+      this.getData("line").then(currLine => {
         if (!isNaN(currLine)) {
           global.line = currLine;
         } else {
@@ -60,7 +60,7 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("node").then((currNode) => {
+      this.getData("node").then(currNode => {
         if (currNode != undefined) {
           global.node = currNode;
         } else {
@@ -72,7 +72,7 @@ export default class StoryView extends React.Component {
     }
   };
 
-  getData = async (val) => {
+  getData = async val => {
     try {
       if (val == "line") {
         const curLine = await AsyncStorage.getItem("line");
@@ -106,7 +106,7 @@ export default class StoryView extends React.Component {
         this.setState({ text: global.currentContent[global.line] });
       } else {
         this.setState({
-          text: this.state.text + "\n" + global.currentContent[global.line],
+          text: this.state.text + "\n" + global.currentContent[global.line]
         });
       }
 
@@ -158,7 +158,7 @@ export default class StoryView extends React.Component {
   }
 
   // Creates val number of buttons on screen for decisions
-  buttonsCreate = (val) => {
+  buttonsCreate = val => {
     for (let i = 0; i < val.length; i++) {
       this.setState({ ["button" + (i + 1) + "Visible"]: true });
       this.setState({ ["button" + (i + 1) + "Text"]: val[i] });
@@ -166,7 +166,7 @@ export default class StoryView extends React.Component {
   };
 
   // Hides buttons after decision made
-  hideButtons = (val) => {
+  hideButtons = val => {
     this.setState({ text: "" });
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-evenly"
   },
   button: {
     width: "80%",
@@ -254,19 +254,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   story: {
     flex: 2,
     top: 80,
     left: 20,
     paddingRight: 25,
-    flexDirection: "column",
+    flexDirection: "column"
   },
   text: {
     color: colors.white,
     fontSize: 20,
     lineHeight: 27,
-    flexWrap: "wrap",
-  },
+    flexWrap: "wrap"
+  }
 });
