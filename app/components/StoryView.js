@@ -52,16 +52,6 @@ export default class StoryView extends React.Component {
     try {
       // intialize line number on
 
-      // Issue with this if statement
-
-      // let storageArr = Parse.Promise.when(this.getKeys());
-      // let ifLineIn = "line" in storageArr;
-      // let ifNodeIn = "node" in storageArr;
-
-      // console.log("storage: ");
-      // console.log(storageArr);
-      // console.log(ifLineIn);
-
       this.getData("line").then(currLine => {
         if (!isNaN(currLine)) {
           global.line = currLine;
@@ -78,17 +68,6 @@ export default class StoryView extends React.Component {
         }
       });
 
-      // if (false) {
-      //   global.line = this.getData("line").then(currLine => {
-      //     return currLine;
-      //   });
-      //   this.getData("node").then(currNode =>
-      //     this.setState({ node: currNode })
-      //   );
-      //   console.log("line : " + global.line);
-      // } else {
-      //   await AsyncStorage.setItem("line", global.line + "");
-      //   await AsyncStorage.setItem("node", this.state.node.name);
       // }
     } catch (err) {
       console.log(err);
@@ -99,7 +78,6 @@ export default class StoryView extends React.Component {
     try {
       if (val == "line") {
         const curLine = await AsyncStorage.getItem("line");
-        console.log("getData: " + curLine);
         return parseInt(curLine);
       } else if (val == "node") {
         const curNodeName = await AsyncStorage.getItem("node");
@@ -152,8 +130,8 @@ export default class StoryView extends React.Component {
         global.line == global.currentContent.length - 1 &&
         global.node.nextNodes.length > 0
       ) {
-        this.setState({ node: global.node.nextNodes[0] });
-        this.setStorage("node", global.node.nextNodes[0]);
+        global.node = global.node.nextNodes[0];
+        this.setStorage("node", global.node);
 
         global.line = -1;
         this.setStorage("line", global.line);
@@ -167,10 +145,11 @@ export default class StoryView extends React.Component {
     try {
       if (type == "line") {
         await AsyncStorage.setItem("line", val + "");
-        AsyncStorage.getItem("line").then(arr => console.log(arr));
+        AsyncStorage.getItem("line").then(arr =>
+          console.log("line saved: " + arr)
+        );
       } else if (type == "node") {
-        console.log(val);
-        await AsyncStorage.setItem("node", val.name);
+        await AsyncStorage.setItem("node", val.name + "");
       }
     } catch (err) {
       console.log(err);
@@ -202,8 +181,9 @@ export default class StoryView extends React.Component {
     }
 
     // Set next node
+
     global.node = global.node.nextNodes[val - 1];
-    this.setStorage("node", global.node.nextNodes[val - 1]);
+    this.setStorage("node", global.node);
 
     global.line = 0;
     this.setStorage("line", global.line);
