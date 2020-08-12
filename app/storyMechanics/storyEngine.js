@@ -18,6 +18,7 @@ class Graph {
       this.data.root.type
     );
     this.root = rootNode;
+    rootNode.nodeMap["root"] = this.root;
 
     stack.push(rootNode);
     visited.push(rootNode.name);

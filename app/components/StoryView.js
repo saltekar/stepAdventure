@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Button } from "react-native";
+import { AsyncStorage } from "react-native";
 
 import Graph from "../storyMechanics/storyEngine";
 import BlinkCursor from "../components/BlinkCursor";
@@ -18,8 +19,8 @@ export default class StoryView extends React.Component {
 
     //global variables
     global.line = 0;
-    global.node = root;
     global.currentContent = [];
+    global.node = root;
 
     this.state = {
       text: "",
@@ -32,9 +33,58 @@ export default class StoryView extends React.Component {
       button1Text: "",
       button2Text: "",
       button3Text: "",
-      button4Text: ""
+      button4Text: "",
     };
+
+    this.initialVals();
   }
+
+  clearStorage = async () => {
+    const asyncStorageKeys = await AsyncStorage.getAllKeys();
+    if (asyncStorageKeys.length > 0) {
+      AsyncStorage.clear();
+    }
+
+    AsyncStorage.getAllKeys().then((arr) => console.log(arr));
+  };
+
+  initialVals = async () => {
+    try {
+      // intialize line number on
+
+      this.getData("line").then((currLine) => {
+        if (!isNaN(currLine)) {
+          global.line = currLine;
+        } else {
+          this.setStorage("line", global.line);
+        }
+      });
+
+      this.getData("node").then((currNode) => {
+        if (currNode != undefined) {
+          global.node = currNode;
+        } else {
+          this.setStorage("node", global.node);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  getData = async (val) => {
+    try {
+      if (val == "line") {
+        const curLine = await AsyncStorage.getItem("line");
+        return parseInt(curLine);
+      } else if (val == "node") {
+        const curNodeName = await AsyncStorage.getItem("node");
+        return global.node.nodeMap[curNodeName];
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   setText = () => {
     global.currentContent = global.node.content.split("\n");
@@ -56,7 +106,7 @@ export default class StoryView extends React.Component {
         this.setState({ text: global.currentContent[global.line] });
       } else {
         this.setState({
-          text: this.state.text + "\n" + global.currentContent[global.line]
+          text: this.state.text + "\n" + global.currentContent[global.line],
         });
       }
 
@@ -79,20 +129,36 @@ export default class StoryView extends React.Component {
         global.node.nextNodes.length > 0
       ) {
         global.node = global.node.nextNodes[0];
+        this.setStorage("node", global.node);
+
         global.line = -1;
+        this.setStorage("line", global.line);
       }
 
       this.incrementLine();
     }
   };
 
-  // Increments current line number
-  incrementLine = () => {
-    global.line += 1;
+  setStorage = async (type, val) => {
+    try {
+      if (type == "line") {
+        await AsyncStorage.setItem("line", val + "");
+      } else if (type == "node") {
+        await AsyncStorage.setItem("node", val.name + "");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
+  // Increments current line number
+  incrementLine() {
+    global.line += 1;
+    this.setStorage("line", global.line);
+  }
+
   // Creates val number of buttons on screen for decisions
-  buttonsCreate = val => {
+  buttonsCreate = (val) => {
     for (let i = 0; i < val.length; i++) {
       this.setState({ ["button" + (i + 1) + "Visible"]: true });
       this.setState({ ["button" + (i + 1) + "Text"]: val[i] });
@@ -100,7 +166,7 @@ export default class StoryView extends React.Component {
   };
 
   // Hides buttons after decision made
-  hideButtons = val => {
+  hideButtons = (val) => {
     this.setState({ text: "" });
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
@@ -110,8 +176,12 @@ export default class StoryView extends React.Component {
     }
 
     // Set next node
+
     global.node = global.node.nextNodes[val - 1];
+    this.setStorage("node", global.node);
+
     global.line = 0;
+    this.setStorage("line", global.line);
   };
 
   render() {
@@ -162,6 +232,11 @@ export default class StoryView extends React.Component {
             />
           ) : null}
         </View>
+        <Button
+          title="press me"
+          color="white"
+          onPress={() => this.clearStorage()}
+        />
       </TouchableOpacity>
     );
   }
@@ -171,7 +246,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   button: {
     width: "80%",
@@ -179,19 +254,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   story: {
     flex: 2,
     top: 80,
     left: 20,
     paddingRight: 25,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   text: {
     color: colors.white,
     fontSize: 20,
     lineHeight: 27,
-    flexWrap: "wrap"
-  }
+    flexWrap: "wrap",
+  },
 });
