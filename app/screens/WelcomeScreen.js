@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -6,11 +6,13 @@ import {
   Button,
   ImageBackground,
   TouchableOpacity,
-  StatusBar,
+  StatusBar
 } from "react-native";
+import { AsyncStorage } from "react-native";
 
-import StepCounter from "../components/Pedometer";
+import { Pedometer } from "expo-sensors";
 import colors from "../config/colors";
+import StepBank from "../components/StepBank";
 
 function WelcomeScreen({ navigation }) {
   return (
@@ -26,7 +28,7 @@ function WelcomeScreen({ navigation }) {
         <Text
           style={{
             fontSize: 45,
-            color: colors.primary,
+            color: colors.primary
           }}
         >
           Step Adventure
@@ -36,7 +38,7 @@ function WelcomeScreen({ navigation }) {
       {/* Step Counter */}
       <View style={styles.stepCounter}>
         <View style={styles.circle}>
-          <StepCounter />
+          <StepBank />
           <Text style={{ fontSize: 30, color: colors.white }}>Steps</Text>
         </View>
       </View>
@@ -62,19 +64,19 @@ const styles = StyleSheet.create({
     width: "50%",
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   background: {
-    flex: 1,
+    flex: 1
   },
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-evenly"
   },
   buttonText: {
     color: colors.white,
-    fontSize: 20,
+    fontSize: 20
   },
   circle: {
     width: 180,
@@ -83,18 +85,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     justifyContent: "center",
     alignItems: "center",
-    opacity: 0.9,
+    opacity: 0.9
   },
   heading: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   stepCounter: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });
 
 export default WelcomeScreen;
