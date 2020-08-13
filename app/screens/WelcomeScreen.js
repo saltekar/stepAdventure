@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -8,11 +8,21 @@ import {
   TouchableOpacity,
   StatusBar
 } from "react-native";
+import { AsyncStorage } from "react-native";
 
 import StepCounter from "../components/Pedometer";
+import { Pedometer } from "expo-sensors";
 import colors from "../config/colors";
 
 function WelcomeScreen({ navigation }) {
+  // initialize AsyncVariables
+
+  const [steps, setSteps] = useState(0);
+
+  Pedometer.watchStepCount(result => {
+    setSteps(result.steps);
+  });
+
   return (
     <ImageBackground
       source={require("../assets/creepy.jpg")}
@@ -36,7 +46,7 @@ function WelcomeScreen({ navigation }) {
       {/* Step Counter */}
       <View style={styles.stepCounter}>
         <View style={styles.circle}>
-          <StepCounter />
+          <Text style={{ fontSize: 50, color: colors.white }}>{steps}</Text>
           <Text style={{ fontSize: 30, color: colors.white }}>Steps</Text>
         </View>
       </View>

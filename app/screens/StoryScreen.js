@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -14,6 +14,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import StepCounter from "../components/Pedometer";
+import { Pedometer } from "expo-sensors";
 import { continueStory } from "../components/StoryView";
 import StoryView from "../components/StoryView";
 import colors from "../config/colors";
@@ -25,6 +26,11 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function StoryScreen({ navigation }) {
+  const [steps, setSteps] = useState(0);
+
+  Pedometer.watchStepCount(result => {
+    setSteps(result.steps);
+  });
   return (
     <ImageBackground
       style={styles.background}
@@ -33,7 +39,7 @@ function StoryScreen({ navigation }) {
       {/* Sets status bar to white */}
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.steps}>
-        <StepCounter />
+        <Text style={{ fontSize: 20, color: colors.white }}>{steps}</Text>
       </SafeAreaView>
       {/* Text for the story */}
       <StoryView />
@@ -65,7 +71,8 @@ const styles = StyleSheet.create({
   steps: {
     alignSelf: "flex-end",
     position: "absolute",
-    top: -15
+    top: -10,
+    right: 5
   }
 });
 

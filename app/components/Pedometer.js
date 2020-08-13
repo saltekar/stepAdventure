@@ -1,6 +1,7 @@
 import React from "react";
 import { Pedometer } from "expo-sensors";
 import { StyleSheet, Text, View } from "react-native";
+import { AsyncStorage } from "react-native";
 
 import colors from "../config/colors";
 
@@ -9,6 +10,15 @@ export default class stepCounter extends React.Component {
     isPedometerAvailable: "checking",
     pastStepCount: 0,
     currentStepCount: 0
+  };
+
+  setSteps = async val => {
+    try {
+      let currSteps = await AsyncStorage.getItem("steps");
+      await AsyncStorage.setItem("steps", parseInt(currSteps) + val + "");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   componentDidMount() {
