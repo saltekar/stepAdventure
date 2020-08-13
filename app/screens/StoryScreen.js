@@ -8,7 +8,7 @@ import {
   Button,
   TextInput,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -17,17 +17,18 @@ import { Pedometer } from "expo-sensors";
 import { continueStory } from "../components/StoryView";
 import StoryView from "../components/StoryView";
 import colors from "../config/colors";
+import StepBank from "../components/StepBank";
 import {
   TouchableWithoutFeedback,
   TouchableHighlight,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
 } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function StoryScreen({ navigation }) {
   const [steps, setSteps] = useState(0);
 
-  Pedometer.watchStepCount(result => {
+  Pedometer.watchStepCount((result) => {
     setSteps(result.steps);
   });
   return (
@@ -38,7 +39,7 @@ function StoryScreen({ navigation }) {
       {/* Sets status bar to white */}
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.steps}>
-        <Text style={{ fontSize: 20, color: colors.white }}>{steps}</Text>
+        <StepBank />
       </SafeAreaView>
       {/* Text for the story */}
       <StoryView />
@@ -62,17 +63,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     top: 40,
     left: 10,
-    position: "absolute"
+    position: "absolute",
   },
   background: {
-    flex: 1
+    flex: 1,
   },
   steps: {
     alignSelf: "flex-end",
     position: "absolute",
     top: -10,
-    right: 5
-  }
+    right: 5,
+  },
 });
 
 export default StoryScreen;
