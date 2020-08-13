@@ -13,7 +13,6 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import StepCounter from "../components/Pedometer";
 import { Pedometer } from "expo-sensors";
 import { continueStory } from "../components/StoryView";
 import StoryView from "../components/StoryView";

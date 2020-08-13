@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { AsyncStorage } from "react-native";
 
-import StepCounter from "../components/Pedometer";
 import { Pedometer } from "expo-sensors";
 import colors from "../config/colors";
 
