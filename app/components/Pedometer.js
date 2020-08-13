@@ -8,7 +8,7 @@ export default class stepCounter extends React.Component {
   state = {
     isPedometerAvailable: "checking",
     pastStepCount: 0,
-    currentStepCount: 0,
+    currentStepCount: 0
   };
 
   componentDidMount() {
@@ -20,21 +20,21 @@ export default class stepCounter extends React.Component {
   }
 
   _subscribe = () => {
-    this._subscription = Pedometer.watchStepCount((result) => {
+    this._subscription = Pedometer.watchStepCount(result => {
       this.setState({
-        currentStepCount: result.steps,
+        currentStepCount: result.steps
       });
     });
 
     Pedometer.isAvailableAsync().then(
-      (result) => {
+      result => {
         this.setState({
-          isPedometerAvailable: String(result),
+          isPedometerAvailable: String(result)
         });
       },
-      (error) => {
+      error => {
         this.setState({
-          isPedometerAvailable: "Could not get isPedometerAvailable: " + error,
+          isPedometerAvailable: "Could not get isPedometerAvailable: " + error
         });
       }
     );
@@ -43,12 +43,12 @@ export default class stepCounter extends React.Component {
     const start = new Date();
     start.setDate(end.getDate() - 1);
     Pedometer.getStepCountAsync(start, end).then(
-      (result) => {
+      result => {
         this.setState({ pastStepCount: result.steps });
       },
-      (error) => {
+      error => {
         this.setState({
-          pastStepCount: "Could not get stepCount: " + error,
+          pastStepCount: "Could not get stepCount: " + error
         });
       }
     );

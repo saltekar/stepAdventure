@@ -6,7 +6,7 @@ import {
   Button,
   ImageBackground,
   TouchableOpacity,
-  StatusBar,
+  StatusBar
 } from "react-native";
 
 import StepCounter from "../components/Pedometer";
@@ -26,7 +26,7 @@ function WelcomeScreen({ navigation }) {
         <Text
           style={{
             fontSize: 45,
-            color: colors.primary,
+            color: colors.primary
           }}
         >
           Step Adventure
@@ -62,19 +62,19 @@ const styles = StyleSheet.create({
     width: "50%",
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   background: {
-    flex: 1,
+    flex: 1
   },
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-evenly"
   },
   buttonText: {
     color: colors.white,
-    fontSize: 20,
+    fontSize: 20
   },
   circle: {
     width: 180,
@@ -83,18 +83,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     justifyContent: "center",
     alignItems: "center",
-    opacity: 0.9,
+    opacity: 0.9
   },
   heading: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   stepCounter: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });
 
 export default WelcomeScreen;

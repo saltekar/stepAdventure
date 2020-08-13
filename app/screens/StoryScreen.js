@@ -8,19 +8,21 @@ import {
   Button,
   TextInput,
   TouchableOpacity,
-  StatusBar,
+  StatusBar
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import StepCounter from "../components/Pedometer";
 import { continueStory } from "../components/StoryView";
 import StoryView from "../components/StoryView";
 import colors from "../config/colors";
 import {
   TouchableWithoutFeedback,
   TouchableHighlight,
-  TouchableNativeFeedback,
+  TouchableNativeFeedback
 } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function StoryScreen({ navigation }) {
   return (
@@ -30,6 +32,9 @@ function StoryScreen({ navigation }) {
     >
       {/* Sets status bar to white */}
       <StatusBar barStyle="light-content" />
+      <SafeAreaView style={styles.steps}>
+        <StepCounter />
+      </SafeAreaView>
       {/* Text for the story */}
       <StoryView />
       <TouchableOpacity
@@ -52,11 +57,16 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     top: 40,
     left: 10,
-    position: "absolute",
+    position: "absolute"
   },
   background: {
-    flex: 1,
+    flex: 1
   },
+  steps: {
+    alignSelf: "flex-end",
+    position: "absolute",
+    top: -15
+  }
 });
 
 export default StoryScreen;

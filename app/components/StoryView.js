@@ -127,6 +127,7 @@ export default class StoryView extends React.Component {
     // Adds lines to story view component
     if (global.line == 0 && global.node.name == "root") {
       global.text = global.currentContent[global.line];
+      this.setStorage("screenText", global.text);
       this.incrementLine();
     } else {
       if (global.text == "") {
