@@ -25,15 +25,30 @@ export default class StoryView extends React.Component {
 
     this.state = {
       textVisible: false,
+
       blinkingCursor: true,
+
       button1Visible: false,
       button2Visible: false,
       button3Visible: false,
       button4Visible: false,
+
       button1Text: "",
       button2Text: "",
       button3Text: "",
-      button4Text: ""
+      button4Text: "",
+
+      dist1Visible: false,
+      dist2Visible: false,
+      dist3Visible: false,
+      dist4Visible: false,
+
+      decision1Distance: 0,
+      decision2Distance: 0,
+      decision3Distance: 0,
+      decision4Distance: 0,
+
+      barVisible: false,
     };
 
     this.initialVals();
@@ -52,7 +67,7 @@ export default class StoryView extends React.Component {
     try {
       // intialize line number on
 
-      this.getData("line").then(currLine => {
+      this.getData("line").then((currLine) => {
         if (!isNaN(currLine)) {
           global.line = currLine;
         } else {
@@ -60,7 +75,7 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("node").then(currNode => {
+      this.getData("node").then((currNode) => {
         if (currNode != undefined) {
           global.node = currNode;
         } else {
@@ -68,7 +83,7 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("screenText").then(currText => {
+      this.getData("screenText").then((currText) => {
         if (currText != null) {
           // Display text on screen
           global.text = currText;
@@ -83,9 +98,10 @@ export default class StoryView extends React.Component {
           ) {
             this.setState({ blinkingCursor: false });
             let decisions = global.node.decisions;
+            let distances = global.node.decisionDistances;
 
             // Create 'decisions' number of buttons
-            this.buttonsCreate(decisions);
+            this.buttonsCreate(decisions, distances);
           }
         } else {
           this.setStorage("screenText", "");
@@ -96,7 +112,7 @@ export default class StoryView extends React.Component {
     }
   };
 
-  getData = async val => {
+  getData = async (val) => {
     try {
       if (val == "line") {
         const curLine = await AsyncStorage.getItem("line");
@@ -151,9 +167,10 @@ export default class StoryView extends React.Component {
       ) {
         this.setState({ blinkingCursor: false });
         let decisions = global.node.decisions;
+        let distances = global.node.decisionDistances;
 
         // Create 'decisions' number of buttons
-        this.buttonsCreate(decisions);
+        this.buttonsCreate(decisions, distances);
       }
 
       if (
@@ -193,23 +210,38 @@ export default class StoryView extends React.Component {
   }
 
   // Creates val number of buttons on screen for decisions
-  buttonsCreate = val => {
-    for (let i = 0; i < val.length; i++) {
+  buttonsCreate = (dec, dist) => {
+    console.log(dist);
+    console.log(dec);
+    for (let i = 0; i < dec.length; i++) {
       this.setState({ ["button" + (i + 1) + "Visible"]: true });
-      this.setState({ ["button" + (i + 1) + "Text"]: val[i] });
+      this.setState({ ["button" + (i + 1) + "Text"]: dec[i] });
+
+      if (dist != undefined && dist[i] != 0) {
+        this.setState({ ["decision" + (i + 1) + "Distance"]: dist[i] });
+        this.setState({ ["dist" + (i + 1) + "Visible"]: true });
+      }
     }
   };
 
   // Hides buttons after decision made
-  hideButtons = val => {
+  hideButtons = (val) => {
     global.text = "";
     this.setStorage("screenText", global.text);
 
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
 
+    // check to display progress bar
+    if (["this.state.dist" + i + "Visible"]) {
+      //display bar with circle on left
+      this.setState({ barVisible: true });
+      watchProgress();
+    }
+
     for (let i = 1; i < 5; i++) {
       this.setState({ ["button" + i + "Visible"]: false });
+      this.setState({ ["dist" + i + "Visible"]: false });
     }
 
     // Set next node
@@ -237,37 +269,66 @@ export default class StoryView extends React.Component {
         </View>
 
         <View style={styles.buttons}>
-          {/* Button 1 */}
-          {this.state.button1Visible ? (
-            <DecisionButton
-              decisionText={this.state.button1Text}
-              onPress={() => this.hideButtons(1)}
-            />
-          ) : null}
+          <View>
+            {/* Button 1 */}
+            {this.state.button1Visible ? (
+              <DecisionButton
+                decisionText={this.state.button1Text}
+                onPress={() => this.hideButtons(1)}
+              />
+            ) : null}
 
-          {/* Button 2 */}
-          {this.state.button2Visible ? (
-            <DecisionButton
-              decisionText={this.state.button2Text}
-              onPress={() => this.hideButtons(2)}
-            />
-          ) : null}
+            {this.state.dist1Visible ? (
+              <Text style={styles.distText}>
+                {"Distance: " + this.state.decision1Distance + " steps"}
+              </Text>
+            ) : null}
+          </View>
 
-          {/* Button 3 */}
-          {this.state.button3Visible ? (
-            <DecisionButton
-              decisionText={this.state.button3Text}
-              onPress={() => this.hideButtons(3)}
-            />
-          ) : null}
+          <View>
+            {/* Button 2 */}
+            {this.state.button2Visible ? (
+              <DecisionButton
+                decisionText={this.state.button2Text}
+                onPress={() => this.hideButtons(2)}
+              />
+            ) : null}
+            {this.state.dist2Visible ? (
+              <Text style={styles.distText}>
+                {"Distance: " + this.state.decision2Distance + " steps"}
+              </Text>
+            ) : null}
+          </View>
 
-          {/* Button 4 */}
-          {this.state.button4Visible ? (
-            <DecisionButton
-              decisionText={this.state.button4Text}
-              onPress={() => this.hideButtons(4)}
-            />
-          ) : null}
+          <View>
+            {/* Button 3 */}
+            {this.state.button3Visible ? (
+              <DecisionButton
+                decisionText={this.state.button3Text}
+                onPress={() => this.hideButtons(3)}
+              />
+            ) : null}
+            {this.state.dist3Visible ? (
+              <Text style={styles.distText}>
+                {"Distance: " + this.state.decision3Distance + " steps"}
+              </Text>
+            ) : null}
+          </View>
+
+          <View>
+            {/* Button 4 */}
+            {this.state.button4Visible ? (
+              <DecisionButton
+                decisionText={this.state.button4Text}
+                onPress={() => this.hideButtons(4)}
+              />
+            ) : null}
+            {this.state.dist4Visible ? (
+              <Text style={styles.distText}>
+                {"Distance: " + this.state.decision4Distance + " steps"}
+              </Text>
+            ) : null}
+          </View>
         </View>
         <Button
           title="press me"
@@ -283,7 +344,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   button: {
     width: "80%",
@@ -291,19 +352,24 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+  },
+  distText: {
+    color: colors.white,
+    fontSize: 15,
+    alignSelf: "center",
   },
   story: {
     flex: 2,
     top: 80,
     left: 20,
     paddingRight: 25,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   text: {
     color: colors.white,
     fontSize: 20,
     lineHeight: 27,
-    flexWrap: "wrap"
-  }
+    flexWrap: "wrap",
+  },
 });
