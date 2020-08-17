@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, AsyncStorage } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  AsyncStorage,
+  TouchableOpacity
+} from "react-native";
 import { Pedometer } from "expo-sensors";
+import DecisionButton from "../components/DecisionButton";
 
 import colors from "../config/colors";
 
@@ -11,6 +18,7 @@ export default class stepBank extends React.Component {
     this.state = {
       steps: 0,
       continueButtonVisible: false,
+      progressBarVisible: true
     };
 
     this.initialSteps();
@@ -25,7 +33,7 @@ export default class stepBank extends React.Component {
   }
 
   _subscribe = () => {
-    this._subscription = Pedometer.watchStepCount((currSteps) => {
+    this._subscription = Pedometer.watchStepCount(currSteps => {
       this.setState({ steps: currSteps.steps });
       this.save(this.state.steps);
     });
@@ -38,7 +46,7 @@ export default class stepBank extends React.Component {
 
   initialSteps = async () => {
     try {
-      this.load().then((currSteps) => {
+      this.load().then(currSteps => {
         if (!isNaN(currSteps)) {
           this.setState({ steps: currSteps });
         } else {
@@ -50,7 +58,7 @@ export default class stepBank extends React.Component {
     }
   };
 
-  save = async (val) => {
+  save = async val => {
     try {
       await AsyncStorage.setItem("steps", val + "");
     } catch (err) {
@@ -67,40 +75,49 @@ export default class stepBank extends React.Component {
     }
   };
 
-  textStyle = function () {
+  textStyle = function() {
     const currsteps = this.state.steps;
     const scale = 350 / this.props.distance;
     const leftAdjust = -182;
 
-    if (leftAdjust + currsteps * scale == 350) {
+    if (leftAdjust + currsteps * scale >= 350 + leftAdjust) {
       this.setState({ continueButtonVisible: true });
+      this.setState({ progressBarVisible: false });
     }
 
     console.log(currsteps);
+    console.log(leftAdjust + currsteps * scale);
     return {
       color: colors.white,
       fontSize: 60,
       lineHeight: 27,
       left: leftAdjust + currsteps * scale,
       top: -8,
-      position: "absolute",
+      position: "absolute"
     };
   };
 
   render() {
-    Pedometer.watchStepCount((currSteps) => {
+    Pedometer.watchStepCount(currSteps => {
       this.save(currSteps.steps);
     });
     return (
       <View style={styles.barBox}>
         <View style={styles.bar}></View>
-        <Text style={this.textStyle()}>|</Text>
+
+        {this.state.progressBarVisible ? (
+          <Text style={this.textStyle()}>|</Text>
+        ) : null}
+        {!this.state.progressBarVisible ? (
+          <Text style={styles.progressEnd}>|</Text>
+        ) : null}
+
+        <Text style={styles.text}>{this.props.content}</Text>
 
         {this.state.continueButtonVisible ? (
-          <DecisionButton
-            decisionText="Continue"
-            //onPress={() => this.hideButtons(1)}
-          />
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.continueText}>Continue</Text>
+          </TouchableOpacity>
         ) : null}
       </View>
     );
@@ -114,9 +131,38 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     position: "absolute",
     justifyContent: "center",
+    alignSelf: "center"
+  },
+  button: {
+    width: "80%",
+    height: 45,
+    backgroundColor: colors.primary,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingRight: 40,
+    paddingLeft: 40,
+    marginTop: 150
+  },
+  continueText: {
+    color: colors.white,
+    fontSize: 20
+  },
+  text: {
+    color: colors.white,
+    fontSize: 20,
+    lineHeight: 27,
+    flexWrap: "wrap",
+    position: "absolute",
     alignSelf: "center",
+    paddingTop: 20
   },
-  barBox: {
-    backgroundColor: "white",
-  },
+  progressEnd: {
+    color: colors.white,
+    fontSize: 60,
+    lineHeight: 27,
+    left: -182 + 423,
+    top: -8,
+    position: "absolute"
+  }
 });
