@@ -9,7 +9,8 @@ export default class stepBank extends React.Component {
     super();
 
     this.state = {
-      steps: 0
+      steps: 0,
+      continueButtonVisible: false,
     };
 
     this.initialSteps();
@@ -24,7 +25,7 @@ export default class stepBank extends React.Component {
   }
 
   _subscribe = () => {
-    this._subscription = Pedometer.watchStepCount(currSteps => {
+    this._subscription = Pedometer.watchStepCount((currSteps) => {
       this.setState({ steps: currSteps.steps });
       this.save(this.state.steps);
     });
@@ -37,7 +38,7 @@ export default class stepBank extends React.Component {
 
   initialSteps = async () => {
     try {
-      this.load().then(currSteps => {
+      this.load().then((currSteps) => {
         if (!isNaN(currSteps)) {
           this.setState({ steps: currSteps });
         } else {
@@ -49,7 +50,7 @@ export default class stepBank extends React.Component {
     }
   };
 
-  save = async val => {
+  save = async (val) => {
     try {
       await AsyncStorage.setItem("steps", val + "");
     } catch (err) {
@@ -66,28 +67,41 @@ export default class stepBank extends React.Component {
     }
   };
 
-  textStyle = function() {
+  textStyle = function () {
     const currsteps = this.state.steps;
+    const scale = 350 / this.props.distance;
+    const leftAdjust = -182;
+
+    if (leftAdjust + currsteps * scale == 350) {
+      this.setState({ continueButtonVisible: true });
+    }
 
     console.log(currsteps);
     return {
       color: colors.white,
       fontSize: 60,
       lineHeight: 27,
-      left: -180,
+      left: leftAdjust + currsteps * scale,
       top: -8,
-      position: "absolute"
+      position: "absolute",
     };
   };
 
   render() {
-    Pedometer.watchStepCount(currSteps => {
+    Pedometer.watchStepCount((currSteps) => {
       this.save(currSteps.steps);
     });
     return (
       <View style={styles.barBox}>
         <View style={styles.bar}></View>
         <Text style={this.textStyle()}>|</Text>
+
+        {this.state.continueButtonVisible ? (
+          <DecisionButton
+            decisionText="Continue"
+            //onPress={() => this.hideButtons(1)}
+          />
+        ) : null}
       </View>
     );
   }
@@ -100,9 +114,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     position: "absolute",
     justifyContent: "center",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   barBox: {
-    backgroundColor: "white"
-  }
+    backgroundColor: "white",
+  },
 });
