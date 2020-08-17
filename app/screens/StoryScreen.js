@@ -33,9 +33,7 @@ function StoryScreen({ navigation }) {
     >
       {/* Sets status bar to white */}
       <StatusBar barStyle="light-content" />
-      <SafeAreaView style={styles.steps}>
-        <StepBank />
-      </SafeAreaView>
+
       {/* Text for the story */}
       <StoryView />
       <TouchableOpacity

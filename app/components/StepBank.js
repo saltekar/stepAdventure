@@ -38,7 +38,6 @@ export default class stepBank extends React.Component {
   initialSteps = async () => {
     try {
       this.load().then(currSteps => {
-        console.log(currSteps);
         if (!isNaN(currSteps)) {
           this.setState({ steps: currSteps });
         } else {
@@ -67,19 +66,43 @@ export default class stepBank extends React.Component {
     }
   };
 
+  textStyle = function() {
+    const currsteps = this.state.steps;
+
+    console.log(currsteps);
+    return {
+      color: colors.white,
+      fontSize: 60,
+      lineHeight: 27,
+      left: -180,
+      top: -8,
+      position: "absolute"
+    };
+  };
+
   render() {
+    Pedometer.watchStepCount(currSteps => {
+      this.save(currSteps.steps);
+    });
     return (
-      <Text style={styles.stepsText}>
-        {this.state.steps}
-        {console.log("display: " + this.state.steps)}
-      </Text>
+      <View style={styles.barBox}>
+        <View style={styles.bar}></View>
+        <Text style={this.textStyle()}>|</Text>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  stepsText: {
-    color: colors.white,
-    fontSize: 25
+  bar: {
+    width: 350,
+    height: 4,
+    backgroundColor: colors.white,
+    position: "absolute",
+    justifyContent: "center",
+    alignSelf: "center"
+  },
+  barBox: {
+    backgroundColor: "white"
   }
 });

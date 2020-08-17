@@ -38,12 +38,12 @@ function WelcomeScreen({ navigation }) {
       {/* Step Counter */}
       <View style={styles.stepCounter}>
         <View style={styles.circle}>
-          <StepBank />
+          <Text style={{ fontSize: 50, color: colors.white }}>0</Text>
           <Text style={{ fontSize: 30, color: colors.white }}>Steps</Text>
         </View>
       </View>
 
-      {/* lLay Button */}
+      {/* Play Button */}
       <View style={styles.buttons}>
         <TouchableOpacity
           activeOpacity={0.7}
