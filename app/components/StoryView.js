@@ -6,7 +6,7 @@ import Graph from "../storyMechanics/storyEngine";
 import BlinkCursor from "../components/BlinkCursor";
 import DecisionButton from "../components/DecisionButton";
 import colors from "../config/colors";
-import ProgressBar from "./StepBank";
+import ProgressBar from "./ProgressBar";
 
 export default class StoryView extends React.Component {
   constructor() {
