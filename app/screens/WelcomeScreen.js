@@ -8,11 +8,8 @@ import {
   TouchableOpacity,
   StatusBar
 } from "react-native";
-import { AsyncStorage } from "react-native";
 
-import { Pedometer } from "expo-sensors";
 import colors from "../config/colors";
-import StepBank from "../components/StepBank";
 
 function WelcomeScreen({ navigation }) {
   return (

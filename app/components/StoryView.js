@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Button } from "react-native";
 import { AsyncStorage } from "react-native";
 
@@ -53,7 +53,7 @@ export default class StoryView extends React.Component {
       barTextVisible: false,
       barText: "",
 
-      distanceChosen: 0,
+      distanceChosen: 0
     };
 
     this.initialVals();
@@ -72,7 +72,7 @@ export default class StoryView extends React.Component {
     try {
       // intialize line number on
 
-      this.getData("line").then((currLine) => {
+      this.getData("line").then(currLine => {
         if (!isNaN(currLine)) {
           global.line = currLine;
         } else {
@@ -80,7 +80,7 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("node").then((currNode) => {
+      this.getData("node").then(currNode => {
         if (currNode != undefined) {
           global.node = currNode;
         } else {
@@ -88,7 +88,7 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("screenText").then((currText) => {
+      this.getData("screenText").then(currText => {
         if (currText != null) {
           // Display text on screen
           global.text = currText;
@@ -117,7 +117,7 @@ export default class StoryView extends React.Component {
     }
   };
 
-  getData = async (val) => {
+  getData = async val => {
     try {
       if (val == "line") {
         const curLine = await AsyncStorage.getItem("line");
@@ -224,7 +224,7 @@ export default class StoryView extends React.Component {
   };
 
   // Hides buttons after decision made
-  hideButtons = (val) => {
+  hideButtons = val => {
     for (let i = 1; i < 5; i++) {
       this.setState({ ["button" + i + "Visible"]: false });
       this.setState({ ["dist" + i + "Visible"]: false });
@@ -238,7 +238,7 @@ export default class StoryView extends React.Component {
       this.setState({ barText: eval("this.state.button" + val + "Text") });
       this.setState({ barTextVisible: true });
       this.setState({
-        distanceChosen: eval("this.state.decision" + val + "Distance"),
+        distanceChosen: eval("this.state.decision" + val + "Distance")
       });
       return;
     }
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-evenly"
   },
   button: {
     width: "80%",
@@ -378,24 +378,24 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   distText: {
     color: colors.white,
     fontSize: 15,
-    alignSelf: "center",
+    alignSelf: "center"
   },
   story: {
     flex: 2,
     top: 80,
     left: 20,
     paddingRight: 25,
-    flexDirection: "column",
+    flexDirection: "column"
   },
   text: {
     color: colors.white,
     fontSize: 20,
     lineHeight: 27,
-    flexWrap: "wrap",
-  },
+    flexWrap: "wrap"
+  }
 });
