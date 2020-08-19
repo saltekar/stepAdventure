@@ -75,7 +75,35 @@ export default class stepBank extends React.Component {
     }
   };
 
+  getData = async (val) => {
+    try {
+      if (val == "pastCurrSteps") {
+        const pastCurrSteps = await AsyncStorage.getItem(val);
+        return parseInt(pastCurrSteps);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  setStorage = async (type, val) => {
+    try {
+      if (type == "pastCurrSteps") {
+        await AsyncStorage.setItem(type, val + "");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   textStyle = function () {
+    this.getData("pastCurrSteps").then((pastSteps) => {
+      if (!isNaN(pastSteps)) {
+        this.setState({ pastCurrSteps: pastSteps });
+      } else {
+        this.setStorage("pastCurrSteps", this.state.pastCurrSteps);
+      }
+    });
     const currSteps = this.state.steps - this.state.pastCurrSteps;
     const scale = 350 / this.props.distance;
 
@@ -87,6 +115,7 @@ export default class stepBank extends React.Component {
       this.setState({ progressBarVisible: false });
 
       this.setState({ pastCurrSteps: currSteps });
+      this.setStorage("pastCurrSteps", this.state.pastCurrSteps);
     }
 
     return {
