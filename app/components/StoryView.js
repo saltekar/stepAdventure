@@ -54,6 +54,7 @@ export default class StoryView extends React.Component {
       barText: "",
 
       distanceChosen: 0,
+      decisionChosen: -1,
     };
 
     this.initialVals();
@@ -240,6 +241,9 @@ export default class StoryView extends React.Component {
       this.setState({
         distanceChosen: eval("this.state.decision" + val + "Distance"),
       });
+      this.setState({
+        decisionChosen: val,
+      });
       return;
     }
     global.text = "";
@@ -264,7 +268,7 @@ export default class StoryView extends React.Component {
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
     // Set next node
-    global.node = global.node.nextNodes[val - 1];
+    global.node = global.node.nextNodes[this.state.decisionChosen - 1];
     this.setStorage("node", global.node);
 
     global.line = 0;
