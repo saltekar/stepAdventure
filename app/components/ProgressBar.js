@@ -57,14 +57,13 @@ export default class ProgressBar extends React.Component {
 
   initialSteps = async () => {
     try {
-      // this.load().then((currSteps) => {
-      //   if (!isNaN(currSteps)) {
-      //     this.setState({ steps: currSteps });
-      //   } else {
-      //     this.save(this.state.steps);
-      //   }
-      // });
-      this.setState({ steps: 0 });
+      this.load().then((currSteps) => {
+        if (!isNaN(currSteps)) {
+          this.setState({ steps: currSteps });
+        } else {
+          this.save(this.state.steps);
+        }
+      });
     } catch (err) {
       console.log(err);
     }
@@ -124,6 +123,8 @@ export default class ProgressBar extends React.Component {
       global.pastCurrSteps = currSteps;
       this.setStorage("pastCurrSteps", global.pastCurrSteps);
       console.log(global.pastCurrSteps + " <- past curr");
+
+      this.save(0);
     }
 
     return {
