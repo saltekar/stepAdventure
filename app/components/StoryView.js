@@ -54,7 +54,7 @@ export default class StoryView extends React.Component {
       barText: "",
 
       distanceChosen: 0,
-      decisionChosen: -1,
+      decisionChosen: -1
     };
 
     this.initialVals();
@@ -73,7 +73,7 @@ export default class StoryView extends React.Component {
     try {
       // intialize line number on
 
-      this.getData("line").then((currLine) => {
+      this.getData("line").then(currLine => {
         if (!isNaN(currLine)) {
           global.line = currLine;
         } else {
@@ -81,7 +81,7 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("node").then((currNode) => {
+      this.getData("node").then(currNode => {
         if (currNode != undefined) {
           global.node = currNode;
         } else {
@@ -89,25 +89,40 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("screenText").then((currText) => {
+      this.getData("screenText").then(currText => {
         if (currText != null) {
           // Display text on screen
           global.text = currText;
           this.setState({ textVisible: true });
 
           global.currentContent = global.node.content.split("\n");
+          this.setState({ blinkingCursor: false });
+          let decisions = global.node.decisions;
+          let distances = global.node.decisionDistances;
 
           // Display buttons
           if (
             global.node.type == "DECISION" &&
             global.line == global.currentContent.length
           ) {
-            this.setState({ blinkingCursor: false });
-            let decisions = global.node.decisions;
-            let distances = global.node.decisionDistances;
-
-            // Create 'decisions' number of buttons
-            this.buttonsCreate(decisions, distances);
+            this.getData("barVisible").then(visible => {
+              if (visible != null && visible == "true") {
+                this.getData("decisionChosen").then(chosen => {
+                  this.setState({ distanceChosen: distances[chosen - 1] });
+                  this.setState({
+                    ["button" + chosen + "Text"]: decisions[chosen - 1]
+                  });
+                  this.setState({
+                    ["decision" + chosen + "Distance"]: distances[chosen - 1]
+                  });
+                  this.hideButtons(chosen);
+                });
+              } else {
+                this.setStorage("barVisible", "false");
+                this.setStorage("decisionChosen", -1);
+                this.buttonsCreate(decisions, distances);
+              }
+            });
           }
         } else {
           this.setStorage("screenText", "");
@@ -118,17 +133,23 @@ export default class StoryView extends React.Component {
     }
   };
 
-  getData = async (val) => {
+  getData = async val => {
     try {
       if (val == "line") {
-        const curLine = await AsyncStorage.getItem("line");
+        const curLine = await AsyncStorage.getItem(val);
         return parseInt(curLine);
       } else if (val == "node") {
-        const curNodeName = await AsyncStorage.getItem("node");
+        const curNodeName = await AsyncStorage.getItem(val);
         return global.node.nodeMap[curNodeName];
       } else if (val == "screenText") {
-        const currText = await AsyncStorage.getItem("screenText");
+        const currText = await AsyncStorage.getItem(val);
         return currText;
+      } else if (val == "barVisible") {
+        const visible = await AsyncStorage.getItem(val);
+        return visible;
+      } else if (val == "decisionChosen") {
+        const chosen = await AsyncStorage.getItem(val);
+        return parseInt(chosen);
       }
     } catch (err) {
       console.log(err);
@@ -199,6 +220,10 @@ export default class StoryView extends React.Component {
         await AsyncStorage.setItem("node", val.name + "");
       } else if (type == "screenText") {
         await AsyncStorage.setItem("screenText", val);
+      } else if (type == "barVisible") {
+        await AsyncStorage.setItem("barVisible", val);
+      } else if (type == "decisionChosen") {
+        await AsyncStorage.setItem("decisionChosen", val + "");
       }
     } catch (err) {
       console.log(err);
@@ -218,6 +243,7 @@ export default class StoryView extends React.Component {
       this.setState({ ["button" + (i + 1) + "Text"]: dec[i] });
 
       if (dist != undefined && dist[i] != 0) {
+        console.log(dist[i]);
         this.setState({ ["decision" + (i + 1) + "Distance"]: dist[i] });
         this.setState({ ["dist" + (i + 1) + "Visible"]: true });
       }
@@ -225,13 +251,17 @@ export default class StoryView extends React.Component {
   };
 
   // Hides buttons after decision made
-  hideButtons = (val) => {
+  hideButtons = val => {
     for (let i = 1; i < 5; i++) {
       this.setState({ ["button" + i + "Visible"]: false });
       this.setState({ ["dist" + i + "Visible"]: false });
     }
+
     // check to display progress bar
-    if (eval("this.state.dist" + val + "Visible")) {
+    if (eval("this.state.decision" + val + "Distance") > 0) {
+      this.setStorage("barVisible", "true");
+      this.setStorage("decisionChosen", val);
+
       //display bar with circle on left
       this.setState({ blinkingCursor: false });
       this.setState({ barVisible: true });
@@ -239,10 +269,10 @@ export default class StoryView extends React.Component {
       this.setState({ barText: eval("this.state.button" + val + "Text") });
       this.setState({ barTextVisible: true });
       this.setState({
-        distanceChosen: eval("this.state.decision" + val + "Distance"),
+        distanceChosen: eval("this.state.decision" + val + "Distance")
       });
       this.setState({
-        decisionChosen: val,
+        decisionChosen: val
       });
       return;
     }
@@ -261,6 +291,14 @@ export default class StoryView extends React.Component {
 
   hideBar = () => {
     this.setState({ barVisible: false });
+    this.setStorage("barVisible", "false");
+
+    // set distances back to 0
+    for (let i = 1; i < 5; i++) {
+      this.setState({
+        ["decision" + this.state.decisionChosen + "Distance"]: 0
+      });
+    }
 
     global.text = "";
     this.setStorage("screenText", global.text);
@@ -375,7 +413,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-evenly"
   },
   button: {
     width: "80%",
@@ -383,24 +421,24 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   distText: {
     color: colors.white,
     fontSize: 15,
-    alignSelf: "center",
+    alignSelf: "center"
   },
   story: {
     flex: 2,
     top: 80,
     left: 20,
     paddingRight: 25,
-    flexDirection: "column",
+    flexDirection: "column"
   },
   text: {
     color: colors.white,
     fontSize: 20,
     lineHeight: 27,
-    flexWrap: "wrap",
-  },
+    flexWrap: "wrap"
+  }
 });
