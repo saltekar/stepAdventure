@@ -30,7 +30,7 @@
     "type": "DECISION",
     "content": "You walk on the bridge and it starts to shake.\nYou hear a growling sound form underneath... ",
     "decisions": [
-      ["Put your head down and run!", "s7", 0],
+      ["Put your head down and run!", "s7", 50],
       ["Look over the side and see whats underneath", "s8", 0],
       ["Curl up into the fetile position and pray to JC", "s9", 0]
     ]
