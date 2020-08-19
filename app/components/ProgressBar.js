@@ -4,7 +4,7 @@ import {
   View,
   Text,
   AsyncStorage,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 import { Pedometer } from "expo-sensors";
 
@@ -16,10 +16,11 @@ export default class stepBank extends React.Component {
 
     this.state = {
       steps: 0,
-      pastCurrSteps: 0,
       continueButtonVisible: false,
-      progressBarVisible: true,
+      progressBarVisible: true
     };
+
+    global.pastCurrSteps = 0;
 
     this.initialSteps();
   }
@@ -33,9 +34,18 @@ export default class stepBank extends React.Component {
   }
 
   _subscribe = () => {
-    this._subscription = Pedometer.watchStepCount((currSteps) => {
+    this._subscription = Pedometer.watchStepCount(currSteps => {
       this.setState({ steps: currSteps.steps });
       this.save(this.state.steps);
+    });
+
+    this.getData("pastCurrSteps").then(pastSteps => {
+      console.log(pastSteps);
+      if (!isNaN(pastSteps)) {
+        global.pastCurrSteps = pastSteps;
+      } else {
+        this.setStorage("pastCurrSteps", global.pastCurrSteps);
+      }
     });
   };
 
@@ -46,7 +56,7 @@ export default class stepBank extends React.Component {
 
   initialSteps = async () => {
     try {
-      this.load().then((currSteps) => {
+      this.load().then(currSteps => {
         if (!isNaN(currSteps)) {
           this.setState({ steps: currSteps });
         } else {
@@ -58,7 +68,7 @@ export default class stepBank extends React.Component {
     }
   };
 
-  save = async (val) => {
+  save = async val => {
     try {
       await AsyncStorage.setItem("steps", val + "");
     } catch (err) {
@@ -75,7 +85,7 @@ export default class stepBank extends React.Component {
     }
   };
 
-  getData = async (val) => {
+  getData = async val => {
     try {
       if (val == "pastCurrSteps") {
         const pastCurrSteps = await AsyncStorage.getItem(val);
@@ -96,15 +106,8 @@ export default class stepBank extends React.Component {
     }
   };
 
-  textStyle = function () {
-    this.getData("pastCurrSteps").then((pastSteps) => {
-      if (!isNaN(pastSteps)) {
-        this.setState({ pastCurrSteps: pastSteps });
-      } else {
-        this.setStorage("pastCurrSteps", this.state.pastCurrSteps);
-      }
-    });
-    const currSteps = this.state.steps - this.state.pastCurrSteps;
+  textStyle = function() {
+    const currSteps = this.state.steps - global.pastCurrSteps;
     const scale = 350 / this.props.distance;
 
     const leftAdjust = -182;
@@ -114,8 +117,9 @@ export default class stepBank extends React.Component {
       this.setState({ continueButtonVisible: true });
       this.setState({ progressBarVisible: false });
 
-      this.setState({ pastCurrSteps: currSteps });
-      this.setStorage("pastCurrSteps", this.state.pastCurrSteps);
+      global.pastCurrSteps = currSteps;
+      this.setStorage("pastCurrSteps", global.pastCurrSteps);
+      console.log(global.pastCurrSteps + " <- past curr");
     }
 
     return {
@@ -124,12 +128,12 @@ export default class stepBank extends React.Component {
       lineHeight: 27,
       left: leftAdjust + currSteps * scale,
       top: -8,
-      position: "absolute",
+      position: "absolute"
     };
   };
 
   render() {
-    Pedometer.watchStepCount((stepCount) => {
+    Pedometer.watchStepCount(stepCount => {
       this.save(stepCount.steps);
     });
     return (
@@ -166,7 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     position: "absolute",
     justifyContent: "center",
-    alignSelf: "center",
+    alignSelf: "center"
   },
   button: {
     width: "80%",
@@ -177,11 +181,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingRight: 40,
     paddingLeft: 40,
-    marginTop: 150,
+    marginTop: 150
   },
   continueText: {
     color: colors.white,
-    fontSize: 20,
+    fontSize: 20
   },
   text: {
     color: colors.white,
@@ -190,7 +194,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     position: "absolute",
     alignSelf: "center",
-    paddingTop: 20,
+    paddingTop: 20
   },
   progressEnd: {
     color: colors.white,
@@ -198,13 +202,13 @@ const styles = StyleSheet.create({
     lineHeight: 27,
     left: -182 + 423,
     top: -8,
-    position: "absolute",
+    position: "absolute"
   },
   endProgressBar: {
     color: colors.white,
     fontSize: 15,
     right: -186,
     top: -25,
-    position: "absolute",
-  },
+    position: "absolute"
+  }
 });
