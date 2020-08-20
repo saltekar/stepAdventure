@@ -6,6 +6,7 @@ class Node {
     this.nextNodes = [];
     this.name = name;
     this.type = type;
+    this.decisionDistances = [];
     this.decisions = [];
     this.nodeMap = global.nodeMap;
   }
@@ -13,6 +14,10 @@ class Node {
   addNode(node) {
     this.nextNodes.push(node);
     global.nodeMap[node.name] = node;
+  }
+
+  addDistance(d) {
+    this.decisionDistances.push(d);
   }
 
   addDecision(d) {

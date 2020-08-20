@@ -47,6 +47,7 @@ class Graph {
 
               // content at index 0 in decision arr
               currentNode.addDecision(currentDecisions[i][0]);
+              currentNode.addDistance(currentDecisions[i][2]);
               currentNode.addNode(nextNode);
 
               // Push this.data.nextName onto stack

@@ -2,28 +2,13 @@ import React, { useState } from "react";
 import {
   ImageBackground,
   StyleSheet,
-  View,
-  Image,
   Text,
-  Button,
-  TextInput,
   TouchableOpacity,
   StatusBar
 } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 
-import { Pedometer } from "expo-sensors";
-import { continueStory } from "../components/StoryView";
 import StoryView from "../components/StoryView";
 import colors from "../config/colors";
-import StepBank from "../components/StepBank";
-import {
-  TouchableWithoutFeedback,
-  TouchableHighlight,
-  TouchableNativeFeedback
-} from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 function StoryScreen({ navigation }) {
   return (
@@ -33,9 +18,7 @@ function StoryScreen({ navigation }) {
     >
       {/* Sets status bar to white */}
       <StatusBar barStyle="light-content" />
-      <SafeAreaView style={styles.steps}>
-        <StepBank />
-      </SafeAreaView>
+
       {/* Text for the story */}
       <StoryView />
       <TouchableOpacity
