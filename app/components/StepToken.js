@@ -4,7 +4,7 @@ import {
   View,
   Text,
   AsyncStorage,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 import { Pedometer } from "expo-sensors";
 
@@ -18,17 +18,26 @@ export default class StepToken extends React.Component {
       steps: 0,
       subtraction: 10,
       tokensCollected: 0,
+      pastTokens: 0
     };
 
     this.initialToken();
   }
   initialToken = async () => {
     try {
-      this.load().then((currSteps) => {
+      this.load().then(currSteps => {
         if (!isNaN(currSteps)) {
           this.setState({ steps: currSteps });
         } else {
           this.save(this.state.steps);
+        }
+      });
+
+      this.loadT().then(tokens => {
+        if (!isNaN(tokens)) {
+          this.setState({ pastTokens: tokens });
+        } else {
+          this.saveT(this.state.pastTokens);
         }
       });
     } catch (err) {
@@ -45,10 +54,10 @@ export default class StepToken extends React.Component {
   }
 
   _subscribe = () => {
-    this._subscription = Pedometer.watchStepCount((currSteps) => {
+    this._subscription = Pedometer.watchStepCount(currSteps => {
       this.setState({
         steps:
-          currSteps.steps - this.state.tokensCollected * this.state.subtraction,
+          currSteps.steps - this.state.tokensCollected * this.state.subtraction
       });
       this.save(this.state.steps);
       this.watchCount();
@@ -61,7 +70,7 @@ export default class StepToken extends React.Component {
     this._subscription = null;
   };
 
-  save = async (val) => {
+  save = async val => {
     try {
       await AsyncStorage.setItem("tokenSteps", val + "");
     } catch (err) {
@@ -78,14 +87,36 @@ export default class StepToken extends React.Component {
     }
   };
 
+  saveT = async val => {
+    try {
+      await AsyncStorage.setItem("tokens", val + "");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  loadT = async () => {
+    try {
+      const steps = await AsyncStorage.getItem("tokens");
+      return parseInt(steps);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   watchCount = () => {
     if (this.state.steps > this.state.subtraction) {
       this.setState({ tokensCollected: this.state.tokensCollected + 1 });
+      this.saveT(this.state.tokensCollected);
     }
   };
 
   render() {
-    return <Text style={styles.token}>{this.state.tokensCollected}</Text>;
+    return (
+      <Text style={styles.token}>
+        {this.state.tokensCollected + this.state.pastTokens}
+      </Text>
+    );
   }
 }
 
@@ -95,6 +126,6 @@ const styles = StyleSheet.create({
     top: 40,
     right: 10,
     fontSize: 20,
-    position: "absolute",
-  },
+    position: "absolute"
+  }
 });
