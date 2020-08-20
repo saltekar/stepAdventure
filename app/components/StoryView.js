@@ -55,6 +55,8 @@ export default class StoryView extends React.Component {
 
       distanceChosen: 0,
       decisionChosen: -1,
+
+      tokenCount: 0,
     };
 
     this.initialVals();
