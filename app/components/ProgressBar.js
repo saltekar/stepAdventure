@@ -21,8 +21,6 @@ export default class ProgressBar extends React.Component {
       progressBarVisible: true
     };
 
-    this._unsubscribe;
-    this._subscribe;
     this.initialSteps();
   }
 

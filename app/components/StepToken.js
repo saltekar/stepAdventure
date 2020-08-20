@@ -105,9 +105,9 @@ export default class StepToken extends React.Component {
   };
 
   watchCount = () => {
-    if (this.state.steps > this.state.subtraction) {
+    if (this.state.steps >= this.state.subtraction) {
       this.setState({ tokensCollected: this.state.tokensCollected + 1 });
-      this.saveT(this.state.tokensCollected);
+      this.saveT(this.state.tokensCollected + this.state.pastTokens);
     }
   };
 
