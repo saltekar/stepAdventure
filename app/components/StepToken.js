@@ -15,26 +15,9 @@ export default class StepToken extends React.Component {
     super();
 
     this.state = {
-      steps: 0,
-      subtraction: 50,
-      tokensCollected: 0,
+      pastStepCount: 0,
     };
-
-    this.initialToken();
   }
-  initialToken = async () => {
-    try {
-      this.load().then((currSteps) => {
-        if (!isNaN(currSteps)) {
-          this.setState({ steps: currSteps });
-        } else {
-          this.save(this.state.steps);
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   componentDidMount() {
     this._subscribe();
@@ -45,43 +28,24 @@ export default class StepToken extends React.Component {
   }
 
   _subscribe = () => {
-    this._subscription = Pedometer.watchStepCount((currSteps) => {
-      this.setState({
-        steps:
-          currSteps.steps - this.state.tokensCollected * this.state.subtraction,
-      });
-      this.save(this.state.steps);
-      this.watchCount();
-      console.log(this.state.steps);
-    });
+    const end = new Date();
+    const start = new Date();
+    Pedometer.getStepCountAsync(start, end).then(
+      (result) => {
+        this.setState({ pastStepCount: result.steps });
+      },
+      (error) => {
+        this.setState({
+          pastStepCount: "Could not get stepCount: " + error,
+        });
+      }
+    );
+    console.log(this.state.pastStepCount);
   };
 
   _unsubscribe = () => {
     this._subscription && this._subscription.remove();
     this._subscription = null;
-  };
-
-  save = async (val) => {
-    try {
-      await AsyncStorage.setItem("steps", val + "");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  load = async () => {
-    try {
-      const steps = await AsyncStorage.getItem("steps");
-      return parseInt(steps);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  watchCount = () => {
-    if (this.state.steps > 50) {
-      this.setState({ tokensCollected: this.state.tokensCollected + 1 });
-    }
   };
 
   render() {
