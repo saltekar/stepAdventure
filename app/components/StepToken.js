@@ -47,7 +47,8 @@ export default class StepToken extends React.Component {
   _subscribe = () => {
     this._subscription = Pedometer.watchStepCount((currSteps) => {
       this.setState({
-        steps: currSteps.steps - this.tokensCollected * this.subtraction,
+        steps:
+          currSteps.steps - this.state.tokensCollected * this.state.subtraction,
       });
       this.save(this.state.steps);
       this.watchCount();
