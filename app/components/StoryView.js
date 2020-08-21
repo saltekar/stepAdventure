@@ -57,7 +57,7 @@ export default class StoryView extends React.Component {
       distanceChosen: 0,
       decisionChosen: -1,
 
-      tokenCount: 0
+      tokenCount: 0,
     };
 
     this.initialVals();
@@ -76,7 +76,7 @@ export default class StoryView extends React.Component {
     try {
       // intialize line number on
 
-      this.getData("line").then(currLine => {
+      this.getData("line").then((currLine) => {
         if (!isNaN(currLine)) {
           global.line = currLine;
         } else {
@@ -84,7 +84,7 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("node").then(currNode => {
+      this.getData("node").then((currNode) => {
         if (currNode != undefined) {
           global.node = currNode;
         } else {
@@ -92,7 +92,7 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("screenText").then(currText => {
+      this.getData("screenText").then((currText) => {
         if (currText != null) {
           // Display text on screen
           global.text = currText;
@@ -108,15 +108,15 @@ export default class StoryView extends React.Component {
             global.node.type == "DECISION" &&
             global.line == global.currentContent.length
           ) {
-            this.getData("barVisible").then(visible => {
+            this.getData("barVisible").then((visible) => {
               if (visible != null && visible == "true") {
-                this.getData("decisionChosen").then(chosen => {
+                this.getData("decisionChosen").then((chosen) => {
                   this.setState({ distanceChosen: distances[chosen - 1] });
                   this.setState({
-                    ["button" + chosen + "Text"]: decisions[chosen - 1]
+                    ["button" + chosen + "Text"]: decisions[chosen - 1],
                   });
                   this.setState({
-                    ["decision" + chosen + "Distance"]: distances[chosen - 1]
+                    ["decision" + chosen + "Distance"]: distances[chosen - 1],
                   });
                   this.hideButtons(chosen);
                 });
@@ -136,7 +136,14 @@ export default class StoryView extends React.Component {
     }
   };
 
-  getData = async val => {
+  getTokens = () => {
+    this.getData("tokens").then((currTokens) => {
+      this.setState({ tokenCount: currTokens });
+    });
+    return this.state.tokenCount;
+  };
+
+  getData = async (val) => {
     try {
       if (val == "line") {
         const curLine = await AsyncStorage.getItem(val);
@@ -254,7 +261,7 @@ export default class StoryView extends React.Component {
   };
 
   // Hides buttons after decision made
-  hideButtons = val => {
+  hideButtons = (val) => {
     for (let i = 1; i < 5; i++) {
       this.setState({ ["button" + i + "Visible"]: false });
       this.setState({ ["dist" + i + "Visible"]: false });
@@ -272,10 +279,10 @@ export default class StoryView extends React.Component {
       this.setState({ barText: eval("this.state.button" + val + "Text") });
       this.setState({ barTextVisible: true });
       this.setState({
-        distanceChosen: eval("this.state.decision" + val + "Distance")
+        distanceChosen: eval("this.state.decision" + val + "Distance"),
       });
       this.setState({
-        decisionChosen: val
+        decisionChosen: val,
       });
       return;
     }
@@ -299,7 +306,7 @@ export default class StoryView extends React.Component {
     // set distances back to 0
     for (let i = 1; i < 5; i++) {
       this.setState({
-        ["decision" + this.state.decisionChosen + "Distance"]: 0
+        ["decision" + this.state.decisionChosen + "Distance"]: 0,
       });
     }
 
@@ -332,6 +339,9 @@ export default class StoryView extends React.Component {
         </View>
 
         {!this.state.barVisible ? <StepToken /> : null}
+        {this.state.barVisible ? (
+          <Text style={styles.token}>{this.getTokens()}</Text>
+        ) : null}
 
         <View style={styles.buttons}>
           {/* Progress Bar */}
@@ -419,7 +429,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   button: {
     width: "80%",
@@ -427,24 +437,31 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   distText: {
     color: colors.white,
     fontSize: 15,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   story: {
     flex: 2,
     top: 80,
     left: 20,
     paddingRight: 25,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   text: {
     color: colors.white,
     fontSize: 20,
     lineHeight: 27,
-    flexWrap: "wrap"
-  }
+    flexWrap: "wrap",
+  },
+  token: {
+    color: colors.white,
+    top: 40,
+    right: 10,
+    fontSize: 20,
+    position: "absolute",
+  },
 });

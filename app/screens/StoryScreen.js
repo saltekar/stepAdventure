@@ -4,10 +4,11 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
 } from "react-native";
 
 import StoryView from "../components/StoryView";
+
 import colors from "../config/colors";
 
 function StoryScreen({ navigation }) {
@@ -21,6 +22,7 @@ function StoryScreen({ navigation }) {
 
       {/* Text for the story */}
       <StoryView />
+
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.navigate("Home")}
@@ -41,17 +43,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     top: 40,
     left: 10,
-    position: "absolute"
+    position: "absolute",
   },
   background: {
-    flex: 1
+    flex: 1,
   },
   steps: {
     alignSelf: "flex-end",
     position: "absolute",
     top: -10,
-    right: 5
-  }
+    right: 5,
+  },
 });
 
 export default StoryScreen;
