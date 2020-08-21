@@ -66,8 +66,6 @@ export default class StepToken extends React.Component {
   };
 
   _unsubscribe = () => {
-    this.saveT(this.state.tokensCollected + this.state.pastTokens);
-
     this._subscription && this._subscription.remove();
     this._subscription = null;
   };
@@ -115,6 +113,8 @@ export default class StepToken extends React.Component {
   };
 
   render() {
+    this.saveT(this.state.tokensCollected + this.state.pastTokens);
+
     return (
       <Text style={styles.token}>
         {this.state.tokensCollected + this.state.pastTokens}
