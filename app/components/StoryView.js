@@ -341,11 +341,11 @@ export default class StoryView extends React.Component {
 
           {this.state.blinkingCursor ? <BlinkCursor content="|" /> : null}
         </View>
-        {!this.state.barVisible ? <StepToken /> : null}
-
-        {this.state.barVisible ? (
-          <Text style={styles.token}>{this.state.tokens}</Text>
-        ) : null}
+        {!this.state.barVisible ? (
+          <StepToken />
+        ) : (
+          <StepText steps={this.state.tokenCnt} />
+        )}
 
         <View style={styles.buttons}>
           {/* Progress Bar */}
