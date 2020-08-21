@@ -24,6 +24,7 @@ export default class StoryView extends React.Component {
     global.currentContent = [];
     global.node = root;
     global.text = "";
+    global.tokenCnt = 0;
 
     this.state = {
       textVisible: false,
@@ -139,8 +140,8 @@ export default class StoryView extends React.Component {
   getTokens = () => {
     this.getData("tokens").then((currTokens) => {
       this.setState({ tokenCount: currTokens });
+      global.tokenCnt = currTokens;
     });
-    return this.state.tokenCount;
   };
 
   getData = async (val) => {
@@ -273,6 +274,7 @@ export default class StoryView extends React.Component {
       this.setStorage("decisionChosen", val);
 
       //display bar with circle on left
+      this.getTokens();
       this.setState({ blinkingCursor: false });
       this.setState({ barVisible: true });
 
@@ -340,7 +342,7 @@ export default class StoryView extends React.Component {
 
         {!this.state.barVisible ? <StepToken /> : null}
         {this.state.barVisible ? (
-          <Text style={styles.token}>{this.getTokens()}</Text>
+          <Text style={styles.token}>{global.tokenCnt}</Text>
         ) : null}
 
         <View style={styles.buttons}>
