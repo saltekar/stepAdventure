@@ -66,6 +66,8 @@ export default class StepToken extends React.Component {
   };
 
   _unsubscribe = () => {
+    this.saveT(this.state.tokensCollected + this.state.pastTokens);
+
     this._subscription && this._subscription.remove();
     this._subscription = null;
   };
@@ -89,6 +91,8 @@ export default class StepToken extends React.Component {
 
   saveT = async val => {
     try {
+      console.log(val + "  save tokens");
+
       await AsyncStorage.setItem("tokens", val + "");
     } catch (err) {
       console.log(err);
@@ -106,7 +110,6 @@ export default class StepToken extends React.Component {
 
   watchCount = () => {
     if (this.state.steps >= this.state.subtraction) {
-      this.saveT(this.state.tokensCollected + this.state.pastTokens + 1);
       this.setState({ tokensCollected: this.state.tokensCollected + 1 });
     }
   };
