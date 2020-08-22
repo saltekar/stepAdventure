@@ -16,9 +16,10 @@ export default class StepToken extends React.Component {
 
     this.state = {
       steps: 0,
-      subtraction: 10,
+      subtraction: 25,
       tokensCollected: 0,
-      pastTokens: 0
+      pastTokens: 0,
+      pastSteps: 0
     };
 
     this.initialToken();
@@ -27,7 +28,7 @@ export default class StepToken extends React.Component {
     try {
       this.load().then(currSteps => {
         if (!isNaN(currSteps)) {
-          this.setState({ steps: currSteps });
+          this.setState({ pastSteps: currSteps });
         } else {
           this.save(this.state.steps);
         }
@@ -57,7 +58,9 @@ export default class StepToken extends React.Component {
     this._subscription = Pedometer.watchStepCount(currSteps => {
       this.setState({
         steps:
-          currSteps.steps - this.state.tokensCollected * this.state.subtraction
+          currSteps.steps +
+          this.state.pastSteps -
+          this.state.tokensCollected * this.state.subtraction
       });
       this.save(this.state.steps);
       this.watchCount();
@@ -114,7 +117,9 @@ export default class StepToken extends React.Component {
 
   render() {
     this.saveT(this.state.tokensCollected + this.state.pastTokens);
-
+    this.save(
+      this.state.steps - this.state.tokensCollected * this.state.subtraction
+    );
     return (
       <Text style={styles.token}>
         {this.state.tokensCollected + this.state.pastTokens}
