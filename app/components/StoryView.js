@@ -9,6 +9,8 @@ import colors from "../config/colors";
 import ProgressBar from "./ProgressBar";
 import StepToken from "./StepToken";
 import StepText from "./StepText";
+import TokenButton from "./TokenButton";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 export default class StoryView extends React.Component {
   constructor() {
@@ -52,6 +54,11 @@ export default class StoryView extends React.Component {
       decision3Distance: 0,
       decision4Distance: 0,
 
+      tokenButton1Visible: false,
+      tokenButton2Visible: false,
+      tokenButton3Visible: false,
+      tokenButton4Visible: false,
+
       barVisible: false,
       barTextVisible: false,
       barText: "",
@@ -59,7 +66,10 @@ export default class StoryView extends React.Component {
       distanceChosen: 0,
       decisionChosen: -1,
 
-      tokens: 0
+      showAlert: false,
+      showErrorAlert: false,
+
+      tokens: 0,
     };
 
     this.initialVals();
@@ -78,7 +88,7 @@ export default class StoryView extends React.Component {
     try {
       // intialize line number on
 
-      this.getData("line").then(currLine => {
+      this.getData("line").then((currLine) => {
         if (!isNaN(currLine)) {
           global.line = currLine;
         } else {
@@ -86,7 +96,7 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("node").then(currNode => {
+      this.getData("node").then((currNode) => {
         if (currNode != undefined) {
           global.node = currNode;
         } else {
@@ -94,7 +104,7 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("screenText").then(currText => {
+      this.getData("screenText").then((currText) => {
         if (currText != null) {
           // Display text on screen
           global.text = currText;
@@ -110,15 +120,15 @@ export default class StoryView extends React.Component {
             global.node.type == "DECISION" &&
             global.line == global.currentContent.length
           ) {
-            this.getData("barVisible").then(visible => {
+            this.getData("barVisible").then((visible) => {
               if (visible != null && visible == "true") {
-                this.getData("decisionChosen").then(chosen => {
+                this.getData("decisionChosen").then((chosen) => {
                   this.setState({ distanceChosen: distances[chosen - 1] });
                   this.setState({
-                    ["button" + chosen + "Text"]: decisions[chosen - 1]
+                    ["button" + chosen + "Text"]: decisions[chosen - 1],
                   });
                   this.setState({
-                    ["decision" + chosen + "Distance"]: distances[chosen - 1]
+                    ["decision" + chosen + "Distance"]: distances[chosen - 1],
                   });
                   this.hideButtons(chosen);
                 });
@@ -138,7 +148,7 @@ export default class StoryView extends React.Component {
     }
   };
 
-  getData = async val => {
+  getData = async (val) => {
     try {
       if (val == "line") {
         const curLine = await AsyncStorage.getItem(val);
@@ -254,15 +264,17 @@ export default class StoryView extends React.Component {
         console.log(dist[i]);
         this.setState({ ["decision" + (i + 1) + "Distance"]: dist[i] });
         this.setState({ ["dist" + (i + 1) + "Visible"]: true });
+        this.setState({ ["tokenButton" + (i + 1) + "Visible"]: true });
       }
     }
   };
 
   // Hides buttons after decision made
-  hideButtons = val => {
+  hideButtons = (val) => {
     for (let i = 1; i < 5; i++) {
       this.setState({ ["button" + i + "Visible"]: false });
       this.setState({ ["dist" + i + "Visible"]: false });
+      this.setState({ ["tokenButton" + (i + 1) + "Visible"]: false });
     }
 
     // check to display progress bar
@@ -277,10 +289,10 @@ export default class StoryView extends React.Component {
       this.setState({ barText: eval("this.state.button" + val + "Text") });
       this.setState({ barTextVisible: true });
       this.setState({
-        distanceChosen: eval("this.state.decision" + val + "Distance")
+        distanceChosen: eval("this.state.decision" + val + "Distance"),
       });
       this.setState({
-        decisionChosen: val
+        decisionChosen: val,
       });
       return;
     }
@@ -304,7 +316,7 @@ export default class StoryView extends React.Component {
     // set distances back to 0
     for (let i = 1; i < 5; i++) {
       this.setState({
-        ["decision" + this.state.decisionChosen + "Distance"]: 0
+        ["decision" + this.state.decisionChosen + "Distance"]: 0,
       });
     }
 
@@ -321,7 +333,35 @@ export default class StoryView extends React.Component {
     this.setStorage("line", global.line);
   };
 
+  tokenChosen = (decisionDistance) => {
+    try {
+      this.getData("tokens").then((tokenCnt) => {
+        if (tokenCnt < Math.floor(decisionDistance / 25)) {
+          this.setState({ showErrorAlert: true });
+          console.log("error alert: " + this.state.showErrorAlert);
+        } else {
+          this.setState({ showAlert: true });
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  showAlert = () => {
+    this.setState({
+      showAlert: true,
+    });
+  };
+
+  hideAlert = () => {
+    this.setState({
+      showAlert: false,
+    });
+  };
+
   render() {
+    const { showAlert } = this.state;
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -352,14 +392,70 @@ export default class StoryView extends React.Component {
           ) : null}
 
           <View>
-            {/* Button 1 */}
-            {this.state.button1Visible ? (
-              <DecisionButton
-                decisionText={this.state.button1Text}
-                onPress={() => this.hideButtons(1)}
-              />
-            ) : null}
+            <View style={styles.decisionButtonsContainer}>
+              {/* Button 1 */}
+              {this.state.button1Visible ? (
+                <DecisionButton
+                  decisionText={this.state.button1Text}
+                  onPress={() => this.hideButtons(1)}
+                />
+              ) : null}
 
+              {this.state.tokenButton1Visible ? (
+                <TokenButton
+                  decisionCost={this.state.decision1Distance}
+                  onPress={() => this.tokenChosen(this.state.decision1Distance)}
+                />
+              ) : null}
+
+              <AwesomeAlert
+                contentContainerStyle={{ backgroundColor: colors.primary }}
+                show={showAlert}
+                showProgress={false}
+                // title=""
+                message={
+                  "Are you sure you want to spend " +
+                  this.state.decision1Distance / 25 +
+                  " step tokens?"
+                }
+                messageStyle={{ color: colors.white }}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showCancelButton={true}
+                showConfirmButton={true}
+                cancelText="No"
+                confirmText="Yes"
+                confirmButtonColor="#9DB4C0"
+                cancelButtonColor="#9DB4C0"
+                // onCancelPressed={() => {
+                //   this.hideAlert();
+                // }}
+                onConfirmPressed={() => {
+                  this.hideAlert();
+                }}
+              />
+
+              {/* Error Alert for lack of tokens */}
+
+              <AwesomeAlert
+                contentContainerStyle={{ backgroundColor: colors.primary }}
+                show={this.state.showErrorAlert}
+                showProgress={false}
+                message={"You do not have enough tokens!"}
+                messageStyle={{ color: colors.white }}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showCancelButton={false}
+                showConfirmButton={true}
+                confirmText="Ok"
+                confirmButtonColor="#9DB4C0"
+                onConfirmPressed={() => {
+                  this.setState({
+                    showErrorAlert: false,
+                  });
+                }}
+              />
+            </View>
             {this.state.dist1Visible ? (
               <Text style={styles.distText}>
                 {"Distance: " + this.state.decision1Distance + " steps"}
@@ -426,7 +522,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   button: {
     width: "80%",
@@ -434,31 +530,36 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+  },
+  decisionButtonsContainer: {
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
   },
   distText: {
     color: colors.white,
     fontSize: 15,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   story: {
     flex: 2,
     top: 80,
     left: 20,
     paddingRight: 25,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   text: {
     color: colors.white,
     fontSize: 20,
     lineHeight: 27,
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
   token: {
     color: colors.white,
     top: 40,
     right: 10,
     fontSize: 20,
-    position: "absolute"
-  }
+    position: "absolute",
+  },
 });
