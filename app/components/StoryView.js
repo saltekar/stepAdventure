@@ -363,7 +363,9 @@ export default class StoryView extends React.Component {
     try {
       this.getData("tokens").then(tokenCnt => {
         this.setStorage("tokens", tokenCnt - Math.floor(decisionDist / 25));
-        console.log(tokenCnt - Math.floor(decisionDist / 25));
+        console.log(
+          tokenCnt - Math.floor(decisionDist / 25) + "   - async save"
+        );
       });
 
       this.getData("tokens").then(tokenCont => {

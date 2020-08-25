@@ -36,7 +36,7 @@ export default class StepToken extends React.Component {
 
       this.loadT().then(tokens => {
         if (!isNaN(tokens)) {
-          console.log(tokens);
+          console.log(tokens + " --loaded ");
           this.setState({ pastTokens: tokens });
         } else {
           this.saveT(this.state.pastTokens);
@@ -93,7 +93,7 @@ export default class StepToken extends React.Component {
 
   saveT = async val => {
     try {
-      console.log(val + "  save tokens");
+      console.log(val + "  save tokens in stepToken");
 
       await AsyncStorage.setItem("tokens", val + "");
     } catch (err) {
@@ -111,13 +111,22 @@ export default class StepToken extends React.Component {
   };
 
   watchCount = () => {
+    this.loadT().then(tokens => {
+      if (!isNaN(tokens)) {
+        console.log(tokens + " --loaded3 ");
+        this.setState({ pastTokens: tokens });
+      } else {
+        this.saveT(this.state.pastTokens);
+      }
+    });
+
     if (this.state.steps >= this.state.subtraction) {
       this.setState({ tokensCollected: this.state.tokensCollected + 1 });
+      this.saveT(this.state.tokensCollected + this.state.pastTokens);
     }
   };
 
   render() {
-    this.saveT(this.state.tokensCollected + this.state.pastTokens);
     this.save(
       this.state.steps - this.state.tokensCollected * this.state.subtraction
     );
