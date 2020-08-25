@@ -36,6 +36,7 @@ export default class StepToken extends React.Component {
 
       this.loadT().then(tokens => {
         if (!isNaN(tokens)) {
+          console.log(tokens);
           this.setState({ pastTokens: tokens });
         } else {
           this.saveT(this.state.pastTokens);
@@ -120,6 +121,7 @@ export default class StepToken extends React.Component {
     this.save(
       this.state.steps - this.state.tokensCollected * this.state.subtraction
     );
+
     return (
       <Text style={styles.token}>
         {this.state.tokensCollected + this.state.pastTokens}
