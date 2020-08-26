@@ -69,7 +69,8 @@ export default class StoryView extends React.Component {
       showAlert: false,
       showErrorAlert: false,
 
-      tokens: 0
+      tokens: 0,
+      token: false
     };
 
     this.initialVals();
@@ -363,6 +364,8 @@ export default class StoryView extends React.Component {
     try {
       this.getData("tokens").then(tokenCnt => {
         this.setStorage("tokens", tokenCnt - Math.floor(decisionDist / 25));
+        this.setState({ token: true });
+        this.setState({ token: false });
         console.log(
           tokenCnt - Math.floor(decisionDist / 25) + "   - async save"
         );
@@ -406,7 +409,13 @@ export default class StoryView extends React.Component {
           {this.state.blinkingCursor ? <BlinkCursor content="|" /> : null}
         </View>
 
-        {!this.state.barVisible ? <StepToken /> : <StepText />}
+        {!this.state.token ? (
+          !this.state.barVisible ? (
+            <StepToken />
+          ) : (
+            <StepText />
+          )
+        ) : null}
 
         {/* {this.state.barVisible ?  : null} */}
 

@@ -11,8 +11,8 @@ import { Pedometer } from "expo-sensors";
 import colors from "../config/colors";
 
 export default class StepToken extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       steps: 0,
@@ -46,6 +46,8 @@ export default class StepToken extends React.Component {
     } catch (err) {
       console.log(err);
     }
+
+    this.saveP(-1);
   };
 
   tokenLoad = async () => {
@@ -119,6 +121,23 @@ export default class StepToken extends React.Component {
   loadT = async () => {
     try {
       const steps = await AsyncStorage.getItem("tokens");
+      return parseInt(steps);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  saveP = async val => {
+    try {
+      await AsyncStorage.setItem("propToken", val + "");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  loadP = async () => {
+    try {
+      const steps = await AsyncStorage.getItem("propToken");
       return parseInt(steps);
     } catch (err) {
       console.log(err);
