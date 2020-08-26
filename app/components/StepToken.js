@@ -152,14 +152,6 @@ export default class StepToken extends React.Component {
     }
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    this.loadT().then((tokens) => {
-      if (tokens != this.state.pastTokens) {
-        this.tokenLoad();
-      }
-    });
-  }
-
   render() {
     this.save(
       this.state.steps - this.state.tokensCollected * this.state.subtraction
