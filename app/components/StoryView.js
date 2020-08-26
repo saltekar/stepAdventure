@@ -9,6 +9,8 @@ import colors from "../config/colors";
 import ProgressBar from "./ProgressBar";
 import StepToken from "./StepToken";
 import StepText from "./StepText";
+import TokenButton from "./TokenButton";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 export default class StoryView extends React.Component {
   constructor() {
@@ -26,6 +28,7 @@ export default class StoryView extends React.Component {
     global.node = root;
     global.text = "";
     global.tokenCnt = 0;
+    global.decisionChosen = -1;
 
     this.state = {
       textVisible: false,
@@ -52,14 +55,22 @@ export default class StoryView extends React.Component {
       decision3Distance: 0,
       decision4Distance: 0,
 
+      tokenButton1Visible: false,
+      tokenButton2Visible: false,
+      tokenButton3Visible: false,
+      tokenButton4Visible: false,
+
       barVisible: false,
       barTextVisible: false,
       barText: "",
 
       distanceChosen: 0,
-      decisionChosen: -1,
 
-      tokens: 0
+      showAlert: false,
+      showErrorAlert: false,
+
+      tokens: 0,
+      token: false
     };
 
     this.initialVals();
@@ -232,6 +243,8 @@ export default class StoryView extends React.Component {
         await AsyncStorage.setItem("barVisible", val);
       } else if (type == "decisionChosen") {
         await AsyncStorage.setItem("decisionChosen", val + "");
+      } else if (type == "tokens") {
+        await AsyncStorage.setItem("tokens", val + "");
       }
     } catch (err) {
       console.log(err);
@@ -254,6 +267,7 @@ export default class StoryView extends React.Component {
         console.log(dist[i]);
         this.setState({ ["decision" + (i + 1) + "Distance"]: dist[i] });
         this.setState({ ["dist" + (i + 1) + "Visible"]: true });
+        this.setState({ ["tokenButton" + (i + 1) + "Visible"]: true });
       }
     }
   };
@@ -263,6 +277,7 @@ export default class StoryView extends React.Component {
     for (let i = 1; i < 5; i++) {
       this.setState({ ["button" + i + "Visible"]: false });
       this.setState({ ["dist" + i + "Visible"]: false });
+      this.setState({ ["tokenButton" + i + "Visible"]: false });
     }
 
     // check to display progress bar
@@ -279,9 +294,10 @@ export default class StoryView extends React.Component {
       this.setState({
         distanceChosen: eval("this.state.decision" + val + "Distance")
       });
-      this.setState({
-        decisionChosen: val
-      });
+      // this.setState({
+      //   decisionChosen: val
+      // });
+      global.decisionChosen = val;
       return;
     }
     global.text = "";
@@ -314,14 +330,71 @@ export default class StoryView extends React.Component {
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
     // Set next node
-    global.node = global.node.nextNodes[this.state.decisionChosen - 1];
+    global.node = global.node.nextNodes[global.decisionChosen - 1];
     this.setStorage("node", global.node);
 
     global.line = 0;
     this.setStorage("line", global.line);
   };
 
+  tokenChosen = decisionDistance => {
+    try {
+      this.getData("tokens").then(tokenCnt => {
+        if (tokenCnt < Math.floor(decisionDistance / 25)) {
+          this.setState({ showErrorAlert: true });
+        } else {
+          this.setState({ showAlert: true });
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  skipProgressBar = (decisionDist, decisionChos) => {
+    this.hideAlert();
+    this.setStorage("decisionChosen", decisionChos);
+    global.decisionChosen = decisionChos;
+
+    for (let i = 1; i < 5; i++) {
+      this.setState({ ["button" + i + "Visible"]: false });
+      this.setState({ ["dist" + i + "Visible"]: false });
+      this.setState({ ["tokenButton" + i + "Visible"]: false });
+    }
+    try {
+      this.getData("tokens").then(tokenCnt => {
+        this.setStorage("tokens", tokenCnt - Math.floor(decisionDist / 25));
+        this.setState({ token: true });
+        this.setState({ token: false });
+        console.log(
+          tokenCnt - Math.floor(decisionDist / 25) + "   - async save"
+        );
+      });
+
+      this.getData("tokens").then(tokenCont => {
+        console.log(tokenCont + "  - count");
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+    this.hideBar();
+  };
+
+  showAlert = () => {
+    this.setState({
+      showAlert: true
+    });
+  };
+
+  hideAlert = () => {
+    this.setState({
+      showAlert: false
+    });
+  };
+
   render() {
+    const { showAlert } = this.state;
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -336,7 +409,13 @@ export default class StoryView extends React.Component {
           {this.state.blinkingCursor ? <BlinkCursor content="|" /> : null}
         </View>
 
-        {!this.state.barVisible ? <StepToken /> : <StepText />}
+        {!this.state.token ? (
+          !this.state.barVisible ? (
+            <StepToken />
+          ) : (
+            <StepText />
+          )
+        ) : null}
 
         {/* {this.state.barVisible ?  : null} */}
 
@@ -352,14 +431,70 @@ export default class StoryView extends React.Component {
           ) : null}
 
           <View>
-            {/* Button 1 */}
-            {this.state.button1Visible ? (
-              <DecisionButton
-                decisionText={this.state.button1Text}
-                onPress={() => this.hideButtons(1)}
-              />
-            ) : null}
+            <View style={styles.decisionButtonsContainer}>
+              {/* Button 1 */}
+              {this.state.button1Visible ? (
+                <DecisionButton
+                  decisionText={this.state.button1Text}
+                  onPress={() => this.hideButtons(1)}
+                />
+              ) : null}
 
+              {this.state.tokenButton1Visible ? (
+                <TokenButton
+                  decisionCost={this.state.decision1Distance}
+                  onPress={() => this.tokenChosen(this.state.decision1Distance)}
+                />
+              ) : null}
+
+              <AwesomeAlert
+                contentContainerStyle={{ backgroundColor: colors.primary }}
+                show={showAlert}
+                showProgress={false}
+                // title=""
+                message={
+                  "Are you sure you want to spend " +
+                  this.state.decision1Distance / 25 +
+                  " step tokens?"
+                }
+                messageStyle={{ color: colors.white }}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showCancelButton={true}
+                showConfirmButton={true}
+                cancelText="No"
+                confirmText="Yes"
+                confirmButtonColor="#9DB4C0"
+                cancelButtonColor="#9DB4C0"
+                onCancelPressed={() => {
+                  this.hideAlert();
+                }}
+                onConfirmPressed={() => {
+                  this.skipProgressBar(this.state.decision1Distance, 1);
+                }}
+              />
+
+              {/* Error Alert for lack of tokens */}
+
+              <AwesomeAlert
+                contentContainerStyle={{ backgroundColor: colors.primary }}
+                show={this.state.showErrorAlert}
+                showProgress={false}
+                message={"You do not have enough tokens!"}
+                messageStyle={{ color: colors.white }}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showCancelButton={false}
+                showConfirmButton={true}
+                confirmText="Ok"
+                confirmButtonColor="#9DB4C0"
+                onConfirmPressed={() => {
+                  this.setState({
+                    showErrorAlert: false
+                  });
+                }}
+              />
+            </View>
             {this.state.dist1Visible ? (
               <Text style={styles.distText}>
                 {"Distance: " + this.state.decision1Distance + " steps"}
@@ -435,6 +570,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center"
+  },
+  decisionButtonsContainer: {
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    flexDirection: "row"
   },
   distText: {
     color: colors.white,
