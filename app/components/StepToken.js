@@ -4,7 +4,8 @@ import {
   View,
   Text,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import { Pedometer } from "expo-sensors";
 
@@ -19,7 +20,7 @@ export default class StepToken extends React.Component {
       subtraction: 25,
       tokensCollected: 0,
       pastTokens: 0,
-      pastSteps: 0
+      pastSteps: 0,
     };
 
     this.initialToken();
@@ -27,7 +28,7 @@ export default class StepToken extends React.Component {
 
   initialToken = async () => {
     try {
-      this.load().then(currSteps => {
+      this.load().then((currSteps) => {
         if (!isNaN(currSteps)) {
           this.setState({ pastSteps: currSteps });
         } else {
@@ -35,7 +36,7 @@ export default class StepToken extends React.Component {
         }
       });
 
-      this.loadT().then(tokens => {
+      this.loadT().then((tokens) => {
         if (!isNaN(tokens)) {
           console.log(tokens + " --loaded ");
           this.setState({ pastTokens: tokens });
@@ -52,7 +53,7 @@ export default class StepToken extends React.Component {
 
   tokenLoad = async () => {
     try {
-      this.loadT().then(tokens => {
+      this.loadT().then((tokens) => {
         if (!isNaN(tokens)) {
           this.setState({ pastTokens: tokens });
         } else {
@@ -73,12 +74,12 @@ export default class StepToken extends React.Component {
   }
 
   _subscribe = () => {
-    this._subscription = Pedometer.watchStepCount(currSteps => {
+    this._subscription = Pedometer.watchStepCount((currSteps) => {
       this.setState({
         steps:
           currSteps.steps +
           this.state.pastSteps -
-          this.state.tokensCollected * this.state.subtraction
+          this.state.tokensCollected * this.state.subtraction,
       });
       this.save(this.state.steps);
       this.watchCount();
@@ -91,7 +92,7 @@ export default class StepToken extends React.Component {
     this._subscription = null;
   };
 
-  save = async val => {
+  save = async (val) => {
     try {
       await AsyncStorage.setItem("tokenSteps", val + "");
     } catch (err) {
@@ -108,7 +109,7 @@ export default class StepToken extends React.Component {
     }
   };
 
-  saveT = async val => {
+  saveT = async (val) => {
     try {
       console.log(val + "  save tokens in stepToken");
 
@@ -127,7 +128,7 @@ export default class StepToken extends React.Component {
     }
   };
 
-  saveP = async val => {
+  saveP = async (val) => {
     try {
       await AsyncStorage.setItem("propToken", val + "");
     } catch (err) {
@@ -157,19 +158,36 @@ export default class StepToken extends React.Component {
     );
 
     return (
-      <Text style={styles.token}>
-        {this.state.tokensCollected + this.state.pastTokens}
-      </Text>
+      <View style={styles.tokenContainer}>
+        <Text style={styles.token}>
+          {this.state.tokensCollected + this.state.pastTokens}
+        </Text>
+        <Image
+          style={styles.tokenImage}
+          source={require("../assets/coin.png")}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  tokenContainer: {
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  },
   token: {
     color: colors.white,
     top: 40,
-    right: 10,
+    right: 30,
     fontSize: 20,
-    position: "absolute"
-  }
+    alignSelf: "flex-end",
+  },
+  tokenImage: {
+    width: 20,
+    height: 21,
+    alignSelf: "flex-end",
+    top: 18,
+    right: 10,
+  },
 });

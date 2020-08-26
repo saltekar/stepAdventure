@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { AsyncStorage } from "react-native";
 
 import colors from "../config/colors";
@@ -9,7 +9,7 @@ class StepText extends React.Component {
     super(props);
 
     this.state = {
-      tokens: 0
+      tokens: 0,
     };
 
     console.log("run");
@@ -17,13 +17,13 @@ class StepText extends React.Component {
   }
 
   getTokens = () => {
-    this.getData("tokens").then(currTokens => {
+    this.getData("tokens").then((currTokens) => {
       this.setState({ tokens: currTokens });
       console.log(currTokens + " TOKENS");
     });
   };
 
-  getData = async val => {
+  getData = async (val) => {
     try {
       if (val == "tokens") {
         const tokens = await AsyncStorage.getItem(val);
@@ -36,18 +36,37 @@ class StepText extends React.Component {
 
   render() {
     console.log(this.state.tokens);
-    return <Text style={styles.token}>{this.state.tokens}</Text>;
+    return (
+      <View style={styles.tokenContainer}>
+        <Text style={styles.token}>{this.state.tokens}</Text>
+        <Image
+          style={styles.tokenImage}
+          source={require("../assets/coin.png")}
+        />
+      </View>
+    );
   }
 }
 
 export default StepText;
 
 const styles = StyleSheet.create({
+  tokenContainer: {
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  },
   token: {
     color: colors.white,
     top: 40,
-    right: 10,
+    right: 30,
     fontSize: 20,
-    position: "absolute"
-  }
+    alignSelf: "flex-end",
+  },
+  tokenImage: {
+    width: 20,
+    height: 21,
+    alignSelf: "flex-end",
+    top: 18,
+    right: 10,
+  },
 });
