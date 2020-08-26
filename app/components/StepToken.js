@@ -5,10 +5,7 @@ import {
   Text,
   AsyncStorage,
   TouchableOpacity,
-<<<<<<< HEAD
   Image,
-=======
->>>>>>> 36139f0c1629046546bf8b2801583a774d6f048e
 } from "react-native";
 import { Pedometer } from "expo-sensors";
 
@@ -192,7 +189,6 @@ const styles = StyleSheet.create({
     top: 40,
     right: 30,
     fontSize: 20,
-<<<<<<< HEAD
     alignSelf: "flex-end",
   },
   tokenImage: {
@@ -201,8 +197,5 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     top: 18,
     right: 10,
-=======
-    position: "absolute",
->>>>>>> 36139f0c1629046546bf8b2801583a774d6f048e
   },
 });
