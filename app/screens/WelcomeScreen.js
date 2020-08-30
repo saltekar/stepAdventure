@@ -50,6 +50,15 @@ function WelcomeScreen({ navigation }) {
           <Text style={styles.buttonText}>Play</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Activity Butotn */}
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => navigation.navigate("ActivityScreen")}
+        style={styles.activityButton}
+      >
+        <Text style={styles.buttonText}>A</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 }
@@ -63,13 +72,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  activityButton: {
+    backgroundColor: colors.primary,
+    height: 50,
+    width: 50,
+    borderRadius: 50 / 2,
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-start",
+    bottom: 15,
+    left: 15
+  },
   background: {
     flex: 1
   },
   buttons: {
     flex: 2,
-    alignItems: "center",
-    justifyContent: "space-evenly"
+    alignItems: "center"
   },
   buttonText: {
     color: colors.white,

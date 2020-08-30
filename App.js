@@ -4,6 +4,7 @@ import React from "react";
 import { View } from "react-native";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 import StoryScreen from "./app/screens/StoryScreen";
+import ActivityScreen from "./app/screens/ActivityScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -21,6 +22,7 @@ export default function App() {
       >
         <Stack.Screen name="Home" component={WelcomeScreen} />
         <Stack.Screen name="StoryScreen" component={StoryScreen} />
+        <Stack.Screen name="ActivityScreen" component={ActivityScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

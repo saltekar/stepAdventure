@@ -1,28 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
-  StatusBar
+  View
 } from "react-native";
-
-import StoryView from "../components/StoryView";
+import ActivityCenter from "../components/ActivityCenter";
 
 import colors from "../config/colors";
 
-function StoryScreen({ navigation }) {
+function ActivityScreen({ navigation }) {
   return (
     <ImageBackground
+      source={require("../assets/creepy.jpg")}
       style={styles.background}
-      source={require("../assets/forest.jpg")}
     >
-      {/* Sets status bar to white */}
-      <StatusBar barStyle="light-content" />
+      <View style={styles.dailyAvg}>
+        <Text style={styles.dailyStepsTitle}>Average Daily Steps:</Text>
+        <Text style={styles.steps}>230</Text>
+      </View>
 
-      {/* Text for the story */}
-      <StoryView />
+      <ActivityCenter />
 
+      {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.navigate("Home")}
@@ -34,6 +35,9 @@ function StoryScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1
+  },
   backButton: {
     backgroundColor: colors.primary,
     height: 20,
@@ -45,9 +49,19 @@ const styles = StyleSheet.create({
     left: 10,
     position: "absolute"
   },
-  background: {
-    flex: 1
+  dailyAvg: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  dailyStepsTitle: {
+    fontSize: 38,
+    color: colors.primary
+  },
+  steps: {
+    fontSize: 30,
+    color: colors.primary
   }
 });
 
-export default StoryScreen;
+export default ActivityScreen;
