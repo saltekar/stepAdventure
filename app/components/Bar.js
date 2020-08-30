@@ -16,7 +16,7 @@ export default function Bar(props) {
         justifyContent: "flex-end",
         alignItems: "center",
         borderRadius: 40,
-        top: -50
+        top: -40
       }}
     >
       <Text style={styles.barTitle}>{props.title}</Text>

@@ -14,6 +14,9 @@ import colors from "../config/colors";
 class ActivityCenter extends React.Component {
   constructor(props) {
     super(props);
+    global.max = 0;
+    global.avg = 0;
+
     this.state = {
       pastStepCount: 0,
       days: [],
@@ -52,41 +55,54 @@ class ActivityCenter extends React.Component {
   render() {
     if (this.state.days.length == 7) {
       global.max = Math.max.apply(Math, this.state.days);
+
+      var total = 0;
+      for (var i = 1; i < this.state.days.length; i++) {
+        total += this.state.days[i];
+      }
+      global.avg = total / this.state.days.length;
     }
 
     return (
-      <View style={styles.activity}>
-        <Bar title="Today" width={this.state.days[0]} max={global.max} />
-        <Bar
-          title={this.state.dates[1]}
-          width={this.state.days[1]}
-          max={global.max}
-        />
-        <Bar
-          title={this.state.dates[2]}
-          width={this.state.days[2]}
-          max={global.max}
-        />
-        <Bar
-          title={this.state.dates[3]}
-          width={this.state.days[3]}
-          max={global.max}
-        />
-        <Bar
-          title={this.state.dates[4]}
-          width={this.state.days[4]}
-          max={global.max}
-        />
-        <Bar
-          title={this.state.dates[5]}
-          width={this.state.days[5]}
-          max={global.max}
-        />
-        <Bar
-          title={this.state.dates[6]}
-          width={this.state.days[6]}
-          max={global.max}
-        />
+      <View style={{ flex: 1 }}>
+        <View style={styles.dailyAvg}>
+          <Text style={styles.dailyStepsTitle}>Average Daily Steps:</Text>
+          <Text style={styles.steps}>{global.avg}</Text>
+        </View>
+
+        <View style={styles.activity}>
+          <Bar title="Today" width={this.state.days[0]} max={global.max} />
+          <Bar
+            title={this.state.dates[1]}
+            width={this.state.days[1]}
+            max={global.max}
+          />
+          <Bar
+            title={this.state.dates[2]}
+            width={this.state.days[2]}
+            max={global.max}
+          />
+          <Bar
+            title={this.state.dates[3]}
+            width={this.state.days[3]}
+            max={global.max}
+          />
+          <Bar
+            title={this.state.dates[4]}
+            width={this.state.days[4]}
+            max={global.max}
+          />
+          <Bar
+            title={this.state.dates[5]}
+            width={this.state.days[5]}
+            max={global.max}
+          />
+          <Bar
+            title={this.state.dates[6]}
+            width={this.state.days[6]}
+            max={global.max}
+          />
+        </View>
       </View>
     );
   }
@@ -96,12 +112,26 @@ export default ActivityCenter;
 
 const styles = StyleSheet.create({
   activity: {
-    flex: 2,
+    flex: 5,
     flexDirection: "column",
     justifyContent: "space-evenly"
   },
 
   barTitle: {
     marginTop: -20
+  },
+  dailyAvg: {
+    flex: 2,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  dailyStepsTitle: {
+    fontSize: 38,
+    color: colors.primary
+  },
+  steps: {
+    fontSize: 30,
+    color: colors.primary
   }
 });

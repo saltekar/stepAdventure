@@ -16,11 +16,6 @@ function ActivityScreen({ navigation }) {
       source={require("../assets/creepy.jpg")}
       style={styles.background}
     >
-      <View style={styles.dailyAvg}>
-        <Text style={styles.dailyStepsTitle}>Average Daily Steps:</Text>
-        <Text style={styles.steps}>230</Text>
-      </View>
-
       <ActivityCenter />
 
       {/* Back Button */}
@@ -48,19 +43,6 @@ const styles = StyleSheet.create({
     top: 40,
     left: 10,
     position: "absolute"
-  },
-  dailyAvg: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  dailyStepsTitle: {
-    fontSize: 38,
-    color: colors.primary
-  },
-  steps: {
-    fontSize: 30,
-    color: colors.primary
   }
 });
 
