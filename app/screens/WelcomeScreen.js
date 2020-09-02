@@ -25,20 +25,13 @@ function WelcomeScreen({ navigation }) {
       <View style={styles.heading}>
         <Text
           style={{
-            fontSize: 45,
-            color: colors.primary
+            fontSize: 80,
+            color: colors.primary,
+            textAlign: "center"
           }}
         >
           Step Adventure
         </Text>
-      </View>
-
-      {/* Step Counter */}
-      <View style={styles.stepCounter}>
-        <View style={styles.circle}>
-          <Text style={{ fontSize: 50, color: colors.white }}>0</Text>
-          <Text style={{ fontSize: 30, color: colors.white }}>Steps</Text>
-        </View>
       </View>
 
       {/* Play Button */}
@@ -52,7 +45,7 @@ function WelcomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      {/* Activity Butotn */}
+      {/* Activity Button */}
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => navigation.navigate("ActivityScreen")}
@@ -63,6 +56,18 @@ function WelcomeScreen({ navigation }) {
           source={require("../assets/activity-person.png")}
         />
       </TouchableOpacity>
+
+      {/* Settings Button */}
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => navigation.navigate("SettingScreen")}
+        style={styles.settingButton}
+      >
+        <Image
+          style={styles.settingsIcon}
+          source={require("../assets/settingsIcon.png")}
+        />
+      </TouchableOpacity>
     </ImageBackground>
   );
 }
@@ -70,9 +75,9 @@ function WelcomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   actionButton: {
     backgroundColor: colors.primary,
-    height: 50,
-    width: "50%",
-    borderRadius: 20,
+    height: 80,
+    width: "60%",
+    borderRadius: 40,
     alignItems: "center",
     justifyContent: "center"
   },
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 50 / 2,
-    position: "relative",
+    position: "absolute",
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "flex-start",
@@ -92,12 +97,12 @@ const styles = StyleSheet.create({
     flex: 1
   },
   buttons: {
-    flex: 2,
+    flex: 1,
     alignItems: "center"
   },
   buttonText: {
     color: colors.white,
-    fontSize: 20
+    fontSize: 40
   },
   circle: {
     width: 180,
@@ -111,7 +116,25 @@ const styles = StyleSheet.create({
   heading: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    top: -60
+  },
+  settingButton: {
+    backgroundColor: colors.primary,
+    height: 50,
+    width: 50,
+    borderRadius: 50 / 2,
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-end",
+    bottom: 15,
+    right: 15
+  },
+  settingsIcon: {
+    flex: 1,
+    aspectRatio: 0.6,
+    resizeMode: "contain"
   },
   stepCounter: {
     flex: 2,
