@@ -13,13 +13,15 @@ export default function TokenButton({ decisionCost, onPress }) {
 
 const styles = StyleSheet.create({
   button: {
-    width: "14%",
+    // width: "14%",
     height: 45,
     backgroundColor: colors.primary,
     borderRadius: 27,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+    paddingLeft: 7,
+    paddingRight: 7,
   },
   text: {
     color: colors.white,
