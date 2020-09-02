@@ -29,6 +29,7 @@ export default class StoryView extends React.Component {
     global.text = "";
     global.tokenCnt = 0;
     global.decisionChosen = -1;
+    global.stepsPerToken = 25;
 
     this.state = {
       textVisible: false,
@@ -453,7 +454,7 @@ export default class StoryView extends React.Component {
                 showProgress={false}
                 message={
                   "Are you sure you want to spend " +
-                  this.state.decision1Distance / 25 +
+                  this.state.decision1Distance / global.stepsPerToken +
                   " step tokens?"
                 }
                 messageStyle={{ color: colors.white }}
@@ -523,7 +524,7 @@ export default class StoryView extends React.Component {
                 showProgress={false}
                 message={
                   "Are you sure you want to spend " +
-                  this.state.decision2Distance / 25 +
+                  this.state.decision2Distance / global.stepsPerToken +
                   " step tokens?"
                 }
                 messageStyle={{ color: colors.white }}
@@ -594,7 +595,7 @@ export default class StoryView extends React.Component {
                 showProgress={false}
                 message={
                   "Are you sure you want to spend " +
-                  this.state.decision3Distance / 25 +
+                  this.state.decision3Distance / global.stepsPerToken +
                   " step tokens?"
                 }
                 messageStyle={{ color: colors.white }}
@@ -665,7 +666,7 @@ export default class StoryView extends React.Component {
                 showProgress={false}
                 message={
                   "Are you sure you want to spend " +
-                  this.state.decision4Distance / 25 +
+                  this.state.decision4Distance / global.stepsPerToken +
                   " step tokens?"
                 }
                 messageStyle={{ color: colors.white }}
