@@ -9,7 +9,7 @@ class StepText extends React.Component {
     super(props);
 
     this.state = {
-      tokens: 0,
+      tokens: 0
     };
 
     console.log("run");
@@ -17,13 +17,13 @@ class StepText extends React.Component {
   }
 
   getTokens = () => {
-    this.getData("tokens").then((currTokens) => {
+    this.getData("tokens").then(currTokens => {
       this.setState({ tokens: currTokens });
       console.log(currTokens + " TOKENS");
     });
   };
 
-  getData = async (val) => {
+  getData = async val => {
     try {
       if (val == "tokens") {
         const tokens = await AsyncStorage.getItem(val);
@@ -53,20 +53,20 @@ export default StepText;
 const styles = StyleSheet.create({
   tokenContainer: {
     flexDirection: "column",
-    justifyContent: "flex-end",
+    justifyContent: "flex-end"
   },
   token: {
     color: colors.white,
-    top: 40,
+    top: 45,
     right: 30,
     fontSize: 20,
-    alignSelf: "flex-end",
+    alignSelf: "flex-end"
   },
   tokenImage: {
     width: 20,
     height: 21,
     alignSelf: "flex-end",
-    top: 18,
-    right: 10,
-  },
+    top: 23,
+    right: 10
+  }
 });
