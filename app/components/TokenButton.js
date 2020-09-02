@@ -3,9 +3,12 @@ import { StyleSheet, TouchableOpacity, Text, View, Image } from "react-native";
 import colors from "../config/colors";
 
 export default function TokenButton({ decisionCost, onPress }) {
+  global.stepsPerToken = 25;
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.text}>{Math.floor(decisionCost / 25)}</Text>
+      <Text style={styles.text}>
+        {Math.floor(decisionCost / global.stepsPerToken)}
+      </Text>
       <Image style={styles.tokenImage} source={require("../assets/coin.png")} />
     </TouchableOpacity>
   );
@@ -13,7 +16,7 @@ export default function TokenButton({ decisionCost, onPress }) {
 
 const styles = StyleSheet.create({
   button: {
-    width: "14%",
+    width: 45,
     height: 45,
     backgroundColor: colors.primary,
     borderRadius: 27,
