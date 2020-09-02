@@ -61,6 +61,7 @@ class ActivityCenter extends React.Component {
         total += this.state.days[i];
       }
       global.avg = total / this.state.days.length;
+      global.avg = Math.round(global.avg);
     }
 
     return (

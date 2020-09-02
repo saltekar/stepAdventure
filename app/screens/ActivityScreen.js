@@ -7,6 +7,7 @@ import {
   View
 } from "react-native";
 import ActivityCenter from "../components/ActivityCenter";
+import BackButton from "../components/BackButton";
 
 import colors from "../config/colors";
 
@@ -18,13 +19,7 @@ function ActivityScreen({ navigation }) {
     >
       <ActivityCenter />
 
-      {/* Back Button */}
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.navigate("Home")}
-      >
-        <Text style={{ color: colors.white }}>Back</Text>
-      </TouchableOpacity>
+      <BackButton nav={navigation} />
     </ImageBackground>
   );
 }
@@ -32,17 +27,6 @@ function ActivityScreen({ navigation }) {
 const styles = StyleSheet.create({
   background: {
     flex: 1
-  },
-  backButton: {
-    backgroundColor: colors.primary,
-    height: 20,
-    width: "15%",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 20,
-    top: 40,
-    left: 10,
-    position: "absolute"
   }
 });
 

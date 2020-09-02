@@ -10,6 +10,7 @@ import {
 import StoryView from "../components/StoryView";
 
 import colors from "../config/colors";
+import BackButton from "../components/BackButton";
 
 function StoryScreen({ navigation }) {
   return (
@@ -23,28 +24,12 @@ function StoryScreen({ navigation }) {
       {/* Text for the story */}
       <StoryView />
 
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.navigate("Home")}
-      >
-        <Text style={{ color: colors.white }}>Back</Text>
-      </TouchableOpacity>
+      <BackButton nav={navigation} />
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  backButton: {
-    backgroundColor: colors.primary,
-    height: 20,
-    width: "15%",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 20,
-    top: 40,
-    left: 10,
-    position: "absolute"
-  },
   background: {
     flex: 1
   }

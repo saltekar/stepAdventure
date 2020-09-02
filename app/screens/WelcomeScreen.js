@@ -6,7 +6,8 @@ import {
   Button,
   ImageBackground,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Image
 } from "react-native";
 
 import colors from "../config/colors";
@@ -57,7 +58,10 @@ function WelcomeScreen({ navigation }) {
         onPress={() => navigation.navigate("ActivityScreen")}
         style={styles.activityButton}
       >
-        <Text style={styles.buttonText}>A</Text>
+        <Image
+          style={styles.walkingPerson}
+          source={require("../assets/activity-person.png")}
+        />
       </TouchableOpacity>
     </ImageBackground>
   );
@@ -113,6 +117,11 @@ const styles = StyleSheet.create({
     flex: 2,
     alignItems: "center",
     justifyContent: "center"
+  },
+  walkingPerson: {
+    flex: 1,
+    aspectRatio: 0.6,
+    resizeMode: "contain"
   }
 });
 
