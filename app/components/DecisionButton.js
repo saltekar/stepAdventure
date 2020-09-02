@@ -15,20 +15,16 @@ export default class DecisionButton extends React.Component {
   }
 
   onLayout = (e) => {
-    // global.width = e.nativeEvent.layout.width;
     this.setState({ width: e.nativeEvent.layout.width });
 
     if (this.state.width < 297) {
       global.buttonWrap = false;
     }
-
-    // console.log(this.state.width + " width; " + this.props.decisionText);
   };
 
   render() {
     if (this.state.width > 297) {
       global.buttonWrap = true;
-      // console.log("butwrap: " + global.buttonWrap);
     }
     return (
       <TouchableOpacity
