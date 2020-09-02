@@ -23,7 +23,7 @@
     "content": "You reach a hill and see a bridge in the distance.",
     "decisions": [
       ["Insist on going to bridge", "s4", 50],
-      ["Agree to rest", "s5", 0]
+      ["Agree to rest", "s5", 50]
     ]
   },
   "s4": {
