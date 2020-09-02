@@ -16,12 +16,12 @@ export default function BackButton(props) {
 const styles = StyleSheet.create({
   backButton: {
     backgroundColor: colors.primary,
-    height: 20,
-    width: "15%",
+    height: 25,
+    width: "16%",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 20,
-    top: 40,
+    top: 46,
     left: 10,
     position: "absolute"
   }
