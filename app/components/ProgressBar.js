@@ -4,7 +4,7 @@ import {
   View,
   Text,
   AsyncStorage,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 import { Pedometer } from "expo-sensors";
 
@@ -14,11 +14,13 @@ export default class ProgressBar extends React.Component {
   constructor() {
     super();
 
+    global.continue = false;
+
     this.state = {
       steps: 0,
       savedSteps: 0,
       continueButtonVisible: false,
-      progressBarVisible: true,
+      progressBarVisible: true
     };
 
     this.initialSteps();
@@ -35,7 +37,7 @@ export default class ProgressBar extends React.Component {
   _subscribe = () => {
     console.log("subbed");
     this.setState({ progressBarVisible: true });
-    this._subscription = Pedometer.watchStepCount((currSteps) => {
+    this._subscription = Pedometer.watchStepCount(currSteps => {
       this.setState({ steps: this.state.savedSteps + currSteps.steps });
     });
   };
@@ -44,13 +46,19 @@ export default class ProgressBar extends React.Component {
     this.save(this.state.steps);
     console.log(this.state.steps + "  --unsub");
 
+    if (global.continue == true) {
+      this.save(0);
+      this.setState({ savedSteps: 0 });
+      this.setState({ steps: 0 });
+    }
+
     this._subscription && this._subscription.remove();
     this._subscription = null;
   };
 
   initialSteps = async () => {
     try {
-      this.load().then((currSteps) => {
+      this.load().then(currSteps => {
         if (!isNaN(currSteps)) {
           console.log(currSteps + " -- saved");
           this.setState({ steps: currSteps });
@@ -64,7 +72,7 @@ export default class ProgressBar extends React.Component {
     }
   };
 
-  save = async (val) => {
+  save = async val => {
     try {
       await AsyncStorage.setItem("steps", val + "");
     } catch (err) {
@@ -81,7 +89,7 @@ export default class ProgressBar extends React.Component {
     }
   };
 
-  getData = async (val) => {
+  getData = async val => {
     try {
       if (val == "pastCurrSteps") {
         const pastCurrSteps = await AsyncStorage.getItem(val);
@@ -102,7 +110,7 @@ export default class ProgressBar extends React.Component {
     }
   };
 
-  textStyle = function () {
+  textStyle = function() {
     const currSteps = this.state.steps;
     const scale = 350 / this.props.distance;
 
@@ -110,9 +118,13 @@ export default class ProgressBar extends React.Component {
 
     console.log(currSteps + " currsteps");
     if (leftAdjust + currSteps * scale >= 350 + leftAdjust) {
-      this.save(0);
-      this.setState({ savedSteps: 0 });
-      this.setState({ steps: 0 });
+      // if (global.continue == true) {
+      //   console.log("CONTINEU BUTTONR RESET");
+      //   this.save(0);
+      //   this.setState({ savedSteps: 0 });
+      //   this.setState({ steps: 0 });
+      //   return;
+      // }
 
       console.log(this.state.steps);
 
@@ -129,7 +141,7 @@ export default class ProgressBar extends React.Component {
       lineHeight: 27,
       left: leftAdjust + currSteps * scale,
       top: -8,
-      position: "absolute",
+      position: "absolute"
     };
   };
 
@@ -151,7 +163,11 @@ export default class ProgressBar extends React.Component {
         {this.state.continueButtonVisible ? (
           <TouchableOpacity
             style={styles.button}
-            onPress={() => this.props.hideBar()}
+            onPress={() => {
+              this.props.hideBar();
+              global.continue = true;
+              this.textStyle();
+            }}
           >
             <Text style={styles.continueText}>Continue</Text>
           </TouchableOpacity>
@@ -168,7 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     position: "absolute",
     justifyContent: "center",
-    alignSelf: "center",
+    alignSelf: "center"
   },
   // barBox: {
   //   position: "absolute",
@@ -182,11 +198,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingRight: 40,
     paddingLeft: 40,
-    marginTop: 150,
+    marginTop: 150
   },
   continueText: {
     color: colors.white,
-    fontSize: 20,
+    fontSize: 20
   },
   text: {
     color: colors.white,
@@ -195,7 +211,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     position: "absolute",
     alignSelf: "center",
-    paddingTop: 20,
+    paddingTop: 20
   },
   progressEnd: {
     color: colors.white,
@@ -203,13 +219,13 @@ const styles = StyleSheet.create({
     lineHeight: 27,
     left: -182 + 423,
     top: -8,
-    position: "absolute",
+    position: "absolute"
   },
   endProgressBar: {
     color: colors.white,
     fontSize: 15,
     right: -186,
     top: -25,
-    position: "absolute",
-  },
+    position: "absolute"
+  }
 });
