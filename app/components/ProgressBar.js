@@ -118,14 +118,6 @@ export default class ProgressBar extends React.Component {
 
     console.log(currSteps + " currsteps");
     if (leftAdjust + currSteps * scale >= 350 + leftAdjust) {
-      // if (global.continue == true) {
-      //   console.log("CONTINEU BUTTONR RESET");
-      //   this.save(0);
-      //   this.setState({ savedSteps: 0 });
-      //   this.setState({ steps: 0 });
-      //   return;
-      // }
-
       console.log(this.state.steps);
 
       console.log("I ran");
