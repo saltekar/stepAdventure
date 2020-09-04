@@ -64,10 +64,10 @@ export default class SettingScreen extends React.Component {
             style={styles.restartButton}
           >
             <Text style={styles.restartText}>Restart Game</Text>
-            <Image
+            {/* <Image
               style={styles.restartIcon}
               source={require("../assets/restart.png")}
-            />
+            /> */}
           </TouchableOpacity>
 
           <AwesomeAlert
@@ -132,13 +132,13 @@ const styles = StyleSheet.create({
   restartButton: {
     backgroundColor: colors.primary,
     height: 40,
-    width: 185,
+    width: 155,
     borderRadius: 50 / 2,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
     left: 35,
-    paddingLeft: 15,
+    paddingLeft: 8,
     paddingRight: 8,
   },
   restartIcon: {
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   restartText: {
-    fontSize: 22,
+    fontSize: 20,
     color: colors.white,
   },
   settingsContent: {
