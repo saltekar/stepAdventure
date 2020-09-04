@@ -64,10 +64,6 @@ export default class SettingScreen extends React.Component {
             style={styles.restartButton}
           >
             <Text style={styles.restartText}>Restart Game</Text>
-            {/* <Image
-              style={styles.restartIcon}
-              source={require("../assets/restart.png")}
-            /> */}
           </TouchableOpacity>
 
           <AwesomeAlert
