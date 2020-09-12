@@ -17,7 +17,7 @@ export default class StoryView extends React.Component {
     super();
 
     // Create map
-    let JSON = require("../storyMechanics/storyContent.json");
+    let JSON = require("../storyMechanics/storyDialogue.json");
     const graph = new Graph(JSON);
     graph.createMap();
     let root = graph.getRoot();
@@ -757,7 +757,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colors.white,
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: 27,
     flexWrap: "wrap",
   },
