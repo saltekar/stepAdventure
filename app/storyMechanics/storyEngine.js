@@ -34,7 +34,6 @@ class Graph {
 
         for (let i = 0; i < currentDecisions.length; i++) {
           let nextName = currentDecisions[i][1];
-
           // Check if nextName is in data
           if (this.data[[nextName]] != undefined) {
             // Check if nextName is in visited array
@@ -54,7 +53,7 @@ class Graph {
               stack.push(nextNode);
 
               // Add to visited
-              visited.push(nextName);
+              visited.push(nextNode.type);
             } else {
               // content at index 0 in decision arr
               currentNode.addDecision(currentDecisions[i][0]);
@@ -81,7 +80,7 @@ class Graph {
             stack.push(nextNode);
 
             // Add to visited
-            visited.push(nextName);
+            visited.push(nextNode.name);
           } else {
             currentNode.addNode(currentNode.nodeMap[nextName]);
           }
