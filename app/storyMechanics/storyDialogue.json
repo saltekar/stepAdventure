@@ -11,11 +11,98 @@
   "b1-1": {
     "type": "DECISION",
     "content": "You dive for the ball and land in the mud.\nThe ball lands in front of you, missing your glove.\nDad: \"Oh, so close! Good effort though!\"\nDad: \"Lets head back for dinner, but you better wash before your mom sees you all muddy!\"",
-    "decisions": [["Walk back to Dad", "b2", 20]]
+    "decisions": [["Walk back to Dad", "b1-3", 0]]
   },
   "b1-2": {
     "type": "DECISION",
     "content": "You let the ball go and it falls in the mud.\nDad: \"That's alright, you’ll get it next time!\"\nDad: \"It's getting late, let's head back for dinner.\"",
-    "decisions": [["Walk back to Dad", "b2", 20]]
+    "decisions": [["Walk back to Dad", "b1-3", 0]]
+  },
+  "b1-3": {
+    "type": "CONTINUE",
+    "content": "Dad: \"Great job today Felix, you’re looking ready for this week’s game!\"\n\"I don’t know Papa. I missed almost every catch today...\"\nDad: \"Listen Felix, what's important is that you always try your hardest, even if you think you’ll fail. Now come on, let’s head inside.\"",
+    "nextNode": "b1-4"
+  },
+  "b1-4": {
+    "type": "CONTINUE",
+    "content": "At the front door, standing there with her hands on her hips is Mom.\nMom: \"Hurry, the food is getting cold! I told you two to come home before it gets dark.\"\nMom: \"I swear it's like anytime I tell you something it goes through one ear and out the other.\"\nMom: \"You need to wake up! Wake up! Wake up!\"",
+    "nextNode": "b1-5"
+  },
+  "b1-5": {
+    "type": "DECISION",
+    "content": "You open your eyes and see Mom standing at your door.\nMom: \"Wake up Felix and come down for breakfast\"\nMom: \"Remember, it's college day today.\"",
+    "decisions": [
+      ["Okay im getting up", "b1-6", 0],
+      ["5 more minutes", "b1-7", 0]
+    ]
+  },
+  "b1-6": {
+    "type": "CONTINUE",
+    "content": "Okay, okay. I'm getting up.",
+    "nextNode": "b1-8"
+  },
+  "b1-7": {
+    "type": "CONTINUE",
+    "content": "\"5 more minutes Mom.\"\nMom: \"Okay, but hurry. You’re going to be late to school.\"",
+    "nextNode": "b1-8"
+  },
+  "b1-8": {
+    "type": "DECISION",
+    "content": "You get out of bed and step on your 4th place ribbon from last week’s science fair.\n\"How did this get here? Must have fallen from the wall.\"\nStaring at the ribbon you think to yourself what a disappointment that fair was.\n\"Man we had the best project there, we should have at least gotten 2nd place...whatever.\"",
+    "decisions": [
+      ["Throw away ribbon", "b1-9", 0],
+      ["Put ribbon back on wall", "b1-10", 0]
+    ]
+  },
+  "b1-9": {
+    "type": "CONTINUE",
+    "content": "You throw the ribbon in the trash and get ready for school.",
+    "nextNode": "b1-11"
+  },
+  "b1-10": {
+    "type": "CONTINUE",
+    "content": "You place the ribbon back on the wall and get ready for school.",
+    "nextNode": "b1-11"
+  },
+  "b1-11": {
+    "type": "DECISION",
+    "content": "Mom: \"Hurry Felix, you’re going to be late.\"\nYou run downstairs for breakfast and dig into your eggs and toast.\nMom: \"Did you sleep well?\"",
+    "decisions": [
+      ["Yeah", "b1-12", 0],
+      ["Tell her about dream", "b1-13", 0]
+    ]
+  },
+  "b1-12": {
+    "type": "CONTINUE",
+    "content": "\"Yeah I slept fine. Excited for my last week of high school.\"\nMom: \"I can’t believe you’re already headed off to college!\"",
+    "nextNode": "b1-14"
+  },
+  "b1-13": {
+    "type": "CONTINUE",
+    "content": "\"I saw Papa again… We were playing catch just like old times.\"\nMom: \"I know you miss him, and things haven’t been easy.\"\nMom: \"But we’ve come so far since then…\"\nMom: \"Now look at you, all grown up and off to college.\"",
+    "nextNode": "b1-14"
+  },
+  "b1-14": {
+    "type": "DECISION",
+    "content": "Mom: \"You look just like Papa in his Duke t-shirt.\"\nYou quietly look down at your plate.\nMom: \"He would have been so proud of you honey.\"",
+    "decisions": [
+      ["Thanks", "b1-15", 0],
+      ["I hope so", "b1-16", 0]
+    ]
+  },
+  "b1-15": {
+    "type": "CONTINUE",
+    "content": "\"Thanks Mom. See you after school.\"",
+    "nextNode": "b1-17"
+  },
+  "b1-16": {
+    "type": "CONTINUE",
+    "content": "\"I sure hope so…\"",
+    "nextNode": "b1-17"
+  },
+  "b1-17": {
+    "type": "DECISION",
+    "content": "You finish your plate and head to school.",
+    "decisions": [["Walk to school", "b1-18", 0]]
   }
 }
