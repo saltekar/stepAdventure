@@ -1,11 +1,12 @@
 global.nodeMap = {};
 
 class Node {
-  constructor(content, name, type, cost) {
+  constructor(content, name, type, reset = false) {
     this.content = content;
     this.nextNodes = [];
     this.name = name;
     this.type = type;
+    this.reset = reset;
     this.decisionDistances = [];
     this.decisions = [];
     this.nodeMap = global.nodeMap;
@@ -14,6 +15,10 @@ class Node {
   addNode(node) {
     this.nextNodes.push(node);
     global.nodeMap[node.name] = node;
+  }
+
+  setReset(t) {
+    this.reset = t;
   }
 
   addDistance(d) {

@@ -57,7 +57,8 @@ class Graph {
             } else {
               // content at index 0 in decision arr
               currentNode.addDecision(currentDecisions[i][0]);
-              currentNode.addNode(currentNode.nodeMap[nextNode]);
+              currentNode.addDistance(currentDecisions[i][2]);
+              currentNode.addNode(currentNode.nodeMap[nextName]);
             }
           }
         }
@@ -74,6 +75,11 @@ class Graph {
               this.data[[nextName]].type
             );
 
+            // Chheck if reset
+            if (this.data[[nextName]].reset == "TRUE") {
+              currentNode.setReset(true);
+            }
+
             currentNode.addNode(nextNode);
 
             // Push this.data.nextName onto stack
@@ -83,6 +89,10 @@ class Graph {
             visited.push(nextNode.name);
           } else {
             currentNode.addNode(currentNode.nodeMap[nextName]);
+
+            if (this.data[[nextName]].reset == "TRUE") {
+              currentNode.setReset(true);
+            }
           }
         }
       }
