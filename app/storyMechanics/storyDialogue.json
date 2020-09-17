@@ -25,6 +25,7 @@
   },
   "b1-4": {
     "type": "CONTINUE",
+    "reset": "TRUE",
     "content": "At the front door, standing there with her hands on her hips is Mom.\nMom: \"Hurry, the food is getting cold! I told you two to come home before it gets dark.\"\nMom: \"I swear it's like anytime I tell you something it goes through one ear and out the other.\"\nMom: \"You need to wake up! Wake up! Wake up!\"",
     "nextNode": "b1-5"
   },
@@ -104,5 +105,276 @@
     "type": "DECISION",
     "content": "You finish your plate and head to school.",
     "decisions": [["Walk to school", "b1-18", 0]]
+  },
+  "b1-18": {
+    "type": "DECISION",
+    "content": "You walk into class and take a seat.\nMr. Davies: \"Alright class, grad practice starts soon so chat amongst yourselves until then.\"\nAlly: \"Hey Felix! Do you want to sign each other’s yearbooks?\n\"Yeah sure.\"\nYou and Ally exchange yearbooks.\nWhat do you write?",
+    "decisions": [
+      ["HAGS", "b1-19", 0],
+      ["Let's stay in touch!", "b1-19", 0],
+      ["(Long emotional letter)", "b1-19", 0],
+      ["(Leave it blank)", "b1-19", 0]
+    ]
+  },
+  "b1-19": {
+    "type": "DECISION",
+    "content": "Intercom: \"FELIX HERNANDEZ PLEASE REPORT TO THE PRINCIPAL'S OFFICE IMMEDIATELY.\"\nYour stomach drops.\nAlly: \"Oooo sounds like someones in trouble.\"\n\"Ha ah ha I hope not...\"\nYou exchange back yearbooks and leave class.",
+    "decisions": [["Walk to principal’s office", "b1-20", 0]]
+  },
+  "b1-20": {
+    "type": "CONTINUE",
+    "content": "You get to the entrance and stop.\n\"What could I possibly be in trouble for?\"\n\"... Oh maybe they found out (something funny and not that bad)\"\n\"Well only one way to find out.\"\nYou open the door and walk in.",
+    "nextNode": "b1-21"
+  },
+  "b1-21": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Principal Khosla: \"Felix, please take a seat. Someone wants to speak with you.\"\nAn older gentleman with a cane walks in.\nOlder Gentleman: \"Greetings Felix. Do you remember me?\"\nYou study his face and he looks vaguely familiar.",
+    "decisions": [
+      ["No, sorry", "b1-22", 0],
+      ["Yes, of course", "b1-23", 0]
+    ]
+  },
+  "b1-22": {
+    "type": "CONTINUE",
+    "content": "\"Hmm no sorry, I don't think so.\"\nOlder Gentleman: \"Well that's a surprise, I thought you would most certainly remember me.\"",
+    "nextNode": "b1-24"
+  },
+  "b1-23": {
+    "type": "CONTINUE",
+    "content": "\"Yeah, you’re Chevy Chase right?\"\nOlder Gentleman: \"Huh?\"\n\"Ya the old dude from Community!\"\n\"The show was never the same after you left.\"\nOlder Gentleman: \"What? Oh heavens no you’re mistaken.\"",
+    "nextNode": "b1-24"
+  },
+  "b1-24": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"My name is Mr. Hendricks. I was one of the panelists at the science fair.\"\nYou remember reading about him in an article...\nArthur Hendricks made billions through pharmaceuticals and made headlines by committing himself entirely to philanthropy.\nMr. Hendricks: \"I was mighty impressed with your analysis regarding the varying salinity levels of our vast oceans.\"",
+    "decisions": [
+      ["Thanks", "b1-25", 0],
+      ["Really? We got fourth place.", "b1-26", 0]
+    ]
+  },
+  "b1-25": {
+    "type": "CONTINUE",
+    "content": "\"Thank you Mr Hendricks, feels good to have our work recognized.\"",
+    "nextNode": "b1-27"
+  },
+  "b1-26": {
+    "type": "CONTINUE",
+    "content": "\"Really? You’re impressed with a  4th place project?\"\n\"If only the other panelists thought so too.\"",
+    "nextNode": "b1-27"
+  },
+  "b1-27": {
+    "type": "DECISION",
+    "content": "Mr Hendricks: \"The other panelists failed to recognize the brilliance behind your methods.\"\nMr. Hendricks: \"For decades I have worked tirelessly to improve the lives of those less fortunate.\"\nMr. Hendricks: \"Now I have began work on my most ambitious feat - Purification of ocean water through desalination methods\"",
+    "decisions": [
+      ["Sounds interesting", "b1-28", 0],
+      ["Why me?", "b1-29", 0]
+    ]
+  },
+  "b1-28": {
+    "type": "CONTINUE",
+    "content": "\"Sounds interesting, this could help billions of people around the world.\"\nMr. Hendricks: \" I’m glad you realize the great potential of our work Felix.\"",
+    "nextNode": "b1-30"
+  },
+  "b1-29": {
+    "type": "CONTINUE",
+    "content": "\"That's great and all, but what does this have to do with me?\"",
+    "nextNode": "b1-31"
+  },
+  "b1-30": {
+    "type": "DECISION",
+    "content": "Mr. Hendricks: \"Your past research and bright mind could be monumental in our efforts.\"\nMr. Hendricks: \"I would love for you to join me in our state of the art research laboratory. This of course would come with a generous salary.\"\nMr. Hendricks: \"How does that sound?\"",
+    "decisions": [
+      ["Sounds fantastic!", "b1-31", 0],
+      ["I don’t know…", "b1-32", 0]
+    ]
+  },
+  "b1-31": {
+    "type": "CONTINUE",
+    "content": "\"That sounds fantastic! I can’t wait to tell Eddie about our job offers.\"",
+    "nextNode": "b1-34"
+  },
+  "b1-32": {
+    "type": "CONTINUE",
+    "content": "\"I don’t know...my plan was always to go to college.\"\nMr. Hendricks: \"Listen Felix, what we’re trying to accomplish here will bring real change and have immediate impacts on those who need it the most.\"\n\"Hmm that sounds like a great opportunity. I need some time to think about this though...\"",
+    "nextNode": "b1-33"
+  },
+  "b1-33": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"Felix all I am saying is give us a chance. Work here for 3 months and if it’s not a good fit you can go back to college then. I’ll even pay your whole tuition.\"\n\"Well if that's the case I don’t see why not? Seems like a good opportunity either way.\"\n\"Eddie’s going to be so excited to take this opportunity with me.\"",
+    "nextNode": "b1-34"
+  },
+  "b1-34": {
+    "type": "DECISION",
+    "content": "Mr. Hendricks: \"Splendid! It pleases me to hear you’ll join us.\"\nMr. Hendricks: \"However, I’m afraid I made myself unclear. This proposal is only for you.\"\n\"Wait what? We worked on that project together!\"",
+    "decisions": [
+      ["Eddie helped", "b1-35", 0],
+      ["It was 50/50 split", "b1-36", 0]
+    ]
+  },
+  "b1-35": {
+    "type": "CONTINUE",
+    "content": "\"Eddie contributed a lot to the project.\"",
+    "nextNode": "b1-37"
+  },
+  "b1-36": {
+    "type": "CONTINUE",
+    "content": "\"Eddie did as much work as I did.\"",
+    "nextNode": "b1-37"
+  },
+  "b1-37": {
+    "type": "DECISION",
+    "content": "Mr. Hendricks: \"Come on now Felix, we both know YOU were the real brains behind the operation.\"\nMr. Hendricks: \"Felix my boy, remember these words. Never allow personal relationships to hinder your true potential. \"",
+    "decisions": [
+      ["Eddie is smart and capable", "b1-38", 0],
+      ["Don’t want to leave Eddie", "b1-39", 0]
+    ]
+  },
+  "b1-38": {
+    "type": "CONTINUE",
+    "content": "\"You’re wrong! Eddie is a smart and capable mind. I won’t go without him.\"",
+    "nextNode": "b1-40"
+  },
+  "b1-39": {
+    "type": "CONTINUE",
+    "content": "\"That may be true, but Eddie and I have been through everything together\"\n\"There’s no way I’ll leave without him.\"",
+    "nextNode": "b1-40"
+  },
+  "b1-40": {
+    "type": "DECISION",
+    "content": "For a moment Mr. Hendricks studies Felix’s eyes.\nYou stare back at him with unwavering conviction.\nMr. Hendricks: \"Well it's clear there's no changing your mind.\"\nMr. Hendricks: \"I guess we can find something he can do.\"",
+    "decisions": [
+      ["Sounds good I still have to check with my mom", "b1-41", 0],
+      ["Perfect, Eddie is going to be so excited!", "b1-42", 0]
+    ]
+  },
+  "b1-41": {
+    "type": "CONTINUE",
+    "content": "\"Sounds good, I still have to check with my mom.\"",
+    "nextNode": "b1-43"
+  },
+  "b1-42": {
+    "type": "CONTINUE",
+    "content": "\"Perfect, Eddie is going to be so excited.\"",
+    "nextNode": "b1-43"
+  },
+
+  "b1-43": {
+    "type": "CONTINUE",
+    "content": "Mr. Hendricks: \"Great...oh and I forgot to mention - we leave tomorrow at dawn.\"\nMr. Hendricks: \"Worry not, I already made arrangements with your school..\"\nMr. Hendricks: \"Principal Kholsa here has assured me everything will be taken care of.\"\nPrincipal Kholsa gives Mr. Hendricks a slight nod.",
+    "nextNode": "b1-44"
+  },
+  "b1-44": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "The bell rings and it’s now lunch time.\nMr. Hendricks: \"This is goodbye for now Felix, see you tomorrow.\"\n\"Okay sounds good.\"\nYou leave the office and excitedly rush to find Eddie.",
+    "decisions": [["Walk to cafeteria", "b1-45", 0]]
+  },
+  "b1-45": {
+    "type": "DECISION",
+    "content": "Eddie: \"What’s happening? They said I can go home?\"\n\"You won’t believe what happened\"",
+    "decisions": [["Tell Eddie about opportunity", "b1-46", 0]]
+  },
+  "b1-46": {
+    "type": "DECISION",
+    "content": "You tell Eddie about the opportunity.\nEddie: \"What?! No way! That’s incredible.\"\nEddie: \"Honestly this sounds better than college anyways, and this way we’ll be able to stick together.\"\nEddie: \"And not to mention the money we’ll make!\"",
+    "decisions": [
+      ["The money would be nice", "b1-47", 0],
+      ["We’re going to learn so much!", "b1-48", 0]
+    ]
+  },
+  "b1-47": {
+    "type": "CONTINUE",
+    "content": "\"Yeah, the money would be nice I guess..\"\n\"We definitely wouldn’t have the typical ramen experience of a college student haha.\"",
+    "nextNode": "b1-49"
+  },
+  "b1-48": {
+    "type": "CONTINUE",
+    "content": "\"Yeah! Also think about how much we would learn in this environment.\"\n\"Definitely more than we would ever learn in college!\"",
+    "nextNode": "b1-49"
+  },
+  "b1-49": {
+    "type": "DECISION",
+    "content": "\"We leave tomorrow, so we better get packing.\"\nEddie: \"This is going to be so fun! \nEddie: \"I can’t wait! I’m going to head home and tell my family.\"\n\"Ok see you tomorrow bright and early!\"",
+    "decisions": [["Head home", "b1-50", 0]]
+  },
+  "b1-50": {
+    "type": "DECISION",
+    "content": "You walk through the front door.\nMom: \"Oh Felix is it true?! The principal told me all about your opportunity!\"\nMom: \"That’s so exciting!\"\n\"Yeah Mom it’s true. I can’t believe it!\"",
+    "decisions": [
+      ["I wanted to check with you first", "b1-51", 0],
+      ["I’m leaving tomorrow", "b1-52", 0]
+    ]
+  },
+  "b1-51": {
+    "type": "CONTINUE",
+    "content": "\"I just wanted to check with you first before I leave.\"\n\"This all is happening so fast.\"\nMom: \"Thanks for checking in with me honey.\"\nMom: \"If this is really what you want, I fully support it!\"",
+    "nextNode": "b1-53"
+  },
+  "b1-52": {
+    "type": "CONTINUE",
+    "content": "\"The plane leaves tomorrow.\"\n\"I know it's sudden but I’m confident it's the right choice for me.\"\nMom: \"Well it seems my little boy is making decisions for himself now!\"",
+    "nextNode": "b1-53"
+  },
+  "b1-53": {
+    "type": "DECISION",
+    "content": "Mom: \"I know your father always wanted to see you go to his alma mater.\"\nYou look down at your Duke shirt.\nMom: \"But this sounds like an opportunity for you to be a part of a great cause.\"",
+    "decisions": [
+      ["Going to learn so much", "b1-54", 0],
+      ["Going to make real change", "b1-55", 0],
+      ["Still want to attend Duke one day", "b1-56", 0]
+    ]
+  },
+  "b1-54": {
+    "type": "CONTINUE",
+    "content": "\"Yeah, I’m going to learn so much in that environment Mom.\"\n\"Their laboratory sounds incredible!\"",
+    "nextNode": "b1-57"
+  },
+  "b1-55": {
+    "type": "CONTINUE",
+    "content": "\"It does! I really feel like this will allow me to make a real difference.\"\n\"785 million people lack access to a basic drinking-water service.\"\n\"This includes 144 million people who are just dependent on surface water!\"\n\"Hopefully my work will help those suffering from the water crisis.\"",
+    "nextNode": "b1-57"
+  },
+  "b1-56": {
+    "type": "CONTINUE",
+    "content": "\"Yeah, and I haven’t forgotten about how important Duke was to Dad.\"\n\"I still want to attend some day.\"",
+    "nextNode": "b1-57"
+  },
+  "b1-57": {
+    "type": "CONTINUE",
+    "content": "Mom: \"I’m so proud of you Felix. I think this is the right choice for you.\"\nMom: \"Let’s go upstairs and I’ll help you pack.\"\nYou and Mom head upstairs.\nYou go to sleep after dinner.",
+    "nextNode": "b1-58"
+  },
+  "b1-58": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Your 5:30 am alarm rings loudly and instinctively you reach for snooze.\nBut, your excitement shoots you right out of bed.\nMom: \"FEELLLIXX. There’s some car outside waiting for you.\"\nYou quickly get ready and head downstairs.\nMom: \"I’m going to miss you so much Felix. Make sure to call from time to time.\"\n\"Don’t worry I will Mom. You can always come visit.\"\nYou hug your Mom goodbye and head out the door",
+    "nextNode": "b1-59"
+  },
+  "b1-59": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Mom: \"Felix wait! You forgot this!\nShe hands you your 4th place ribbon from the science fair.",
+    "decisions": [
+      ["Thanks Mom", "b1-60", 0],
+      ["Keep it in my room", "b1-61", 0]
+    ]
+  },
+  "b1-60": {
+    "type": "CONTINUE",
+    "content": "\"Thanks Mom, I’ll put it in my new room.\"\nYou put the ribbon in your backpack.",
+    "nextNode": "b1-62"
+  },
+  "b1-61": {
+    "type": "CONTINUE",
+    "content": "\"“Thanks Mom, but actually can you keep that in my room.\"",
+    "nextNode": "b1-62"
+  },
+  "b1-62": {
+    "type": "DECISION",
+    "content": "",
+    "decisions": [["Walk to car ", "b1-63", 0]]
   }
 }
