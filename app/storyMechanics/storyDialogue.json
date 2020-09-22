@@ -363,18 +363,42 @@
     ]
   },
   "b1-60": {
-    "type": "CONTINUE",
+    "type": "DECISION",
     "content": "\"Thanks Mom, I’ll put it in my new room.\"\nYou put the ribbon in your backpack.",
-    "nextNode": "b1-62"
+    "decisions": [["Walk to car", "b1-62", 0]]
   },
   "b1-61": {
-    "type": "CONTINUE",
+    "type": "DECISION",
     "content": "\"“Thanks Mom, but actually can you keep that in my room.\"",
-    "nextNode": "b1-62"
+    "decisions": [["Walk to car", "b1-62", 0]]
   },
   "b1-62": {
+    "type": "CONTINUE",
+    "content": "Driver: \"Alright. Mr. Hernandez, we’ve reached our destination.\"\n\"Thanks!\"\nYou step out of the car onto a small airfield.\nMr. Hendricks waves to you standing in front of a small jet.\nMr. Hendricks: \"Felix my boy, come come. Let’s get you settled in.\"\nMr. Hendricks: \"Help yourself to any refreshments… that is if our friend Eddie hasn’t already devoured them aha ha.\"",
+    "nextNode": "b1-63"
+  },
+  "b1-63": {
     "type": "DECISION",
-    "content": "",
-    "decisions": [["Walk to car ", "b1-63", 0]]
+    "reset": "TRUE",
+    "content": "You walk up the stairs into the jet and take a seat.\nEddie: \"Hey Felix! You check out these snacks!? They got every soda you can think of!\"\nEddie: \"And do you see these enormous seats! They go all the way back!\"",
+    "decisions": [
+      ["It's amazing", "b1-64", 0],
+      ["It is really is something else", "b1-65", 0]
+    ]
+  },
+  "b1-64": {
+    "type": "CONTINUE",
+    "content": "\"This plane is amazing! I can get used to this.\"",
+    "nextNode": "b1-66"
+  },
+  "b1-65": {
+    "type": "CONTINUE",
+    "content": "\"Uhh you’re right this plane really is something else.\"",
+    "nextNode": "b1-66"
+  },
+  "b1-66": {
+    "type": "CONTINUE",
+    "content": "Eddie: \"And these chips! Don't even get me started! They’re the crispiest I’ve ever tasted!\"\n\"Eddie I’m pretty sure those are the same chips we get at school.\"\nEddie: \"Really?! I don’t know man, these just taste CRISPIER for some reason.\"\nMr. Hendricks takes a seat in front of you.",
+    "nextNode": "b1-67"
   }
 }
