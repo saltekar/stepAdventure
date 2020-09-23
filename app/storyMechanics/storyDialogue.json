@@ -479,5 +479,99 @@
     "reset": "TRUE",
     "content": "Pilot: \"Sorry for the rough landing folks. Although it wasn’t my fault... it was the asphalt.\"\nYou turn to see Eddie laughing while still hunched over in pain.\nYou thank the pilot and get off the airplane.\nMr. Hendricks: \"I have to take care of some things. Please follow my assistant Lauren for the tour.\"\nYou and Eddie walk toward Lauren.\nLauren: \"Hi, I’ll be showing you two around I guess. Follow me if you want!\"",
     "decisions": [["Follow Lauren to lab", "b1-80", 0]]
+  },
+  "b1-80": {
+    "type": "DECISION",
+    "content": "You follow Lauren to the entrance of the lab.\nLauren: \"This is the island’s main facility. This is where all our researchers work and stuff.\"\nEveryone walks inside of the facility.\nLauren: \"Welcome to the main lobby. You guys can check out the rest of the facility, or not. Do whatever.\" \nLauren walks to the corner of the room and takes out her phone.\n(Visit all locations and talk to everyone to end tour)",
+    "decisions": [
+      ["Go to cafeteria", "b1-81", 0],
+      ["Go to research lab", "b1-82", 0],
+      ["Go to break room", "b1-83", 0]
+    ]
+  },
+  "b1-81": {
+    "type": "DECISION",
+    "content": "You enter the cafeteria and notice the place to be mostly empty.\n\"Makes sense, not many people eat lunch at 4pm.\"\nYou see an older lady with a large sun hat sitting at the patio.",
+    "decisions": [
+      ["Talk to the lady", "b1-84", 0],
+      ["Ask Lauren about room", "b1-85", 0],
+      ["Head back to lobby", "b1-86", 0]
+    ]
+  },
+  "b1-84": {
+    "type": "DECISION",
+    "content": "You approach the woman and she glances back at you.\nLady: \"Hello, are you new? I haven’t seen you around.\"\n\"Hi, I’m Felix. I just got to the island a few minutes ago.\"\nLady: \"Oh my husband hasn’t mentioned you. I’m Mrs. Hendricks. Pleasure.\"\nYou shake her hand.\nMrs. Hendricks: \"Let me know if you have any questions.\"",
+    "decisions": [
+      ["How's the food?", "b1-87", 0],
+      ["What do you do around here?", "b1-88", 0]
+    ]
+  },
+  "b1-87": {
+    "type": "DECISION",
+    "content": "\"How’s the food here?\"\nMrs. Hendricks: \"Satisfactory, although not quite up to my standards.\"\n\"Good thing I'm not picky!\"\n\"As long as there’s hot sauce lying around, I’m good to go.\"\nMrs. Hendricks: \"Ah I see...hot sauce...that will certainly SPICE things up!\"\nMrs. Hendricks clears her throat and checks the time\nMrs. Hendricks: \"Well if you’ll excuse me, I must bid you farewell. I’m sure we’ll meet again.\"",
+    "decisions": [["Head back to cafeteria", "b1-89", 0]]
+  },
+  "b1-89": {
+    "type": "CONTINUE",
+    "content": "You head back to the cafeteria",
+    "nextNode": "b1-81"
+  },
+  "b1-88": {
+    "type": "DECISION",
+    "content": "\"What do you do around here?\"\nMrs. Hendricks: \"Well a variety of things really. At times I assist my husband with basic operations, but I mostly focus on writing my novel.\"\n\"Woah you’re an author? That’s super cool. What are you writing about?\"\nMrs. Hendricks: \"A tale of discovery and righteousness.\"\nYou smile and nod your head pretending to know what that means.\nMrs. Hendricks: \"I must be on my way now Felix dear, this novel will not write itself!\"\n\"Of course, it was nice to meet you!\"",
+    "decisions": [["Head back to cafeteria", "b1-89", 0]]
+  },
+  "b1-85": {
+    "type": "CONTINUE",
+    "content": "\"Hey Lauren can you tell me about the cafeteria.\"\nLauren: \"The cafeteria? People eat here. That’s about it.\"\n\t\"Do they serve lasagna?\"\nLauren: \"I don’t know, check the menu.\"\n\"I hate lasagna.\"\nLauren: \"Umm okay. Thanks for sharing.\"\nYou walk away.",
+    "nextNode": "b1-81"
+  },
+  "b1-86": {
+    "type": "CONTINUE",
+    "content": "You head back to the lobby.",
+    "nextNode": "b1-81"
+  },
+  "b1-82": {
+    "type": "DECISION",
+    "content": "You walk down the hall to find a large room labeled \"Research Lab.\"\n\"Oh this looks cool.\"\nYou open the door and walk in. You look in awe at the state of the art equipment.\nResearcher: \"Hey, what are you doing around here? Are you lost?\"\n\"Oh. Hi, I’m Felix. I just got to the island. I’m just checking the lab out.\"\nResearcher: \"The name’s Ryan. Dr. Jacobs to you. You must be one of the new interns.\"\nDr. Jacobs: \"I’m glad you’re kid, we got some vials that need a good scrubbing.\"\nDr. Jacobs: \"Put some elbow grease into it, you don’t want to end up like the last guy...\"",
+    "decisions": [
+      ["I'm not cleaning vials!", "b1-90", 0],
+      ["Sorry, I'm not an intern", "b1-91", 0]
+    ]
+  },
+  "b1-90": {
+    "type": "DECISION",
+    "content": "\"I didn’t come here to clean vials!\"\n\"Mr. Hendricks brought me here to conduct research on ocean salinity levels.\"\nDr. Jacobs: \"Looks like we’ve got a real hot shot over here! Isn’t that just dandy.\"\nDr. Jacobs: \"Now get lost kid, you still can’t be here. This is a private lab.\"\nYou exit the lab.",
+    "decisions": [["Head back to lobby", "b1-86", 0]]
+  },
+  "b1-91": {
+    "type": "DECISION",
+    "content": "\"Sorry but I think you’re mistaken, I’m not an intern. I just started here as a full time researcher.\"\nDr. Jacobs: \"Oh is that so? Well well pardon my ignorance. How dare I mistake a prodigy like yourself for a measly intern!\"\nDr. Jacobs: \"However distinguished you may be, this is still a private lab. I trust you’re smart enough to find the door.\"\nYou leave the lab.",
+    "decisions": [["Head back to lobby", "b1-86", 0]]
+  },
+  "b1-83": {
+    "type": "DECISION",
+    "content": "You enter the break room to see modern style couches, fun chairs, foosball table, and a mini bar with snacks and refreshments.\nAt one of the TVs is a girl about your age playing video games.",
+    "decisions": [
+      ["Talk to the girl", "b1-92", 0],
+      ["Eat some snacks", "b1-93", 0],
+      ["Ask Lauren about room", "b1-94", 0],
+      ["Head back to the lobby", "b1-86", 0]
+    ]
+  },
+  "b1-92": {
+    "type": "CONTINUE",
+    "content": "While walking towards her you trip on one of the wires and disconnect the gaming console.\nGirl: \"HEY WHAT'S YOUR PROBLEM!? I just lost because of you!\"\n\"Oh I’m so sorry I didn’t see the wire there. Here let me reconnect it\"\nGirl: \"It’s too late for that {INSERT LEGENDARY NICKNAME}!\"\nShe storms out of the room.",
+    "nextNode": "b1-83"
+  },
+  "b1-93": {
+    "type": "CONTINUE",
+    "content": "You walk to the snack bar and see the last chocolate bar calling your name\nYou grab it and scarf it down.",
+    "nextNode": "b1-83"
+  },
+  "b1-94": {
+    "type": "CONTINUE",
+    "content": "\"Hey Lauren what’s this room?\"\nLauren: \"As you can see, this is a break room. People take breaks here.\"\nLauren: \"Any other good questions?\"\n\"I guess not…\"\nYou walk away.You grab it and scarf it down.",
+    "nextNode": "b1-83"
   }
 }
