@@ -1,7 +1,6 @@
 {
   "root": {
     "type": "DECISION",
-    "first": true,
     "content": "Dad: \"Go long Felix!\"\nYou take off running down the field and see the ball racing past you.\n\"I got it, I got it!\"\nYou look down and see a lot of mud.",
     "decisions": [
       ["Dive for the ball", "b1-1", 0],
@@ -435,7 +434,7 @@
   },
   "b1-72": {
     "type": "CONTINUE",
-    "content": "\"That’s awesome! We’ll be able to gather our own test samples.\"\nMr. Hendricks: \"Our research facilities are indeed state of the art…\nMr. Hendricks: \"But I hope you also enjoy the unrivaled beauty of the Island.\"",
+    "content": "\"That’s awesome! We’ll be able to gather our own test samples.\"\nMr. Hendricks: \"Our research facilities are indeed state of the art…\"\nMr. Hendricks: \"But I hope you also enjoy the unrivaled beauty of the Island.\"",
     "nextNode": "b1-73"
   },
   "b1-73": {
@@ -478,20 +477,27 @@
     "type": "DECISION",
     "reset": "TRUE",
     "content": "Pilot: \"Sorry for the rough landing folks. Although it wasn’t my fault... it was the asphalt.\"\nYou turn to see Eddie laughing while still hunched over in pain.\nYou thank the pilot and get off the airplane.\nMr. Hendricks: \"I have to take care of some things. Please follow my assistant Lauren for the tour.\"\nYou and Eddie walk toward Lauren.\nLauren: \"Hi, I’ll be showing you two around I guess. Follow me if you want!\"",
-    "decisions": [["Follow Lauren to lab", "b1-80", 0]]
+    "decisions": [["Follow Lauren to lab", "b1-79a", 0]]
+  },
+  "b1-79a": {
+    "type": "CONTINUE",
+    "content": "You follow Lauren to the entrance of the lab.\nLauren: \"This is the island’s main facility. This is where all our researchers work and stuff.\"\nEveryone walks inside of the facility.\nLauren: \"Welcome to the main lobby. You guys can check out the rest of the facility, or not. Do whatever.\"",
+    "nextNode": "b1-80"
   },
   "b1-80": {
     "type": "DECISION",
-    "content": "You follow Lauren to the entrance of the lab.\nLauren: \"This is the island’s main facility. This is where all our researchers work and stuff.\"\nEveryone walks inside of the facility.\nLauren: \"Welcome to the main lobby. You guys can check out the rest of the facility, or not. Do whatever.\" \nLauren walks to the corner of the room and takes out her phone.\n(Visit all locations and talk to everyone to end tour)",
+    "content": "Lauren stands to the corner of the room on her phone.\n(Visit all locations and talk to everyone to end tour)",
     "decisions": [
       ["Go to cafeteria", "b1-81", 0],
       ["Go to research lab", "b1-82", 0],
       ["Go to break room", "b1-83", 0]
-    ]
+    ],
+    "hiddenButton": ["End tour", "b1-95", 0]
   },
   "b1-81": {
     "type": "DECISION",
-    "content": "You enter the cafeteria and notice the place to be mostly empty.\n\"Makes sense, not many people eat lunch at 4pm.\"\nYou see an older lady with a large sun hat sitting at the patio.",
+    "reset": "TRUE",
+    "content": "You enter the cafeteria and notice the place to be mostly empty.\nYou see an older lady with a large sun hat sitting at the patio.",
     "decisions": [
       ["Talk to the lady", "b1-84", 0],
       ["Ask Lauren about room", "b1-85", 0],
@@ -523,13 +529,13 @@
   },
   "b1-85": {
     "type": "CONTINUE",
-    "content": "\"Hey Lauren can you tell me about the cafeteria.\"\nLauren: \"The cafeteria? People eat here. That’s about it.\"\n\t\"Do they serve lasagna?\"\nLauren: \"I don’t know, check the menu.\"\n\"I hate lasagna.\"\nLauren: \"Umm okay. Thanks for sharing.\"\nYou walk away.",
+    "content": "\"Hey Lauren can you tell me about the cafeteria.\"\nLauren: \"The cafeteria? People eat here. That’s about it.\"\n\"Do they serve lasagna?\"\nLauren: \"I don’t know, check the menu.\"\n\"I hate lasagna.\"\nLauren: \"Umm okay. Thanks for sharing.\"\nYou walk away.",
     "nextNode": "b1-81"
   },
   "b1-86": {
     "type": "CONTINUE",
     "content": "You head back to the lobby.",
-    "nextNode": "b1-81"
+    "nextNode": "b1-80"
   },
   "b1-82": {
     "type": "DECISION",
@@ -571,7 +577,12 @@
   },
   "b1-94": {
     "type": "CONTINUE",
-    "content": "\"Hey Lauren what’s this room?\"\nLauren: \"As you can see, this is a break room. People take breaks here.\"\nLauren: \"Any other good questions?\"\n\"I guess not…\"\nYou walk away.You grab it and scarf it down.",
+    "content": "\"Hey Lauren what’s this room?\"\nLauren: \"As you can see, this is a break room. People take breaks here.\"\nLauren: \"Any other good questions?\"\n\"I guess not…\"",
     "nextNode": "b1-83"
+  },
+  "b1-95": {
+    "type": "CONTINUE",
+    "content": "You walk up to Lauren.\n\"Okay, I think we mostly checked out everything.\"",
+    "nextNode": "b1-96"
   }
 }

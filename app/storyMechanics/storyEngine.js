@@ -29,6 +29,39 @@ class Graph {
 
       // Check type
       if (currentNode.type === "DECISION") {
+        // Add hiddon button if present
+        let hiddenButton = this.data[[currentNode.name]].hiddenButton;
+        if (hiddenButton != undefined) {
+          let nextName = hiddenButton[1];
+          // Check if nextName is in data
+          if (this.data[[nextName]] != undefined) {
+            // Check if nextName is in visited array
+            if (!visited.includes(nextName)) {
+              let nextNode = new Node(
+                this.data[[nextName]].content,
+                nextName,
+                this.data[[nextName]].type
+              );
+
+              // content at index 0 in decision arr
+              currentNode.hiddenButtonContent = hiddenButton[0];
+              currentNode.hiddenButtonDist = hiddenButton[2];
+              currentNode.hiddenButtonNext = nextNode;
+
+              // Push this.data.nextName onto stack
+              stack.push(nextNode);
+
+              // Add to visited
+              visited.push(nextNode.type);
+            } else {
+              // content at index 0 in decision arr
+              currentNode.hiddenButtonContent = hiddenButton[0];
+              currentNode.hiddenButtonDist = hiddenButton[2];
+              currentNode.hiddenButtonNext = currentNode.nodeMap[nextName];
+            }
+          }
+        }
+
         // Looping through decisions array
         let currentDecisions = this.data[[currentNode.name]].decisions;
 

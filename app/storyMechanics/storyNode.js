@@ -10,6 +10,10 @@ class Node {
     this.decisionDistances = [];
     this.decisions = [];
     this.nodeMap = global.nodeMap;
+    this.visited = false;
+    this.hiddenButtonContent = "";
+    this.hiddenButtonNext = null;
+    this.hiddenButtonDist = 0;
   }
 
   addNode(node) {
@@ -19,6 +23,14 @@ class Node {
 
   setReset(t) {
     this.reset = t;
+  }
+
+  getNextNodes() {
+    return this.nextNodes;
+  }
+
+  setVisited(v) {
+    this.visited = v;
   }
 
   addDistance(d) {

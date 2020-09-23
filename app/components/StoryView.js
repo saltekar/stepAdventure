@@ -182,9 +182,6 @@ export default class StoryView extends React.Component {
 
     if (global.line >= global.currentContent.length) return;
 
-    // Stops when story ends (for testing)
-    let line = global.currentContent[global.line];
-
     // Text visible
     this.setState({ textVisible: true });
 
@@ -204,7 +201,6 @@ export default class StoryView extends React.Component {
       this.setStorage("screenText", global.text);
 
       // Disable blinking cursor decision next
-      let nextLine = global.currentContent[global.line + 1];
       if (
         global.node.type == "DECISION" &&
         global.line == global.currentContent.length - 1
@@ -215,6 +211,9 @@ export default class StoryView extends React.Component {
 
         // Create 'decisions' number of buttons
         this.buttonsCreate(decisions, distances);
+
+        // Check if hidden button should be displayed
+        this.displayHiddenButton();
       }
 
       if (
@@ -225,9 +224,8 @@ export default class StoryView extends React.Component {
         if (global.node.reset == true) {
           global.text = "";
           this.setStorage("screenText", global.text);
-
-          this.setState({ textVisible: false });
         }
+        global.node.setVisited(true);
         global.node = global.node.nextNodes[0];
         this.setStorage("node", global.node);
 
@@ -280,6 +278,34 @@ export default class StoryView extends React.Component {
     }
   };
 
+  // Displays hidden button if all next nodes visited
+  displayHiddenButton = () => {
+    if (global.node.hiddenButtonContent == undefined) return;
+
+    let visitedCount = 0;
+    for (let i = 0; i < global.node.nextNodes.length; i++) {
+      if (global.node.nextNodes[i].visited == true) {
+        visitedCount += 1;
+      }
+    }
+
+    if (visitedCount == global.node.nextNodes.length) {
+      this.setState({ ["button" + 4 + "Visible"]: true });
+      this.setState({
+        ["button" + 4 + "Text"]: global.node.hiddenButtonContent
+      });
+
+      // Display dist if present
+      if (global.node.hiddenButtonDist != 0) {
+        this.setState({
+          ["decision" + 4 + "Distance"]: global.node.hiddenButtonDist
+        });
+        this.setState({ ["dist" + 4 + "Visible"]: true });
+        this.setState({ ["tokenButton" + 4 + "Visible"]: true });
+      }
+    }
+  };
+
   // Hides buttons after decision made
   hideButtons = val => {
     for (let i = 1; i < 5; i++) {
@@ -314,7 +340,15 @@ export default class StoryView extends React.Component {
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
     // Set next node
-    global.node = global.node.nextNodes[val - 1];
+    global.node.setVisited(true);
+
+    // if hidden button is pressed
+    if (global.node.hiddenButtonNext != undefined && val == 4) {
+      global.node = global.node.hiddenButtonNext;
+    } else {
+      global.node = global.node.nextNodes[val - 1];
+    }
+
     this.setStorage("node", global.node);
 
     global.line = 0;
@@ -338,6 +372,7 @@ export default class StoryView extends React.Component {
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
     // Set next node
+    global.node.setVisited(true);
     global.node = global.node.nextNodes[global.decisionChosen - 1];
     this.setStorage("node", global.node);
 
