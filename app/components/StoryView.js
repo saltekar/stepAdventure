@@ -30,6 +30,7 @@ export default class StoryView extends React.Component {
     global.tokenCnt = 0;
     global.decisionChosen = -1;
     global.stepsPerToken = 25;
+    global.reset = false;
 
     this.state = {
       textVisible: false,
@@ -182,6 +183,12 @@ export default class StoryView extends React.Component {
 
     if (global.line >= global.currentContent.length) return;
 
+    if (global.reset == true) {
+      global.text = "";
+      this.setStorage("screenText", global.text);
+      global.reset = false;
+    }
+
     // Text visible
     this.setState({ textVisible: true });
 
@@ -222,8 +229,7 @@ export default class StoryView extends React.Component {
         global.node.nextNodes.length > 0
       ) {
         if (global.node.reset == true) {
-          global.text = "";
-          this.setStorage("screenText", global.text);
+          global.reset = true;
         }
         global.node.setVisited(true);
         global.node = global.node.nextNodes[0];
