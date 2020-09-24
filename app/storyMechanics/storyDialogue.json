@@ -1,7 +1,6 @@
 {
   "root": {
     "type": "DECISION",
-    "first": true,
     "content": "Dad: \"Go long Felix!\"\nYou take off running down the field and see the ball racing past you.\n\"I got it, I got it!\"\nYou look down and see a lot of mud.",
     "decisions": [
       ["Dive for the ball", "b1-1", 0],
@@ -363,18 +362,227 @@
     ]
   },
   "b1-60": {
-    "type": "CONTINUE",
+    "type": "DECISION",
     "content": "\"Thanks Mom, I’ll put it in my new room.\"\nYou put the ribbon in your backpack.",
-    "nextNode": "b1-62"
+    "decisions": [["Walk to car ", "b1-62", 0]]
   },
   "b1-61": {
-    "type": "CONTINUE",
-    "content": "\"“Thanks Mom, but actually can you keep that in my room.\"",
-    "nextNode": "b1-62"
+    "type": "DECISION",
+    "content": "\"Thanks Mom, but actually can you keep that in my room.\"",
+    "decisions": [["Walk to car ", "b1-62", 0]]
   },
   "b1-62": {
+    "type": "CONTINUE",
+    "content": "Driver: \"Alright. Mr. Hernandez, we’ve reached our destination.\"\n\"Thanks!\"\nYou step out of the car onto a small airfield.\nMr. Hendricks waves to you standing in front of a small jet.\nMr. Hendricks: \"Felix my boy, come come. Let’s get you settled in.\"\nMr. Hendricks: \"Help yourself to any refreshments… that is if our friend Eddie hasn’t already devoured them aha ha.\"",
+    "nextNode": "b1-63"
+  },
+  "b1-63": {
     "type": "DECISION",
-    "content": "",
-    "decisions": [["Walk to car ", "b1-63", 0]]
+    "reset": "TRUE",
+    "content": "You walk up the stairs into the jet and take a seat.\nEddie: \"Hey Felix! You check out these snacks!? They got every soda you can think of!\"\nEddie: \"And do you see these enormous seats! They go all the way back!\"",
+    "decisions": [
+      ["It's amazing", "b1-64", 0],
+      ["It really is someting else", "b1-65", 0]
+    ]
+  },
+  "b1-64": {
+    "type": "CONTINUE",
+    "content": "\"This plane is amazing! I can get used to this.\"",
+    "nextNode": "b1-66"
+  },
+  "b1-65": {
+    "type": "CONTINUE",
+    "content": "\"Uhh you’re right this plane really is something else.\"",
+    "nextNode": "b1-66"
+  },
+  "b1-66": {
+    "type": "CONTINUE",
+    "content": "Eddie: \"And these chips! Don't even get me started! They’re the crispiest I’ve ever tasted!\"\n\"Eddie I’m pretty sure those are the same chips we get at school.\"\nEddie: \"Really?! I don’t know man, these just taste CRISPIER for some reason.\"\nMr. Hendricks takes a seat in front of you.",
+    "nextNode": "b1-67"
+  },
+  "b1-67": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"As we speak we are headed towards a private Island 76 nautical miles off the coast of Guam.\"\nMr. Hendricks: \"I have given you both a brief overview of our monumental efforts, but it’s time you understood what we are truly trying to accomplish.\"",
+    "decisions": [
+      ["Wait... an island?", "b1-68", 0],
+      ["Eddie, you okay?", "b1-69", 0]
+    ]
+  },
+  "b1-68": {
+    "type": "CONTINUE",
+    "content": "Wait… did you say an island?",
+    "nextNode": "b1-70"
+  },
+  "b1-69": {
+    "type": "CONTINUE",
+    "content": "You look over and see Eddie hunched over grabbing his stomach in discomfort.\n\"Hey Eddie, you okay?\"\nEddie: \"Yea I think 9 sodas was one too many...and not to mention my extreme fear of heights.\"\nEddie: \"But wait.. Did Hendricks say something about an island?\"\nMr. Hendricks looks at Eddie and gestures to the flight attendant.",
+    "nextNode": "b1-70"
+  },
+  "b1-70": {
+    "type": "DECISION",
+    "content": "'Mr. Hendricks: \"Yes. Our laboratory was built on an island. Prime location for our salinity testing using our research vessels.\"",
+    "decisions": [
+      ["Beaches sound amazing", "b1-71", 0],
+      ["Very convenient gathering samples", "b1-72", 0]
+    ]
+  },
+  "b1-71": {
+    "type": "CONTINUE",
+    "content": "'\"The beaches on the island must be incredible!\"\nMr. Hendricks: \"Aha ha my boy, yes the Island is truly breathtaking...\"\nMr. Hendricks: \"But I hope you take full advantage of our research facilities.",
+    "nextNode": "b1-73"
+  },
+  "b1-72": {
+    "type": "CONTINUE",
+    "content": "\"That’s awesome! We’ll be able to gather our own test samples.\"\nMr. Hendricks: \"Our research facilities are indeed state of the art…\"\nMr. Hendricks: \"But I hope you also enjoy the unrivaled beauty of the Island.\"",
+    "nextNode": "b1-73"
+  },
+  "b1-73": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks looks out the plane window at the islands beneath us.\nMr. Hendricks: \"It seems like a lifetime ago when I embarked on this mission.\"\nMr. Hendricks: \"33 years ago our company went on a humanitarian trip to an impoverished village.\"\nMr. Hendricks: \"Granted, the trip’s sole purpose was to gain good publicity, but something I saw changed me forever.\"",
+    "nextNode": "b1-74"
+  },
+  "b1-74": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"It wasn’t the absence of electricity, the lack of clean water, or even the poor infrastructure…\"\nMr. Hendricks: \"What changed me was the hope. This notion of hope was never shared explicitly, but rather seen through small moments.\"\nMr. Hendricks: \"Through the laughter of children playing soccer…the sparkle in a mother’s eyes looking at her infant child. These moments were forever ingrained in my mind.\"\nMr. Hendricks: \"But alas, this future they hope for is simply unattainable…\"",
+    "decisions": [
+      ["Unattainable?", "b1-75", 0],
+      ["We can help!", "b1-76", 0]
+    ]
+  },
+  "b1-75": {
+    "type": "CONTINUE",
+    "content": "\"Unattainable? There has to be something we can do!\"",
+    "nextNode": "b1-77"
+  },
+  "b1-76": {
+    "type": "CONTINUE",
+    "content": "\"Are you saying the work we do can help?\"",
+    "nextNode": "b1-77"
+  },
+  "b1-77": {
+    "type": "CONTINUE",
+    "content": "Mr. Hendricks: \"Yes, I plan to help the less fortunate in every way I can. Clean water is just the beginning.\"\nYou look out the window to see a bunch of small islands passing by. \nLooking more closely you see small houses and scattered farms.",
+    "nextNode": "b1-78"
+  },
+  "b1-78": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"I have been aiding the people of this archipelago for decades with basic infrastructure, resources, and whatever else they may need.\"\nMr. Hendricks: \"We have maintained a close relationship with their leadership.\"\nMr. Hendricks: \"Last year, they generously allowed us to conduct our research on one of their many vacant islands.\"\nPilot: \"This is your pilot speaking. We are about to make our final descent.\"\nEveryone gets ready for landing.",
+    "nextNode": "b1-79"
+  },
+  "b1-79": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Pilot: \"Sorry for the rough landing folks. Although it wasn’t my fault... it was the asphalt.\"\nYou turn to see Eddie laughing while still hunched over in pain.\nYou thank the pilot and get off the airplane.\nMr. Hendricks: \"I have to take care of some things. Please follow my assistant Lauren for the tour.\"\nYou and Eddie walk toward Lauren.\nLauren: \"Hi, I’ll be showing you two around I guess. Follow me if you want!\"",
+    "decisions": [["Follow Lauren to lab", "b1-79a", 0]]
+  },
+  "b1-79a": {
+    "type": "CONTINUE",
+    "content": "You follow Lauren to the entrance of the lab.\nLauren: \"This is the island’s main facility. This is where all our researchers work and stuff.\"\nEveryone walks inside of the facility.\nLauren: \"Welcome to the main lobby. You guys can check out the rest of the facility, or not. Do whatever.\"",
+    "nextNode": "b1-80"
+  },
+  "b1-80": {
+    "type": "DECISION",
+    "content": "Lauren stands to the corner of the room on her phone.\n(Visit all locations and talk to everyone to end tour)",
+    "decisions": [
+      ["Go to cafeteria", "b1-81", 0],
+      ["Go to research lab", "b1-82", 0],
+      ["Go to break room", "b1-83", 0]
+    ],
+    "hiddenButton": ["End tour", "b1-95", 0]
+  },
+  "b1-81": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "You enter the cafeteria and notice the place to be mostly empty.\nYou see an older lady with a large sun hat sitting at the patio.",
+    "decisions": [
+      ["Talk to the lady", "b1-84", 0],
+      ["Ask Lauren about room", "b1-85", 0],
+      ["Head back to lobby", "b1-86", 0]
+    ]
+  },
+  "b1-84": {
+    "type": "DECISION",
+    "content": "You approach the woman and she glances back at you.\nLady: \"Hello, are you new? I haven’t seen you around.\"\n\"Hi, I’m Felix. I just got to the island a few minutes ago.\"\nLady: \"Oh my husband hasn’t mentioned you. I’m Mrs. Hendricks. Pleasure.\"\nYou shake her hand.\nMrs. Hendricks: \"Let me know if you have any questions.\"",
+    "decisions": [
+      ["How's the food?", "b1-87", 0],
+      ["What do you do around here?", "b1-88", 0]
+    ]
+  },
+  "b1-87": {
+    "type": "DECISION",
+    "content": "\"How’s the food here?\"\nMrs. Hendricks: \"Satisfactory, although not quite up to my standards.\"\n\"Good thing I'm not picky!\"\n\"As long as there’s hot sauce lying around, I’m good to go.\"\nMrs. Hendricks: \"Ah I see...hot sauce...that will certainly SPICE things up!\"\nMrs. Hendricks clears her throat and checks the time\nMrs. Hendricks: \"Well if you’ll excuse me, I must bid you farewell. I’m sure we’ll meet again.\"",
+    "decisions": [["Head back to cafeteria", "b1-89", 0]]
+  },
+  "b1-89": {
+    "type": "CONTINUE",
+    "content": "You head back to the cafeteria",
+    "nextNode": "b1-81"
+  },
+  "b1-88": {
+    "type": "DECISION",
+    "content": "\"What do you do around here?\"\nMrs. Hendricks: \"Well a variety of things really. At times I assist my husband with basic operations, but I mostly focus on writing my novel.\"\n\"Woah you’re an author? That’s super cool. What are you writing about?\"\nMrs. Hendricks: \"A tale of discovery and righteousness.\"\nYou smile and nod your head pretending to know what that means.\nMrs. Hendricks: \"I must be on my way now Felix dear, this novel will not write itself!\"\n\"Of course, it was nice to meet you!\"",
+    "decisions": [["Head back to cafeteria", "b1-89", 0]]
+  },
+  "b1-85": {
+    "type": "CONTINUE",
+    "content": "\"Hey Lauren can you tell me about the cafeteria.\"\nLauren: \"The cafeteria? People eat here. That’s about it.\"\n\"Do they serve lasagna?\"\nLauren: \"I don’t know, check the menu.\"\n\"I hate lasagna.\"\nLauren: \"Umm okay. Thanks for sharing.\"\nYou walk away.",
+    "nextNode": "b1-81"
+  },
+  "b1-86": {
+    "type": "CONTINUE",
+    "content": "You head back to the lobby.",
+    "nextNode": "b1-80"
+  },
+  "b1-82": {
+    "type": "DECISION",
+    "content": "You walk down the hall to find a large room labeled \"Research Lab.\"\n\"Oh this looks cool.\"\nYou open the door and walk in. You look in awe at the state of the art equipment.\nResearcher: \"Hey, what are you doing around here? Are you lost?\"\n\"Oh. Hi, I’m Felix. I just got to the island. I’m just checking the lab out.\"\nResearcher: \"The name’s Ryan. Dr. Jacobs to you. You must be one of the new interns.\"\nDr. Jacobs: \"I’m glad you’re kid, we got some vials that need a good scrubbing.\"\nDr. Jacobs: \"Put some elbow grease into it, you don’t want to end up like the last guy...\"",
+    "decisions": [
+      ["I'm not cleaning vials!", "b1-90", 0],
+      ["Sorry, I'm not an intern", "b1-91", 0]
+    ]
+  },
+  "b1-90": {
+    "type": "DECISION",
+    "content": "\"I didn’t come here to clean vials!\"\n\"Mr. Hendricks brought me here to conduct research on ocean salinity levels.\"\nDr. Jacobs: \"Looks like we’ve got a real hot shot over here! Isn’t that just dandy.\"\nDr. Jacobs: \"Now get lost kid, you still can’t be here. This is a private lab.\"\nYou exit the lab.",
+    "decisions": [["Head back to lobby", "b1-86", 0]]
+  },
+  "b1-91": {
+    "type": "DECISION",
+    "content": "\"Sorry but I think you’re mistaken, I’m not an intern. I just started here as a full time researcher.\"\nDr. Jacobs: \"Oh is that so? Well well pardon my ignorance. How dare I mistake a prodigy like yourself for a measly intern!\"\nDr. Jacobs: \"However distinguished you may be, this is still a private lab. I trust you’re smart enough to find the door.\"\nYou leave the lab.",
+    "decisions": [["Head back to lobby", "b1-86", 0]]
+  },
+  "b1-83": {
+    "type": "DECISION",
+    "content": "You enter the break room to see modern style couches, fun chairs, foosball table, and a mini bar with snacks and refreshments.\nAt one of the TVs is a girl about your age playing video games.",
+    "decisions": [
+      ["Talk to the girl", "b1-92", 0],
+      ["Eat some snacks", "b1-93", 0],
+      ["Ask Lauren about room", "b1-94", 0],
+      ["Head back to the lobby", "b1-86", 0]
+    ]
+  },
+  "b1-92": {
+    "type": "CONTINUE",
+    "content": "While walking towards her you trip on one of the wires and disconnect the gaming console.\nGirl: \"HEY WHAT'S YOUR PROBLEM!? I just lost because of you!\"\n\"Oh I’m so sorry I didn’t see the wire there. Here let me reconnect it\"\nGirl: \"It’s too late for that {INSERT LEGENDARY NICKNAME}!\"\nShe storms out of the room.",
+    "nextNode": "b1-83"
+  },
+  "b1-93": {
+    "type": "CONTINUE",
+    "content": "You walk to the snack bar and see the last chocolate bar calling your name\nYou grab it and scarf it down.",
+    "nextNode": "b1-83"
+  },
+  "b1-94": {
+    "type": "CONTINUE",
+    "content": "\"Hey Lauren what’s this room?\"\nLauren: \"As you can see, this is a break room. People take breaks here.\"\nLauren: \"Any other good questions?\"\n\"I guess not…\"",
+    "nextNode": "b1-83"
+  },
+  "b1-95": {
+    "type": "CONTINUE",
+    "content": "You walk up to Lauren.\n\"Okay, I think we mostly checked out everything.\"",
+    "nextNode": "b1-96"
   }
 }
