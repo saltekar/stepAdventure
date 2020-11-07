@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 You sail for an hour, enjoying the light small talk.
 Ava: “Ok perfect, we’re here.”
 Ava scoops the water below and obtains the sample.
@@ -7,3 +8,7 @@ Ava: “Come on! Hurry up, let's go!”
 “Uhhh.. I’m trying…”
 Ava: “What!? I thought you said you knew how to drive this thing.”
 You continue to yank the throttle and the engine roars.
+=======
+“Thanks Mom, I’ll put it in my new room.”
+You put the ribbon in your backpack.
+>>>>>>> ff31199e2ea9c4b3d0cdbb71f3d945e5aea7d51c

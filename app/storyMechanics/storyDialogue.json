@@ -364,12 +364,21 @@
   "b1-60": {
     "type": "DECISION",
     "content": "\"Thanks Mom, I’ll put it in my new room.\"\nYou put the ribbon in your backpack.",
+<<<<<<< HEAD
     "decisions": [["Walk to car ", "b1-62", 0]]
   },
   "b1-61": {
     "type": "DECISION",
     "content": "\"Thanks Mom, but actually can you keep that in my room.\"",
     "decisions": [["Walk to car ", "b1-62", 0]]
+=======
+    "decisions": [["Walk to car", "b1-62", 0]]
+  },
+  "b1-61": {
+    "type": "DECISION",
+    "content": "\"“Thanks Mom, but actually can you keep that in my room.\"",
+    "decisions": [["Walk to car", "b1-62", 0]]
+>>>>>>> ff31199e2ea9c4b3d0cdbb71f3d945e5aea7d51c
   },
   "b1-62": {
     "type": "CONTINUE",
@@ -377,6 +386,7 @@
     "nextNode": "b1-63"
   },
   "b1-63": {
+<<<<<<< HEAD
     "type": "DECISION",
     "reset": "TRUE",
     "content": "You walk up the stairs into the jet and take a seat.\nEddie: \"Hey Felix! You check out these snacks!? They got every soda you can think of!\"\nEddie: \"And do you see these enormous seats! They go all the way back!\"",
@@ -977,5 +987,29 @@
     "reset": "TRUE",
     "content": "You sail for an hour, enjoying the light small talk.\nAva: \"Ok perfect, we’re here.\"\nAva scoops the water below and obtains the sample.\nAva: \"Let's head on back.\"\nYou pull the throttle and the boat doesn’t move\nAva: \"Come on! Hurry up, let's go!\"\n\"Uhhh.. I’m trying…\"\nAva: \"What!? I thought you said you knew how to drive this thing.\"\nYou continue to yank the throttle and the engine roars.",
     "nextNode": "b1-161"
+=======
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "You walk up the stairs into the jet and take a seat.\nEddie: \"Hey Felix! You check out these snacks!? They got every soda you can think of!\"\nEddie: \"And do you see these enormous seats! They go all the way back!\"",
+    "decisions": [
+      ["It's amazing", "b1-64", 0],
+      ["It is really is something else", "b1-65", 0]
+    ]
+  },
+  "b1-64": {
+    "type": "CONTINUE",
+    "content": "\"This plane is amazing! I can get used to this.\"",
+    "nextNode": "b1-66"
+  },
+  "b1-65": {
+    "type": "CONTINUE",
+    "content": "\"Uhh you’re right this plane really is something else.\"",
+    "nextNode": "b1-66"
+  },
+  "b1-66": {
+    "type": "CONTINUE",
+    "content": "Eddie: \"And these chips! Don't even get me started! They’re the crispiest I’ve ever tasted!\"\n\"Eddie I’m pretty sure those are the same chips we get at school.\"\nEddie: \"Really?! I don’t know man, these just taste CRISPIER for some reason.\"\nMr. Hendricks takes a seat in front of you.",
+    "nextNode": "b1-67"
+>>>>>>> ff31199e2ea9c4b3d0cdbb71f3d945e5aea7d51c
   }
 }
