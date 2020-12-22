@@ -584,5 +584,398 @@
     "type": "CONTINUE",
     "content": "You walk up to Lauren.\n\"Okay, I think we mostly checked out everything.\"",
     "nextNode": "b1-96"
+  },
+  "b1-96": {
+    "type": "DECISION",
+    "content": "Lauren: \"By the way, don’t forget to get dressed for tonight’s quarterly banquet, everyone’s going to be there.\"\nYou and Eddie nervously look at each other, as none of you have suits.\nLauren: \"How professional... I’ll have some here ready for you.\"",
+    "decisions": [
+      ["Bungalows?", "b1-97", 0],
+      ["Thanks", "b1-98", 0]
+    ]
+  },
+  "b1-97": {
+    "type": "CONTINUE",
+    "content": "\"We have bungalows?\"\nLauren: \"Oh, did no one tell you guys? You two will be living in the two vacant bungalows near the coast.\"\nLauren: \"Surely, beats my tiny apartment down in employee housing… Don’t know how you two ended up with that.\"\nEddie: \"That’s so cool! Let’s check it out.\"",
+    "nextNode": "b1-99"
+  },
+  "b1-98": {
+    "type": "CONTINUE",
+    "content": "\"Thanks, you're a lifesaver.\"\nEddie: \"Dope! Oh! Oh! Can you give me an old fashioned white suit like in the Godfather?!\"\nLauren: \"Sorry Eddie, no way that’s happening. You’re getting a normal suit.\"\nEddie: \"You know what, I’d like to speak with your manager.\"",
+    "nextNode": "b1-99"
+  },
+  "b1-99": {
+    "type": "CONTINUE",
+    "content": "Lauren: \"You guys don’t have time for that right now. The banquet is in 10 minutes. Hurry up and get changed.\"\nLauren hands you both suits.\nEddie: \"I call the gray suit!\"\nEddie takes the gray suit and runs off.\nYou grab the navy blue one and go change.",
+    "nextNode": "b1-100"
+  },
+  "b1-100": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "You and Eddie walk out in the suits.\nEddie: \"Damn Felix… Looking good my dude.\"\nFelix: \"Me? Look at you Mr. Fresh.\"\nEddie hits a runway pose.\nLauren: \"I’ll admit you guys clean up well, but we don’t have all day. Let’s get a move on boys.\"",
+    "decisions": [["Walk to main hall", "b1-101", 150]]
+  },
+  "b1-101": {
+    "type": "DECISION",
+    "content": "You walk into the main hall to find a sea of fancy dressed people and tables.\nThe sound of small talk and laughter floods the room.\nEddie: \"Ok Felix, I’ll see you on the other side. It’s time to mingle.\"\nYou see Eddie go ahead and get lost in the crowd.\nYou turn to Lauren with a nervous look.\nLauren: \"Why are you looking at me? Go be social.\"\nYou walk forward into the crowd.",
+    "decisions": [
+      ["Walk to the right", "b1-102", 25],
+      ["Walk to the left", "b1-103", 25]
+    ]
+  },
+  "b1-102": {
+    "type": "CONTINUE",
+    "content": "You walk to the right and a man suddenly grabs your shoulder.\n\tMan: \"Hey do you know if they are serving pizza tonight?\"\n\t\"Uhh I don’t know… probably not.\"\n\tMan: \"Good… I hate pizza!\"\n\tThe man walks away in a hurry.",
+    "nextNode": "b1-104"
+  },
+  "b1-103": {
+    "type": "CONTINUE",
+    "content": "You walk to the left and overhear Eddie talking to a group of people.\n\tEddie: \"And then I was like... a baby? I don't even know how to spell.\"\n\tThe group of people erupt in laughter.",
+    "nextNode": "b1-104"
+  },
+  "b1-104": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "You find your table and sit next to an older looking gentleman.\n\"Hi, I’m Felix. One of the new employees.\"\nMr. Brightwater: \"Pleasure to meet you Felix. My name is Mr. Brightwater. I run the purification testing group.\"\n(Ask both questions to continue.)",
+    "decisions": [
+      ["Ask him about job", "b1-105", 0],
+      ["Ask him about Mr. Hendricks", "b1-106", 0]
+    ],
+    "hiddenButton": ["End conversation", "b1-107", 0]
+  },
+  "b1-105": {
+    "type": "CONTINUE",
+    "content": "\"How’s working on purification testing? Do you guys go out in the ocean for testing?\"\nMr. Brightwater: \"Yes, in fact we do. Every wednesday we go out on the research boat. It’s like a mini vacation for our group haha.\"\n\"That sounds so fun!\"\nMr. Brightwater: \"It sure is! You sure come with us one of these days.\"",
+    "nextNode": "b1-104"
+  },
+  "b1-106": {
+    "type": "CONTINUE",
+    "content": "\"So what’s Mr. Hendricks like?\"\nMr. Brightwater: \"Well I haven’t been around him much, but I’ve heard good things about him.\"\nMr. Brightwater: \"Mr. Hendricks mostly keeps to himself, he is a very driven and busy man.\"\n\"Yeah I can imagine, but I hope I get to know him better!\"\nMr. Brightwater: \"I wouldn’t count on it…\"",
+    "nextNode": "b1-104"
+  },
+  "b1-107": {
+    "type": "CONTINUE",
+    "content": "Everyone goes silent, as Mr. Hendricks takes the stage.\nMr. Hendricks: \"Welcome ladies and gentlemen! It is a pleasure to be hosting this wonderful banquet once again!\"\nMr. Hendricks: \"Before me I see the brightest minds, the most driven individuals, and the most kind-hearted people I’ve met!\"\nMr. Hendricks: \"We’ve all worked tirelessly towards achieving this noble mission, and I am truly proud of the progress we’ve made.\"",
+    "nextNode": "b1-108"
+  },
+  "b1-108": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"Never lose sight of why we do what we do. There are people out there whose lives we could truly improve, and THAT’S our mission, to help those who need it the most.\"\nMr. Hendricks: \"Lastly, It is my pleasure to introduce the newest additions to our team - Felix Hernandez and Edward Zhao.\"\nMr. Hendricks: \"Enjoy yourselves and have a splendid night!\"\nThe crowd applauses.",
+    "nextNode": "b1-109"
+  },
+  "b1-109": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Mr. Brightwater: \"What a speech. The man always knows what to say.\"\nAcross the table, you hear a loud shatter.\nWoman: \"ITS RUINED! How dare you! This dress costs more than what you make in a year!\"\nWaiter: \"I’m so sorry ma’am, I’ll get that cleaned up right away.\"\nThe waiter leaves in a hurry to help the woman.\nWoman: \"It’s so hard to find good help these days...\"",
+    "decisions": [
+      ["Agree with her", "b1-110", 0],
+      ["Defend the waiter", "b1-111", 0]
+    ]
+  },
+  "b1-110": {
+    "type": "CONTINUE",
+    "content": "\"I’m so sorry ma’am, can I offer you a napkin?\nYou hand the woman a napkin.\nWoman: \"Thank you. Glad there’s someone here that has good manners.\" \n\"No problem. You’d think carrying a few plates would be a simple task...\"\nWoman: \"Precisely. Now I must get this cleaned up.\"\nThe woman leaves.\nMr. Brightwater: \"Smart of you to get on her good side. That woman is Mrs. Higgins, one of the most generous donors of this operation.\"",
+    "nextNode": "b1-114"
+  },
+  "b1-111": {
+    "type": "DECISION",
+    "content": "\"Excuse me ma’am, but I saw what happened...it was clearly an accident.\"\nWoman: \"Well don’t you have a smart mouth. Do you know who I am, child?!\"\nWoman: \"I am Mrs. Higgins, one of the most generous donors of this operation.\"\nWoman: \"So, I highly advise you to apologize for your rude remarks.\"",
+    "decisions": [
+      ["Apologize", "b1-112", 0],
+      ["Don’t Apologize", "b1-113", 0]
+    ]
+  },
+  "b1-112": {
+    "type": "CONTINUE",
+    "content": "\"I’m so sorry Mrs. Higgins for speaking out of line. I had no idea who you were.\"\nMrs. Higgins: \"Apology accepted. I hope you watch that mouth going forward. It could get you in a heap of trouble.\"\nMrs. Higgins leaves.",
+    "nextNode": "b1-114"
+  },
+  "b1-113": {
+    "type": "CONTINUE",
+    "content": "\"It’s nice to meet you Mrs. Higgins, but I don’t think I need to apologize.\"\nMrs. Higgins: \"Good heavens! Aren't you a stubborn one! I’ll be sure to remember YOU.\"\nShe storms off.",
+    "nextNode": "b1-114"
+  },
+  "b1-114": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "After a few hours of mandatory socializing, you leave to your bungalow.\nAs you exit the main hall, you notice the waiter from earlier taking the trash out.\n\"Hey aren’t you the waiter from earlier.\"\nWaiter: \"Yeah, sorry the accident earlier.\"",
+    "decisions": [
+      ["Accidents happen", "b1-115", 0],
+      ["Does that happen often?", "b1-116", 0]
+    ]
+  },
+  "b1-115": {
+    "type": "DECISION",
+    "content": "\"It’s okay, accidents happen man. That lady was pretty rude though.\"\nWaiter: \"Yeah. Mrs. Higgins isn’t the biggest fan of me.\"\n\"Haha.. Ya I could tell. My name’s Felix by the way.\"\nToka: \"Good to meet you, I’m Toka. You know you’re the first employee to ask for my name.\"\nToka: \"I have to get back to work, but I’ll see you around.\"\n\"Nice to meet you. See you later.\"\nYou walk to your bungalow.",
+    "decisions": [["Walk to your bungalow", "b1-117", 150]]
+  },
+  "b1-116": {
+    "type": "DECISION",
+    "content": "\"So, does that happen often? Or was that a one time thing?\"\nWaiter: \"It rarely happens, but for a huge event like tonight it’s hard to stay perfect.\"\n\"Ah I feel you, your job definitely looks like it could be difficult sometimes.\"\nWaiter: \"I know! Everyone thinks being a waiter is the easiest job around, but it isn’t!\"\n\"Anyways, I’m Felix, what’s your name?\"\nToka: \"Nice to meet you Felix, I’m Toka.\n\"Alright Toka, you have a good night.\"\nYou walk to your bungalow.",
+    "decisions": [["Walk to your bungalow", "b1-117", 150]]
+  },
+  "b1-117": {
+    "type": "CONTINUE",
+    "content": "You get to your bungalow and take a shower.\nExhausted, you head to bed.\nJust as you get comfortable under the sheets, you hear ... .\nYou look out the window to see tree branches being flung by strong winds.\n\"It was probably just the wind.\"\nYou get back into bed.",
+    "nextNode": "b1-118"
+  },
+  "b1-118": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Suddenly, you hear repeated tapping coming from outside.\nThe noise slowly fades away.",
+    "decisions": [
+      ["Hide under your covers.", "b1-119", 0],
+      ["Check it out", "b1-120", 20]
+    ]
+  },
+  "b1-119": {
+    "type": "CONTINUE",
+    "content": "You’re beyond spooked and decide the only safe place is under the covers.\n\"Maybe If I sleep it’ll go away…\"",
+    "nextNode": "b1-123"
+  },
+  "b1-120": {
+    "type": "DECISION",
+    "content": "You get up and open the door.\nYou look out and see a shadow scurry off into the distance.",
+    "decisions": [
+      ["Go outside to investigate", "b1-121", 50],
+      ["Head back inside", "b1-122", 0]
+    ]
+  },
+  "b1-121": {
+    "type": "DECISION",
+    "content": "You run after the shadowy figure, but it has vanished.\nYou look around and nothing is out of the ordinary.\nThe crashing of waves and constant howling of the wind mask all other sounds.\nThe scenery is almost pleasant.",
+    "decisions": [["Head back inside", "b1-122", 0]]
+  },
+  "b1-122": {
+    "type": "CONTINUE",
+    "content": "Confused and slightly concerned, you head back to bed.\nRight when you take a step, you see a small note on the floor.\nIt reads \"GET OUT\" with bright red ink.\nYour hand shakes uncontrollably as you reach for the note.\nYou can’t believe this is happening.\nThousands of questions rush into your mind.\nWho did this? Why? On my first day?\nYou lay down on your bed, eyes wide open.",
+    "nextNode": "b1-129"
+  },
+  "b1-123": {
+    "type": "DECISION",
+    "content": "You wake up and look around in a daze.\nYou get up and look outside, still startled from last night.\nYou open the door and a cool sea breeze gently flows by.\nIt’s a beautiful sunny day with no clouds in the sky.",
+    "decisions": [
+      ["Admire the scenery", "b1-124", 0],
+      ["Head back inside", "b1-125", 0]
+    ]
+  },
+  "b1-124": {
+    "type": "CONTINUE",
+    "content": "\"Wow, that's some good scenery!\"\nYou head back inside.",
+    "nextNode": "b1-126"
+  },
+  "b1-125": {
+    "type": "CONTINUE",
+    "content": "You head back inside.",
+    "nextNode": "b1-126"
+  },
+  "b1-126": {
+    "type": "DECISION",
+    "content": "You step on a piece of paper and look down.\nIt reads \"GET OUT\" with bright red ink.\nYour stomach drops.\n\"Who could possibly not want me here?\"\nYou pick up the note.",
+    "decisions": [
+      ["Crumble it and put it in drawer", "b1-127", 0],
+      ["Put it in bag", "b1-128", 0]
+    ]
+  },
+  "b1-127": {
+    "type": "DECISION",
+    "content": "\"I can’t think about this right now, I have to go to work.\"\nYou crumble the note up and put it in your drawer.\nYou get ready for your first day.",
+    "decisions": [["Walk to the lab", "b1-130", 150]]
+  },
+  "b1-128": {
+    "type": "DECISION",
+    "content": "Your alarm goes off.\n\"I’m going to be late!\"\nYou quickly put the note in your bag and get ready for your first day.",
+    "decisions": [["Walk to the lab", "b1-130", 150]]
+  },
+  "b1-129": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "You wake up groggy, barely getting any sleep.\nYour eyes immediately focus on the note from last night.\nThe alarm goes off.\nYou pick it up and quickly shove it into your bag.\nYou get dressed and head for your first day.",
+    "decisions": [["Walk to the lab", "b1-130", 150]]
+  },
+  "b1-130": {
+    "type": "DECISION",
+    "content": "You rush into the lobby of the lab and see Eddie laying on one of the sofas.\nEddie: \"Oh hey Felix, what took you so long?\"\n\"Hey, I’m alright...didn’t get much sleep.\"\nEddie: \"Really? I slept like a baby! Is your bed not comfortable or something?\"",
+    "decisions": [
+      ["Everythings fine", "b1-131", 0],
+      ["I got a note…", "b1-132", 0]
+    ]
+  },
+  "b1-131": {
+    "type": "CONTINUE",
+    "content": "\"Everythings fine, I’m just not used to the new bed yet.\"\nEddie: \"You always were the more delicate one.\"\nYou roll your eyes\n\"Yeah I guess you’re right about that.\"",
+    "nextNode": "b1-133"
+  },
+  "b1-132": {
+    "type": "CONTINUE",
+    "content": "\"I got a note last night…\"\nEddie: \"Oh cool, I got a welcome note too. It also came with some chocolates and stuff.\"\n\"No Eddie. Someone sent me this note in the middle of the night. It read GET OUT in red ink.\"\nEddie: \"What… wait… you think it was written in like blood?\"\n\"Umm no, pretty sure just a red marker.\"\nEddie: \"Oh ok. It was probably just someone hazing the new guys. But if it was blood then probably you got yourself a serious situation buddy.\"\nEddie: \"Nobody’s going to use blood for a harmless prank, but murderers...yeah they definitely use blood.\"",
+    "nextNode": "b1-133"
+  },
+  "b1-133": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Dr. Jacobs turns the corner approaching you.\nDr. Jacobs: \"Just your luck kid, looks like you’re with me. Let’s go.\"\nYou forge a smile and say bye to Eddie\nDr. Jacobs begins to walk through the hall. You follow.\nDr. Jacobs: \"Aw man I really hate having to get the newbies.\"",
+    "decisions": [["Walk to research lab", "b1-134", 50]]
+  },
+  "b1-134": {
+    "type": "DECISION",
+    "content": "You and Dr. Jacobs enter the lab to see the rest of the team sitting around a table\nDr. Jacobs: \"Alright folks I brought us the latest newbie! Freddy, introduce yourself to the team.\"",
+    "decisions": [
+      ["Introduce yourself (Confrontational)", "b1-135", 0],
+      ["Introduce yourself (Nice)", "b1-136", 0]
+    ]
+  },
+  "b1-135": {
+    "type": "CONTINUE",
+    "content": "\"Thanks Dr. Jackie for the warm welcome. My name is Felix and I’m excited to be working with you all.\"\nDr. Jacobs gives you a snarky look.",
+    "nextNode": "b1-137"
+  },
+  "b1-136": {
+    "type": "CONTINUE",
+    "content": "\"Hi everyone my name is Felix. I look forward to working with you all.\"",
+    "nextNode": "b1-137"
+  },
+  "b1-137": {
+    "type": "DECISION",
+    "content": "Laura: \"Hi Felix. I’m Dr. Stevens, but you can call me Laura.\"\n\"Hi, pleasure to meet you.\"\nYou look at the last team member in the corner, and recognize her from the break room.\nAva: \"Hey Felix, we’ve already met… You remember right? In the break room where you ruined my game. My name’s Ava.\"",
+    "decisions": [
+      ["Apologize", "b1-138", 0],
+      ["Funny comment", "b1-139", 0]
+    ]
+  },
+  "b1-138": {
+    "type": "CONTINUE",
+    "content": "\"Oh I’m so sorry about that. It was an accident.\"\nAva: \"I STILL don’t know how you didn’t see the wire...but it’s fine I guess.\"",
+    "nextNode": "b1-140"
+  },
+  "b1-139": {
+    "type": "CONTINUE",
+    "content": "\"Yeah.. I remember. I really did you a favor tho. Let’s be honest you weren’t about to get that high score anyway.\"\nAva: \"WOW. The nerve on some people. I see how it is.\"",
+    "nextNode": "b1-140"
+  },
+  "b1-140": {
+    "type": "CONTINUE",
+    "content": "Dr. Jacobs: \"Alright guys, enough chit-chat it’s time to get to work!\"\nDr. Jacobs: \"Ava can you please get Felix caught up on what we are working on.\"\nAva: \"Sure.\"\nFor the next few hours you work in the lab.",
+    "nextNode": "b1-141"
+  },
+  "b1-141": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Ava: \"Okay, so basically if we pour this solution we can see the salinity levels in the water.\"\nWhile Ava explains you start to look around and check out the other equipment.\nYou can’t believe this expensive equipment is all around you and you can actually use it.\nAva snaps her fingers.\nAva: \"Hey!\" Are you even listening to me? You better pay attention, one wrong move and you could ruin our entire sample.\"\n\"I’m sure it's not that difficult, all you’re doing is pouring solution from one vial...\"",
+    "decisions": [
+      ["Pour the solution", "b1-142", 0],
+      ["Put vial down", "b1-146", 0]
+    ]
+  },
+  "b1-142": {
+    "type": "CONTINUE",
+    "content": "You pour the solution from one vial to the other. The solution begins to foam up and rise.\nAva: \"Felix! What did you do?! That wasn’t the right vial!\"\n\"Oh shoot what do I do?!\"",
+    "nextNode": "b1-143"
+  },
+  "b1-143": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "CLICK, CLACK, CLICK\nMr. Hendricks’ cane hits the floor with every step.\nEveryone’s heads turn toward the door.\nDr. Jacobs: \"Look alive people! Mr. Bossman is here!\"\nAva quickly grabs the sample and hides it behind her back.",
+    "nextNode": "b1-144"
+  },
+  "b1-144": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"Oh no need for the formality, everyone proceed with your work.\"\nMr. Hendricks: \"I just came to have a quick chat with our Felix is all.\"\nYou walk away from Ava to bring the attention away from the mess.\nMr. Hendricks: \"Felix my boy! How are you settled in?\"\n\"Hey Mr. Hendricks, everything’s great. Ava was just showing me around the lab.\"\nMr. Hendricks looks over at Ava with a smile as she nervously smiles back, hands behind her back.",
+    "nextNode": "b1-145"
+  },
+  "b1-145": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"Wonderful to hear! Well, I better let you get back to work.\"\nMr. Hendricks: \"Keep working hard Felix. I got big plans for you. BIG.\"\n\"Okay. See you. Thanks for stopping by.\"",
+    "nextNode": "b1-151"
+  },
+  "b1-146": {
+    "type": "CONTINUE",
+    "content": "You carefully put the vial down.\nAva: \"Ok Mr. Cocky, I bet you didn’t know that was the wrong solution...you were about to ruin the sample!\"\n\"You’re lying, I doubt that.\"\nAva: \"This is the right solution. Use this one in the water sample.\"\nAva reaches out to hand you the water sample.\nAs you reach for it, she accidentally lets go too early and…\nCRACK!\nThe vial smashes the floor and shatters into a million pieces.",
+    "nextNode": "b1-147"
+  },
+  "b1-147": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "You both freeze and look at each other wide-eyed\nAva: \"Oh my god Felix! I thought you were holding it!\"\n\"No, you let go of it too early!\"\nAva: \"Oh no...\"\nYou see everyone’s heads turn toward the door.\nDr. Jacobs: \"Look alive people! The big man has entered the building!\"",
+    "nextNode": "b1-148"
+  },
+  "b1-148": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "CLICK, CLACK, CLICK\nMr. Hendricks’ cane hits the floor with every step.\nHis eyes lock with yours and he walks forward. \nAva quickly stands in front of the shattered sample.\nMr. Hendricks: \"Felix my boy, how’s your first day treating you?\"",
+    "decisions": [
+      ["Good", "b1-149", 0],
+      ["Could be better", "b1-150", 0]
+    ]
+  },
+  "b1-149": {
+    "type": "CONTINUE",
+    "content": "You turn and walk toward Mr. Hendricks, moving away from the accident.\n\"Uhhh. ya… Pretty good, can’t really complain. The lab sounds really interesting.\"\nMr. Hendricks: \"Ahaha. Work hard Felix, and I have no doubt you will progress here.\"\nMr. Hendricks: \"Well don’t let me stop you from working, just came here to check on you is all.\"",
+    "nextNode": "b1-151"
+  },
+  "b1-150": {
+    "type": "CONTINUE",
+    "content": "You turn and walk toward Mr. Hendricks, moving away from the accident.\n\"Everything’s been great, I’m just a little overwhelmed with how much cool stuff there is here.\"\nMr. Henricks: \"Ah yes, the state of the art equipment we have here is enough to make any child giddy!\"\nMr. Hendricks: \"Just make sure not to break anything...they cost a fortune!\"\nYour eyes dart around nervously. Your skin feels hot.\nMr. Hendricks: \"Ahaha just kidding my boy, I know you’ll do great!\"",
+    "nextNode": "b1-151"
+  },
+  "b1-151": {
+    "type": "CONTINUE",
+    "content": "Mr. Hendricks leaves the lab.\nThe sound of his cane echoes off into the hallway.\nAva: \"That was weird...in all of my time here, Mr. Hendricks has never come into the lab.\"\nAva: \"Now that i think about it, I’ve never even talked with him.\"\n\"Huh? That is weird...\"",
+    "nextNode": "b1-152"
+  },
+  "b1-152": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "\"Anyways, what are we going to do about this mess?\"\nAva looks at the broken beaker containing the water sample.\nAva: \"Well the sample is ruined, so I’ll have to tell Dr. Jacobs.\"\nAva: \"He is not going to be happy. The last time someone ruined a sample, he created a powerpoint presentation about how incompetent they were.\"\n\"Oh, he sounds fun to work with.\"",
+    "decisions": [
+      ["How important is the sample?", "b1-153", 0],
+      ["Do we have to tell Dr. Jacobs?", "b1-154", 0]
+    ]
+  },
+  "b1-153": {
+    "type": "CONTINUE",
+    "content": "\"How important is the sample?\nAva: \"Pretty important Felix. All our research is about the salinity levels in the water.\"\n\"Okay, fine then. Let’s just get these samples ourselves. It’s just water…\"\nAva: \"Just water? No, this water was collected 168 nautical miles from our shore. It’s too far.\"",
+    "nextNode": "b1-155"
+  },
+  "b1-154": {
+    "type": "CONTINUE",
+    "content": "\"Do we really have to tell him though?\"\nAva: \"Yes! We have to! He’ll find out one way or the other.\"\nAva: \"That man is a hawk when it comes to keeping tabs on our work.\"\n\"Hm ok fine. But what if we found a way to fix this...\"\nAva: \"What do you mean?\"\n\"Well, what if we just got the sample ourselves.\"",
+    "nextNode": "b1-155"
+  },
+  "b1-155": {
+    "type": "DECISION",
+    "content": "\"We can take one of the boats at the dock.\"\nAva: \"You're crazy. That will take too long. They are going to notice we aren’t here.\"\n\"It’ll be fine, there’s a ton of people working here, no way they notice we’re gone for a couple hours.\"\nAva: \"I don’t know...\"",
+    "decisions": [
+      ["You have a better solution?", "b1-156", 0],
+      ["You gotta take risks in life", "b1-157", 0]
+    ]
+  },
+  "b1-156": {
+    "type": "CONTINUE",
+    "content": "You have a better solution? It’s either this or confess to Dr. Jacobs.",
+    "nextNode": "b1-158"
+  },
+  "b1-157": {
+    "type": "CONTINUE",
+    "content": "Sometimes you have to take risks in life Ava.",
+    "nextNode": "b1-158"
+  },
+  "b1-158": {
+    "type": "DECISION",
+    "content": "Ava: \"Ugh alright numnuts.\"\nAva: \"Fine. I guess as long as I’m with Mr. Hendricks’ star pupil, I should be fine.\"\n\"Now we’re talking! Let’s go!\"",
+    "decisions": [["Walk to the dock", "b1-159", 150]]
+  },
+  "b1-159": {
+    "type": "CONTINUE",
+    "content": "You and Ava sneak off to the dock.\nYou hop on a boat and see the keys already in the ignition.\nAva: \"Wait… do you even know how to drive this thing?\"\n\"Yes of course! My dad and I used to go all the time when I was a kid.\"\n\"I basically became a captain just by watching him.\"\nYou start the engine and you feel the boat come to life beneath your feet.\nAva: \"Full steam ahead! Just head north.\"",
+    "nextNode": "b1-160"
+  },
+  "b1-160": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "You sail for an hour, enjoying the light small talk.\nAva: \"Ok perfect, we’re here.\"\nAva scoops the water below and obtains the sample.\nAva: \"Let's head on back.\"\nYou pull the throttle and the boat doesn’t move\nAva: \"Come on! Hurry up, let's go!\"\n\"Uhhh.. I’m trying…\"\nAva: \"What!? I thought you said you knew how to drive this thing.\"\nYou continue to yank the throttle and the engine roars.",
+    "nextNode": "b1-161"
   }
 }
