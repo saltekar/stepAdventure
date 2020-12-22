@@ -3,8 +3,8 @@
     "type": "DECISION",
     "content": "Dad: \"Go long Felix!\"\nYou take off running down the field and see the ball racing past you.\n\"I got it, I got it!\"\nYou look down and see a lot of mud.",
     "decisions": [
-      ["Dive for the ball", "b1-1", 0],
-      ["Let the ball go", "b1-2", 0]
+      ["Dive for the ball", "b1-1", 50],
+      ["Let the ball go", "b1-2", 50]
     ]
   },
   "b1-1": {
