@@ -612,14 +612,14 @@
     "type": "DECISION",
     "reset": "TRUE",
     "content": "You and Eddie walk out in the suits.\nEddie: \"Damn Felix… Looking good my dude.\"\nFelix: \"Me? Look at you Mr. Fresh.\"\nEddie hits a runway pose.\nLauren: \"I’ll admit you guys clean up well, but we don’t have all day. Let’s get a move on boys.\"",
-    "decisions": [["Walk to main hall", "b1-101", 150]]
+    "decisions": [["Walk to main hall", "b1-101", 0]]
   },
   "b1-101": {
     "type": "DECISION",
     "content": "You walk into the main hall to find a sea of fancy dressed people and tables.\nThe sound of small talk and laughter floods the room.\nEddie: \"Ok Felix, I’ll see you on the other side. It’s time to mingle.\"\nYou see Eddie go ahead and get lost in the crowd.\nYou turn to Lauren with a nervous look.\nLauren: \"Why are you looking at me? Go be social.\"\nYou walk forward into the crowd.",
     "decisions": [
-      ["Walk to the right", "b1-102", 25],
-      ["Walk to the left", "b1-103", 25]
+      ["Walk to the right", "b1-102", 0],
+      ["Walk to the left", "b1-103", 0]
     ]
   },
   "b1-102": {
@@ -707,12 +707,12 @@
   "b1-115": {
     "type": "DECISION",
     "content": "\"It’s okay, accidents happen man. That lady was pretty rude though.\"\nWaiter: \"Yeah. Mrs. Higgins isn’t the biggest fan of me.\"\n\"Haha.. Ya I could tell. My name’s Felix by the way.\"\nToka: \"Good to meet you, I’m Toka. You know you’re the first employee to ask for my name.\"\nToka: \"I have to get back to work, but I’ll see you around.\"\n\"Nice to meet you. See you later.\"\nYou walk to your bungalow.",
-    "decisions": [["Walk to your bungalow", "b1-117", 150]]
+    "decisions": [["Walk to your bungalow", "b1-117", 0]]
   },
   "b1-116": {
     "type": "DECISION",
     "content": "\"So, does that happen often? Or was that a one time thing?\"\nWaiter: \"It rarely happens, but for a huge event like tonight it’s hard to stay perfect.\"\n\"Ah I feel you, your job definitely looks like it could be difficult sometimes.\"\nWaiter: \"I know! Everyone thinks being a waiter is the easiest job around, but it isn’t!\"\n\"Anyways, I’m Felix, what’s your name?\"\nToka: \"Nice to meet you Felix, I’m Toka.\n\"Alright Toka, you have a good night.\"\nYou walk to your bungalow.",
-    "decisions": [["Walk to your bungalow", "b1-117", 150]]
+    "decisions": [["Walk to your bungalow", "b1-117", 0]]
   },
   "b1-117": {
     "type": "CONTINUE",
@@ -725,7 +725,7 @@
     "content": "Suddenly, you hear repeated tapping coming from outside.\nThe noise slowly fades away.",
     "decisions": [
       ["Hide under your covers.", "b1-119", 0],
-      ["Check it out", "b1-120", 20]
+      ["Check it out", "b1-120", 0]
     ]
   },
   "b1-119": {
@@ -737,7 +737,7 @@
     "type": "DECISION",
     "content": "You get up and open the door.\nYou look out and see a shadow scurry off into the distance.",
     "decisions": [
-      ["Go outside to investigate", "b1-121", 50],
+      ["Go outside to investigate", "b1-121", 0],
       ["Head back inside", "b1-122", 0]
     ]
   },

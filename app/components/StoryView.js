@@ -306,6 +306,8 @@ export default class StoryView extends React.Component {
         });
         this.setState({ ["dist" + 4 + "Visible"]: true });
       }
+
+      global.node.nextNodes.push(global.node.hiddenButtonNext);
     }
   };
 
@@ -325,9 +327,12 @@ export default class StoryView extends React.Component {
 
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
+
     // Set next node
     global.node.setVisited(true);
+    console.log(global.node.nextNodes.length);
     global.node = global.node.nextNodes[global.decisionChosen - 1];
+
     this.setStorage("node", global.node);
 
     global.line = 0;
