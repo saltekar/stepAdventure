@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Button,
+  Image
+} from "react-native";
 import { AsyncStorage } from "react-native";
 
 import Graph from "../storyMechanics/storyEngine";
@@ -9,7 +16,6 @@ import colors from "../config/colors";
 import ProgressBar from "./ProgressBar";
 import StepToken from "./StepToken";
 import StepText from "./StepText";
-import TokenButton from "./TokenButton";
 import AwesomeAlert from "react-native-awesome-alerts";
 
 export default class StoryView extends React.Component {
@@ -56,11 +62,6 @@ export default class StoryView extends React.Component {
       decision2Distance: 0,
       decision3Distance: 0,
       decision4Distance: 0,
-
-      tokenButton1Visible: false,
-      tokenButton2Visible: false,
-      tokenButton3Visible: false,
-      tokenButton4Visible: false,
 
       barVisible: false,
       barTextVisible: false,
@@ -134,7 +135,7 @@ export default class StoryView extends React.Component {
                   this.setState({
                     ["decision" + chosen + "Distance"]: distances[chosen - 1]
                   });
-                  this.hideButtons(chosen);
+                  this.tokenChosen(distances[chosen - 1], chosen);
                 });
               } else {
                 this.setStorage("barVisible", "false");
@@ -275,12 +276,9 @@ export default class StoryView extends React.Component {
       this.setState({ ["button" + (i + 1) + "Visible"]: true });
       this.setState({ ["button" + (i + 1) + "Text"]: dec[i] });
 
-      if (dist != undefined && dist[i] != 0) {
-        console.log(dist[i]);
-        this.setState({ ["decision" + (i + 1) + "Distance"]: dist[i] });
-        this.setState({ ["dist" + (i + 1) + "Visible"]: true });
-        this.setState({ ["tokenButton" + (i + 1) + "Visible"]: true });
-      }
+      console.log(dist[i] + "<-- dist");
+      this.setState({ ["decision" + (i + 1) + "Distance"]: dist[i] });
+      this.setState({ ["dist" + (i + 1) + "Visible"]: true });
     }
   };
 
@@ -307,58 +305,8 @@ export default class StoryView extends React.Component {
           ["decision" + 4 + "Distance"]: global.node.hiddenButtonDist
         });
         this.setState({ ["dist" + 4 + "Visible"]: true });
-        this.setState({ ["tokenButton" + 4 + "Visible"]: true });
       }
     }
-  };
-
-  // Hides buttons after decision made
-  hideButtons = val => {
-    for (let i = 1; i < 5; i++) {
-      this.setState({ ["button" + i + "Visible"]: false });
-      this.setState({ ["dist" + i + "Visible"]: false });
-      this.setState({ ["tokenButton" + i + "Visible"]: false });
-    }
-
-    // check to display progress bar
-    if (eval("this.state.decision" + val + "Distance") > 0) {
-      this.setStorage("barVisible", "true");
-      this.setStorage("decisionChosen", val);
-
-      //display bar with circle on left
-      this.setState({ blinkingCursor: false });
-      this.setState({ barVisible: true });
-
-      this.setState({ barText: eval("this.state.button" + val + "Text") });
-      this.setState({ barTextVisible: true });
-      this.setState({
-        distanceChosen: eval("this.state.decision" + val + "Distance")
-      });
-      // this.setState({
-      //   decisionChosen: val
-      // });
-      global.decisionChosen = val;
-      return;
-    }
-    global.text = "";
-    this.setStorage("screenText", global.text);
-
-    this.setState({ blinkingCursor: true });
-    this.setState({ textVisible: false });
-    // Set next node
-    global.node.setVisited(true);
-
-    // if hidden button is pressed
-    if (global.node.hiddenButtonNext != undefined && val == 4) {
-      global.node = global.node.hiddenButtonNext;
-    } else {
-      global.node = global.node.nextNodes[val - 1];
-    }
-
-    this.setStorage("node", global.node);
-
-    global.line = 0;
-    this.setStorage("line", global.line);
   };
 
   hideBar = () => {
@@ -386,13 +334,13 @@ export default class StoryView extends React.Component {
     this.setStorage("line", global.line);
   };
 
-  tokenChosen = decisionDistance => {
+  tokenChosen = (decisionDistance, val) => {
     try {
       this.getData("tokens").then(tokenCnt => {
         if (tokenCnt < Math.floor(decisionDistance / 25)) {
           this.setState({ showErrorAlert: true });
         } else {
-          this.setState({ showAlert: true });
+          this.skipProgressBar(decisionDistance, val);
         }
       });
     } catch (err) {
@@ -408,7 +356,6 @@ export default class StoryView extends React.Component {
     for (let i = 1; i < 5; i++) {
       this.setState({ ["button" + i + "Visible"]: false });
       this.setState({ ["dist" + i + "Visible"]: false });
-      this.setState({ ["tokenButton" + i + "Visible"]: false });
     }
     try {
       this.getData("tokens").then(tokenCnt => {
@@ -457,7 +404,6 @@ export default class StoryView extends React.Component {
             <StepText />
           )
         ) : null}
-
         <View style={styles.story}>
           {this.state.textVisible ? (
             <Text style={styles.text}>{global.text}</Text>
@@ -466,71 +412,28 @@ export default class StoryView extends React.Component {
           {this.state.blinkingCursor ? <BlinkCursor content="|" /> : null}
         </View>
 
-        {/* {this.state.barVisible ?  : null} */}
-
         <View style={styles.buttons}>
-          {/* Progress Bar */}
-          {this.state.barVisible ? (
-            <ProgressBar
-              distance={this.state.distanceChosen}
-              content={this.state.barText}
-              hideBar={this.hideBar}
-              showBar={true}
-            />
-          ) : null}
-
           <View>
             <View style={styles.decisionButtonsContainer}>
               {/* Button 1 */}
               {this.state.button1Visible ? (
                 <DecisionButton
-                  decisionText={this.state.button1Text}
-                  onPress={() => this.hideButtons(1)}
-                />
-              ) : null}
-
-              {this.state.tokenButton1Visible ? (
-                <TokenButton
                   decisionCost={this.state.decision1Distance}
-                  onPress={() => this.tokenChosen(this.state.decision1Distance)}
+                  decisionText={this.state.button1Text}
+                  onPress={() =>
+                    this.tokenChosen(this.state.decision1Distance, 1)
+                  }
                 />
               ) : null}
-
-              <AwesomeAlert
-                contentContainerStyle={{ backgroundColor: colors.primary }}
-                show={showAlert}
-                showProgress={false}
-                message={
-                  "Are you sure you want to spend " +
-                  this.state.decision1Distance / global.stepsPerToken +
-                  " step tokens?"
-                }
-                messageStyle={{ color: colors.white }}
-                closeOnTouchOutside={true}
-                closeOnHardwareBackPress={false}
-                showCancelButton={true}
-                showConfirmButton={true}
-                cancelText="No"
-                confirmText="Yes"
-                confirmButtonColor="#9DB4C0"
-                cancelButtonColor="#9DB4C0"
-                onCancelPressed={() => {
-                  this.hideAlert();
-                }}
-                onConfirmPressed={() => {
-                  this.skipProgressBar(this.state.decision1Distance, 1);
-                }}
-              />
 
               {/* Error Alert for lack of tokens */}
-
               <AwesomeAlert
                 contentContainerStyle={{ backgroundColor: colors.primary }}
                 show={this.state.showErrorAlert}
                 showProgress={false}
                 message={"You do not have enough tokens!"}
                 messageStyle={{ color: colors.white }}
-                closeOnTouchOutside={true}
+                closeOnTouchOutside={false}
                 closeOnHardwareBackPress={false}
                 showCancelButton={false}
                 showConfirmButton={true}
@@ -543,10 +446,19 @@ export default class StoryView extends React.Component {
                 }}
               />
             </View>
-            {this.state.dist1Visible ? (
-              <Text style={styles.distText}>
-                {"Distance: " + this.state.decision1Distance + " steps"}
-              </Text>
+            {this.state.button1Visible ? (
+              <View style={styles.costBox}>
+                <Text style={styles.distText}>
+                  {"Cost: " +
+                    Math.floor(
+                      this.state.decision1Distance / global.stepsPerToken
+                    )}
+                </Text>
+                <Image
+                  style={styles.tokenImage}
+                  source={require("../assets/coin.png")}
+                />
+              </View>
             ) : null}
           </View>
 
@@ -556,51 +468,20 @@ export default class StoryView extends React.Component {
               {this.state.button2Visible ? (
                 <DecisionButton
                   decisionText={this.state.button2Text}
-                  onPress={() => this.hideButtons(2)}
+                  onPress={() =>
+                    this.tokenChosen(this.state.decision2Distance, 2)
+                  }
                 />
               ) : null}
-              {this.state.tokenButton2Visible ? (
-                <TokenButton
-                  decisionCost={this.state.decision2Distance}
-                  onPress={() => this.tokenChosen(this.state.decision2Distance)}
-                />
-              ) : null}
-
-              <AwesomeAlert
-                contentContainerStyle={{ backgroundColor: colors.primary }}
-                show={showAlert}
-                showProgress={false}
-                message={
-                  "Are you sure you want to spend " +
-                  this.state.decision2Distance / global.stepsPerToken +
-                  " step tokens?"
-                }
-                messageStyle={{ color: colors.white }}
-                closeOnTouchOutside={true}
-                closeOnHardwareBackPress={false}
-                showCancelButton={true}
-                showConfirmButton={true}
-                cancelText="No"
-                confirmText="Yes"
-                confirmButtonColor="#9DB4C0"
-                cancelButtonColor="#9DB4C0"
-                onCancelPressed={() => {
-                  this.hideAlert();
-                }}
-                onConfirmPressed={() => {
-                  this.skipProgressBar(this.state.decision2Distance, 2);
-                }}
-              />
 
               {/* Error Alert for lack of tokens */}
-
               <AwesomeAlert
                 contentContainerStyle={{ backgroundColor: colors.primary }}
                 show={this.state.showErrorAlert}
                 showProgress={false}
                 message={"You do not have enough tokens!"}
                 messageStyle={{ color: colors.white }}
-                closeOnTouchOutside={true}
+                closeOnTouchOutside={false}
                 closeOnHardwareBackPress={false}
                 showCancelButton={false}
                 showConfirmButton={true}
@@ -613,10 +494,19 @@ export default class StoryView extends React.Component {
                 }}
               />
             </View>
-            {this.state.dist2Visible ? (
-              <Text style={styles.distText}>
-                {"Distance: " + this.state.decision2Distance + " steps"}
-              </Text>
+            {this.state.button2Visible ? (
+              <View style={styles.costBox}>
+                <Text style={styles.distText}>
+                  {"Cost: " +
+                    Math.floor(
+                      this.state.decision2Distance / global.stepsPerToken
+                    )}
+                </Text>
+                <Image
+                  style={styles.tokenImage}
+                  source={require("../assets/coin.png")}
+                />
+              </View>
             ) : null}
           </View>
 
@@ -626,52 +516,20 @@ export default class StoryView extends React.Component {
               {this.state.button3Visible ? (
                 <DecisionButton
                   decisionText={this.state.button3Text}
-                  onPress={() => this.hideButtons(3)}
+                  onPress={() =>
+                    this.tokenChosen(this.state.decision3Distance, 3)
+                  }
                 />
               ) : null}
-
-              {this.state.tokenButton3Visible ? (
-                <TokenButton
-                  decisionCost={this.state.decision3Distance}
-                  onPress={() => this.tokenChosen(this.state.decision3Distance)}
-                />
-              ) : null}
-
-              <AwesomeAlert
-                contentContainerStyle={{ backgroundColor: colors.primary }}
-                show={showAlert}
-                showProgress={false}
-                message={
-                  "Are you sure you want to spend " +
-                  this.state.decision3Distance / global.stepsPerToken +
-                  " step tokens?"
-                }
-                messageStyle={{ color: colors.white }}
-                closeOnTouchOutside={true}
-                closeOnHardwareBackPress={false}
-                showCancelButton={true}
-                showConfirmButton={true}
-                cancelText="No"
-                confirmText="Yes"
-                confirmButtonColor="#9DB4C0"
-                cancelButtonColor="#9DB4C0"
-                onCancelPressed={() => {
-                  this.hideAlert();
-                }}
-                onConfirmPressed={() => {
-                  this.skipProgressBar(this.state.decision3Distance, 3);
-                }}
-              />
 
               {/* Error Alert for lack of tokens */}
-
               <AwesomeAlert
                 contentContainerStyle={{ backgroundColor: colors.primary }}
                 show={this.state.showErrorAlert}
                 showProgress={false}
                 message={"You do not have enough tokens!"}
                 messageStyle={{ color: colors.white }}
-                closeOnTouchOutside={true}
+                closeOnTouchOutside={false}
                 closeOnHardwareBackPress={false}
                 showCancelButton={false}
                 showConfirmButton={true}
@@ -684,10 +542,19 @@ export default class StoryView extends React.Component {
                 }}
               />
             </View>
-            {this.state.dist3Visible ? (
-              <Text style={styles.distText}>
-                {"Distance: " + this.state.decision3Distance + " steps"}
-              </Text>
+            {this.state.button3Visible ? (
+              <View style={styles.costBox}>
+                <Text style={styles.distText}>
+                  {"Cost: " +
+                    Math.floor(
+                      this.state.decision3Distance / global.stepsPerToken
+                    )}
+                </Text>
+                <Image
+                  style={styles.tokenImage}
+                  source={require("../assets/coin.png")}
+                />
+              </View>
             ) : null}
           </View>
 
@@ -697,52 +564,20 @@ export default class StoryView extends React.Component {
               {this.state.button4Visible ? (
                 <DecisionButton
                   decisionText={this.state.button4Text}
-                  onPress={() => this.hideButtons(4)}
+                  onPress={() =>
+                    this.tokenChosen(this.state.decision4Distance, 4)
+                  }
                 />
               ) : null}
-
-              {this.state.tokenButton4Visible ? (
-                <TokenButton
-                  decisionCost={this.state.decision4Distance}
-                  onPress={() => this.tokenChosen(this.state.decision4Distance)}
-                />
-              ) : null}
-
-              <AwesomeAlert
-                contentContainerStyle={{ backgroundColor: colors.primary }}
-                show={showAlert}
-                showProgress={false}
-                message={
-                  "Are you sure you want to spend " +
-                  this.state.decision4Distance / global.stepsPerToken +
-                  " step tokens?"
-                }
-                messageStyle={{ color: colors.white }}
-                closeOnTouchOutside={true}
-                closeOnHardwareBackPress={false}
-                showCancelButton={true}
-                showConfirmButton={true}
-                cancelText="No"
-                confirmText="Yes"
-                confirmButtonColor="#9DB4C0"
-                cancelButtonColor="#9DB4C0"
-                onCancelPressed={() => {
-                  this.hideAlert();
-                }}
-                onConfirmPressed={() => {
-                  this.skipProgressBar(this.state.decision4Distance, 4);
-                }}
-              />
 
               {/* Error Alert for lack of tokens */}
-
               <AwesomeAlert
                 contentContainerStyle={{ backgroundColor: colors.primary }}
                 show={this.state.showErrorAlert}
                 showProgress={false}
                 message={"You do not have enough tokens!"}
                 messageStyle={{ color: colors.white }}
-                closeOnTouchOutside={true}
+                closeOnTouchOutside={false}
                 closeOnHardwareBackPress={false}
                 showCancelButton={false}
                 showConfirmButton={true}
@@ -755,10 +590,19 @@ export default class StoryView extends React.Component {
                 }}
               />
             </View>
-            {this.state.dist4Visible ? (
-              <Text style={styles.distText}>
-                {"Distance: " + this.state.decision4Distance + " steps"}
-              </Text>
+            {this.state.button4Visible ? (
+              <View style={styles.costBox}>
+                <Text style={styles.distText}>
+                  {"Cost: " +
+                    Math.floor(
+                      this.state.decision4Distance / global.stepsPerToken
+                    )}
+                </Text>
+                <Image
+                  style={styles.tokenImage}
+                  source={require("../assets/coin.png")}
+                />
+              </View>
             ) : null}
           </View>
         </View>
@@ -785,6 +629,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center"
+  },
+  costBox: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
   decisionButtonsContainer: {
     alignItems: "center",
@@ -815,5 +664,9 @@ const styles = StyleSheet.create({
     right: 10,
     fontSize: 20,
     position: "absolute"
+  },
+  tokenImage: {
+    width: 18,
+    height: 19
   }
 });
