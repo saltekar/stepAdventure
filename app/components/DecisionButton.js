@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 import colors from "../config/colors";
 
 export default class DecisionButton extends React.Component {
@@ -55,5 +55,9 @@ const styles = StyleSheet.create({
   text: {
     color: colors.white,
     fontSize: 20
+  },
+  tokenImage: {
+    width: 20,
+    height: 21
   }
 });
