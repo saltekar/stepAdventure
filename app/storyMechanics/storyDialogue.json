@@ -3,8 +3,8 @@
     "type": "DECISION",
     "content": "Dad: \"Go long Felix!\"\nYou take off running down the field and see the ball racing past you.\n\"I got it, I got it!\"\nYou look down at the puddle of mud beneath you.",
     "decisions": [
-      ["Dive for the ball", "b1-1", 75],
-      ["Let the ball go", "b1-2", 25]
+      ["Dive for the ball", "b1-1", 0],
+      ["Let the ball go", "b1-2", 0]
     ]
   },
   "b1-1": {
@@ -965,7 +965,7 @@
   "b1-158": {
     "type": "DECISION",
     "content": "Ava: \"Ugh alright numnuts.\"\nAva: \"Fine. I guess as long as I’m with Mr. Hendricks’ star pupil, I should be fine.\"\n\"Now we’re talking! Let’s go!\"",
-    "decisions": [["Walk to the dock", "b1-159", 150]]
+    "decisions": [["Walk to the dock", "b1-159", 0]]
   },
   "b1-159": {
     "type": "CONTINUE",
@@ -977,5 +977,186 @@
     "reset": "TRUE",
     "content": "You sail for an hour, enjoying the light small talk.\nAva: \"Ok perfect, we’re here.\"\nAva scoops the water below and obtains the sample.\nAva: \"Let's head on back.\"\nYou pull the throttle and the boat doesn’t move\nAva: \"Come on! Hurry up, let's go!\"\n\"Uhhh.. I’m trying…\"\nAva: \"What!? I thought you said you knew how to drive this thing.\"\nYou continue to yank the throttle and the engine roars.",
     "nextNode": "b1-161"
+  },
+  "b1-161": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "CLUNK\nThe engine blows. You look down at it in disbelief. It’s clogged with kelp.\n\"Yeah, remember that time I said I knew how to drive a boat.\"\nAva glares at you in frustration.\n\"The last time we went fishing was when I was five...I might be a little rusty.\"\nAva: \"Ya think!? Way to go, numnuts.\"",
+    "decisions": [
+      ["You think you could have done better", "b1-162", 0],
+      ["We have to call for help", "b1-163", 0]
+    ]
+  },
+  "b1-162": {
+    "type": "CONTINUE",
+    "content": "\"You think you could have done any better?\"\nAva: \"Hey! I’m not the one who claimed to be a captain!\"\n\"Alright alright, fair enough.\"",
+    "nextNode": "b1-164"
+  },
+  "b1-163": {
+    "type": "CONTINUE",
+    "content": "\"My bad, guess we have to call for help now.\"\nAva: \"We just have to wait for a patrol boat. I think they run the parameter every few hours.\"\n\"Well, we might as well get comfortable.\"\nYou guys take a seat, as your boat floats to nowhere.",
+    "nextNode": "b1-164"
+  },
+  "b1-164": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Ava: \"Man I really wish your dad had taught you how to drive through kelp.\"\n\"Haha, I bet he would have taught me too… but well, he never had the chance to.\"\nYou gaze off into the distance. \nBoth of you sit in silence, as the sun sets below the horizon. \nAva: \"I’m so sorry to hear that.\"\nAva: \"I know how it feels to lose a parent...\"\n\"Yeah it sucks….once he took a second shift at Walmart I barely got to see him anymore.\"\nAva looks at you in awe\nAva: \"Are you kidding me?! You’re dad’s alive?\"",
+    "nextNode": "b1-165"
+  },
+  "b1-165": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "\"Na I’m just joking, he’s for sure dead.\"\nYou suddenly look behind you\n\"DAD? Is that you?!\"\n\"Nope, still dead.\"\nAva: \"I’m at a loss for words numnuts. Can you not take any situation seriously?\"\n\"Well, ever since I was a kid my mom always told me to keep smiling.\"\n\"And ever since that day I never wanted to be sad about losing him. I wanted to be happy about the times we had.\"",
+    "nextNode": "b1-166"
+  },
+  "b1-166": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "'Ava: \"Felix, I...That’s such a brave way to think about it. I wish I could do the same.\"\nAva:  \"He ditched us when I was a baby, so I can’t say I’m grateful for the times we never had.\"",
+    "decisions": [
+      ["I'm sorry", "b1-167", 0],
+      ["Must have been hard for you", "b1-168", 0]
+    ]
+  },
+  "b1-167": {
+    "type": "CONTINUE",
+    "content": "\"I’m sorry to hear that.\"\nAva: \"That’s alright, I’m used to getting by with a single parent.\"",
+    "nextNode": "b1-169"
+  },
+  "b1-168": {
+    "type": "CONTINUE",
+    "content": "\"Must have been hard for you.\"\n\"I can’t imagine not even having an image of your father in your head.\"\nAva: \"Yeah… I don’t even remember how he looks like…\"\nAva: \"But, my mom is all I need. I’m glad he never came back.\"",
+    "nextNode": "b1-169"
+  },
+  "b1-169": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Ava: \"That’s why I’m working here, on this island. All my life we’ve been struggling. Finally with this job, my mom can live without worry.\"\n\"I can’t imagine the strength it took to endure all the hardships to get to this point\"\n\"Your mom must be so proud.\"\nAva: \"Wow, thanks Felix, you saying that means a lot.\"",
+    "nextNode": "b1-170"
+  },
+  "b1-170": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Out of the corner of your eye you see a patrol boat in the distance.\n\"The boat! It’s here!\"\n\"HEYYY OVER HERE!!\"\nYou and Ava frantically wave your hands trying to draw the boat’s attention.\nThe boat begins to head toward you.\nAva: \"Finally! We’re saved!\"\n\"It’s about time! I think I’ve forgotten what land looks like. What food tastes like. What the dirt feels like!\"",
+    "nextNode": "b1-171"
+  },
+  "b1-171": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Ava: \"Oh shut up, it’s been two hours.\"\nThe patrol boat pulls you to shore.\nAva: \"Let's head back to the lab and get our stuff.\"",
+    "decisions": [["Walk to the lab", "b1-172", 0]]
+  },
+  "b1-172": {
+    "type": "CONTINUE",
+    "content": "You enter the lab, and see the rest of your coworkers still working.\n\"Do these guys not take a break? It’s almost 6pm.\"\nAva: \"Yeah, we work pretty hard here. So, let’s get back to it.\"\nYou and Ava work on restoring the water samples.",
+    "nextNode": "b1-173"
+  },
+  "b1-173": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "After a while, you hear footsteps approaching you.\nYou look up and see Dr. Jacobs.\nDr. Jacobs: \"Hey Felix. Mr. Boss Man wants to see you. Better get a move on!\"",
+    "decisions": [
+      ["What does he want?", "b1-174", 0],
+      ["Am I in trouble?", "b1-175", 0]
+    ]
+  },
+  "b1-174": {
+    "type": "DECISION",
+    "content": "\"What does he want?\"\nDr. Jacobs: \"Beats me. Probably gonna fire you.\"\nDr. Jacobs: \"Just pulling your leg, or maybe not. I don’t know. The guy is a wildcard.\" \nYou look at Ava, and she shrugs her shoulders.\nDr. Jacobs: \"Best you leave now kid.\"",
+    "decisions": [["Walk to Mr. Hendrick's office", "b1-176", 0]]
+  },
+  "b1-175": {
+    "type": "DECISION",
+    "content": "\"Am I in trouble?\"\nDr. Jacobs: \"I’m sure it’s nothing...or is it? He usually never does this.\"\n\"Really?!\"\nDr. Jacobs: \"Ahhh I’m sure you’re fine...I mean it’s not like you’ve screwed anything up, right?\"\n\"Right.\"\nYour face turns red as you put your head down and leave the lab.",
+    "decisions": [["Walk to Mr. Hendrick's office", "b1-176", 0]]
+  },
+  "b1-176": {
+    "type": "CONTINUE",
+    "content": "You walk to Hendrick’s office and knock on the door.\nMr. Hendricks: \"Come in my boy.\"\nYou enter the room and see Eddie already sitting down.\nYou take a seat.\nMr. Hendricks: \"Felix, I normally don’t interrupt people from their work, but this situation calls for special measures.\"\n\"Situation? Sir what do you mean?\"",
+    "nextNode": "b1-177"
+  },
+  "b1-177": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"Well you see my boy, when you’re in the business of creating life changing work, people become envious.\"\nMr. Hendricks: \"It has come to my attention that there is a spy among us on the Island.\"\nEddie: \"A Spy?! This is starting to sound like a Jason Bourne movie.\"\nMr. Hendricks: \"I’m sorry, Jason was born?\"\nEddie: \"Wait you’ve never seen Jason Bourne?\"\n\"Eddie, I don’t think that’s important right now.\"",
+    "nextNode": "b1-178"
+  },
+  "b1-178": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Eddie: \"yeah yeah you’re right. Sorry Mr. Hendricks. As you were saying?\"\nMr. Hendricks gives a sigh and collects himself.\nMr. Hendricks: \"Yes, well my competitors wish to steal our research for profit. Whereas I intend to provide our tech for free.\"\nMr. Hendricks: \"Unfortunately I am unable to fully trust any of my peers. However you both just arrived, I have full confidence in you.\"\nMr. Hendricks: \"It is imperative that you boys help me with this. Please report any suspicious activity.\"",
+    "decisions": [
+      ["Tell him about threatening note", "b1-179", 0],
+      ["Don't tell him about threatening note", "b1-180", 0]
+    ]
+  },
+  "b1-179": {
+    "type": "CONTINUE",
+    "content": "\"Last night… I got a strange note.\"\n\"It read \"Get Out\" in large red letters. It was scary.\"\nMr. Hendricks: \"Hmmm. That is peculiar. Quite a vague threat.\"\nMr. Hendricks: \"Must be connected to the spy situation. Be vigilant, but careful.\"",
+    "nextNode": "b1-181"
+  },
+  "b1-180": {
+    "type": "CONTINUE",
+    "content": "\"This all sounds so crazy, but you can count on us Mr. Hendricks.\"\n\"We’ll let you know if we see anything suspicious.\"\nEddie: \"Don’t worry Mr. H, we’ll take care of the bad guys for you, Bourne style!\"\nMr. Hendricks: \"Please my boys, I am only asking you to keep a lookout, do not attempt anything drastic...or anything this Bourne fellow might do...he sounds like a troublemaker.\"\nEddie: \"Oh you don’t even know the half of it Mr. H! You see in the sequel Jason...\"\nYou interrupt Eddie.\n\"Eddie! That’s enough we should leave.\"",
+    "nextNode": "b1-181"
+  },
+  "b1-181": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"That is all, thanks for coming. Remember, don’t tell a soul.\"\nYou both nod and leave the office.\nEddie: \"I got a bit more work to catch up on, but I’ll see you for dinner.\"\n\"Ok sounds good, I think I’m gonna go on a walk. Need to clear my head.\"",
+    "decisions": [["Walk", "b1-182", 0]]
+  },
+  "b1-182": {
+    "type": "CONTINUE",
+    "content": "You start walking towards the beach.\nTime blurs as you walk past the buildings and eventually past your bungalow.\nYou reflect on all the things that have happened since you’ve gotten here.\n\"Why would anyone give you that note?\"\n\"Who’s the spy? Could it be someone you know?\"\nThe sand tickles your toes.\nYour feet hit the water and you look up.",
+    "nextNode": "b1-183"
+  },
+  "b1-183": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "The sky is painted with a flurry of pink and orange. You feel the warmness on your skin.\nOne deep breath, and the sea breeze fills your head.\nIn the distance, you see a pod of dolphins swimming in harmony.\nIt takes you back to the first time you saw a dolphin with your Dad.\nYou always hated waking up so early and the drive was long, but he always said it would be worth it.\nAnd it was.",
+    "decisions": [["Keep walking", "b1-184", 0]]
+  },
+  "b1-184": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "You keep walking, and see a trail veering of into a forest.\nSoon the trail disappears.\nAfter a while you turn around, but you have no clue where you came from.\n\"Great, just my luck.\"",
+    "decisions": [
+      ["Walk right", "b1-185", 0],
+      ["Walk left", "b1-186", 0]
+    ]
+  },
+  "b1-185": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "You turn right and keep walking.\nYou take a step and mud splatters onto your legs.\n\"Darnit, I just got these shoes.\"\nSlowly, you begin to sink into the ground.\n\"What?! Quicksand?! I thought this was just in the movies.\"\nYou grab a nearby tree branch and pull yourself out.\n\"That was close…\"",
+    "decisions": [["Walk left", "b1-186", 0]]
+  },
+  "b1-186": {
+    "type": "CONTINUE",
+    "content": "You decide to walk to the left.\nThere is no trail, but you follow a grass path through the thick brush.\n\"Jeez hopefully this leads to a trail.\"\nAfter walking for a bit, the elevation gains and you stumble on a massive rocky area.\n\"Maybe if I climb it I’ll be able to see how to get back.\"\nYou hike up the boulder and get a clear view of the nearby area.\nAbout 40 feet away you barely make out what looks like a door hidden between the rocks and trees.\n\"What the hell is that?\"",
+    "nextNode": "b1-187"
+  },
+  "b1-187": {
+    "type": "CONTINUE",
+    "reset": "TRUE",
+    "content": "Your curiosity goes wild. You climb down the boulder and make your way to the door.\nNow you can see the door clearly.\nIt has a keypad and a facial recognition scanner next to it.\n\"This is some high tech stuff...doesn’t look old and abandoned.\"\nSuddenly, you hear the door crank as if massive steel gears were turning.\nYou quickly hide behind a bush and stay quiet.\nYour heart is pounding as the door swings open. \nThree men in lab suits walk out, only darkness behind them.",
+    "nextNode": "b1-188"
+  },
+  "b1-188": {
+    "type": "DECISION",
+    "reset": "TRUE",
+    "content": "You peek your head out of the bush.\nYou recognize the man in the middle. Dr. Jacobs.\nThe two other scientists push out a cart stacked with large white boxes.\nAt the bottom of each box, there is some dark mass.\nLooking more closely, you make out the motionless silhouettes of legs, antlers, small heads...\nDr. Jacobs: \"Hell of a meeting boys. We’re almost ready for phase 1.\"\nDr. Jacobs: \"Project Sahaya is officially underway.\"",
+    "decisions": [["Next", "b1-189", 0]]
+  },
+  "b1-189": {
+    "type": "CONTINUE",
+    "content": "Part 1 complete.\nTo be continued...",
+    "nextNode": "b1-190"
+  },
+  "b1-190": {
+    "type": "CONTINUE",
+    "content": "placeholder.",
+    "nextNode": "b1-191"
   }
 }
