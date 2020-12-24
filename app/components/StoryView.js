@@ -13,7 +13,6 @@ import Graph from "../storyMechanics/storyEngine";
 import BlinkCursor from "../components/BlinkCursor";
 import DecisionButton from "../components/DecisionButton";
 import colors from "../config/colors";
-import ProgressBar from "./ProgressBar";
 import StepToken from "./StepToken";
 import StepText from "./StepText";
 import AwesomeAlert from "react-native-awesome-alerts";
@@ -307,7 +306,7 @@ export default class StoryView extends React.Component {
         this.setState({ ["dist" + 4 + "Visible"]: true });
       }
 
-      // Hidden button can be 4th, 3rd, and second option in this case
+      // Hidden button can be 4th, 3rd, and 2nd option in this case
       global.node.nextNodes.push(global.node.hiddenButtonNext);
       global.node.nextNodes.push(global.node.hiddenButtonNext);
       global.node.nextNodes.push(global.node.hiddenButtonNext);
