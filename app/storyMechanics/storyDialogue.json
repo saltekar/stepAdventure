@@ -780,18 +780,18 @@
   "b1-127": {
     "type": "DECISION",
     "content": "\"I can’t think about this right now, I have to go to work.\"\nYou crumble the note up and put it in your drawer.\nYou get ready for your first day.",
-    "decisions": [["Walk to the lab", "b1-130", 150]]
+    "decisions": [["Walk to the lab", "b1-130", 0]]
   },
   "b1-128": {
     "type": "DECISION",
     "content": "Your alarm goes off.\n\"I’m going to be late!\"\nYou quickly put the note in your bag and get ready for your first day.",
-    "decisions": [["Walk to the lab", "b1-130", 150]]
+    "decisions": [["Walk to the lab", "b1-130", 0]]
   },
   "b1-129": {
     "type": "DECISION",
     "reset": "TRUE",
     "content": "You wake up groggy, barely getting any sleep.\nYour eyes immediately focus on the note from last night.\nThe alarm goes off.\nYou pick it up and quickly shove it into your bag.\nYou get dressed and head for your first day.",
-    "decisions": [["Walk to the lab", "b1-130", 150]]
+    "decisions": [["Walk to the lab", "b1-130", 0]]
   },
   "b1-130": {
     "type": "DECISION",
@@ -815,7 +815,7 @@
     "type": "DECISION",
     "reset": "TRUE",
     "content": "Dr. Jacobs turns the corner approaching you.\nDr. Jacobs: \"Just your luck kid, looks like you’re with me. Let’s go.\"\nYou forge a smile and say bye to Eddie\nDr. Jacobs begins to walk through the hall. You follow.\nDr. Jacobs: \"Aw man I really hate having to get the newbies.\"",
-    "decisions": [["Walk to research lab", "b1-134", 50]]
+    "decisions": [["Walk to research lab", "b1-134", 0]]
   },
   "b1-134": {
     "type": "DECISION",
@@ -1153,10 +1153,5 @@
     "type": "CONTINUE",
     "content": "Part 1 complete.\nTo be continued...",
     "nextNode": "b1-190"
-  },
-  "b1-190": {
-    "type": "CONTINUE",
-    "content": "placeholder.",
-    "nextNode": "b1-191"
   }
 }
