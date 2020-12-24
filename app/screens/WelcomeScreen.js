@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
   Text,
-  Button,
   ImageBackground,
   TouchableOpacity,
   StatusBar,
@@ -26,11 +25,24 @@ function WelcomeScreen({ navigation }) {
         <Text
           style={{
             fontSize: 80,
-            color: colors.primary,
-            textAlign: "center"
+            color: "#253237",
+            textAlign: "center",
+            fontFamily: "Cochin-Bold",
+            marginTop: 50
           }}
         >
           Step Adventure
+        </Text>
+        <Text
+          style={{
+            fontSize: 30,
+            color: "#253237",
+            textAlign: "center",
+            fontFamily: "Cochin",
+            marginTop: 15
+          }}
+        >
+          Project Sahaya
         </Text>
       </View>
 
@@ -75,11 +87,12 @@ function WelcomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   actionButton: {
     backgroundColor: colors.primary,
-    height: 80,
-    width: "60%",
+    height: 60,
+    width: "40%",
     borderRadius: 40,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: "20%"
   },
   activityButton: {
     backgroundColor: colors.primary,
@@ -102,16 +115,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: colors.white,
-    fontSize: 40
-  },
-  circle: {
-    width: 180,
-    height: 180,
-    borderRadius: 180 / 2,
-    backgroundColor: colors.primary,
-    justifyContent: "center",
-    alignItems: "center",
-    opacity: 0.9
+    fontSize: 30
   },
   heading: {
     flex: 1,

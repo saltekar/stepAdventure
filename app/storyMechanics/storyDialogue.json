@@ -160,12 +160,13 @@
   },
   "b1-26": {
     "type": "CONTINUE",
-    "content": "\"Really? You’re impressed with a  4th place project?\"\n\"If only the other panelists thought so too.\"",
+    "content": "\"Really? You’re impressed with a  4th place project?\"\n\"If only the other panelists thought so too.\"Mr Hendricks: \"The other panelists failed to recognize the brilliance behind your methods.\"",
     "nextNode": "b1-27"
   },
   "b1-27": {
     "type": "DECISION",
-    "content": "Mr Hendricks: \"The other panelists failed to recognize the brilliance behind your methods.\"\nMr. Hendricks: \"For decades I have worked tirelessly to improve the lives of those less fortunate.\"\nMr. Hendricks: \"Now I have began work on my most ambitious feat - Purification of ocean water through desalination methods\"",
+    "reset": "TRUE",
+    "content": "Mr. Hendricks: \"For decades I have worked tirelessly to improve the lives of those less fortunate.\"\nMr. Hendricks: \"Now I have began work on my most ambitious feat - Purification of ocean water through desalination methods\"",
     "decisions": [
       ["Sounds interesting", "b1-28", 0],
       ["Why me?", "b1-29", 0]
