@@ -307,6 +307,9 @@ export default class StoryView extends React.Component {
         this.setState({ ["dist" + 4 + "Visible"]: true });
       }
 
+      // Hidden button can be 4th, 3rd, and second option in this case
+      global.node.nextNodes.push(global.node.hiddenButtonNext);
+      global.node.nextNodes.push(global.node.hiddenButtonNext);
       global.node.nextNodes.push(global.node.hiddenButtonNext);
     }
   };
@@ -330,7 +333,6 @@ export default class StoryView extends React.Component {
 
     // Set next node
     global.node.setVisited(true);
-    console.log(global.node.nextNodes.length);
     global.node = global.node.nextNodes[global.decisionChosen - 1];
 
     this.setStorage("node", global.node);
