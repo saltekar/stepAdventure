@@ -6,10 +6,15 @@ import {
   ImageBackground,
   TouchableOpacity,
   StatusBar,
-  Image
+  Image,
+  Button,
+  AsyncStorage
 } from "react-native";
 
 import colors from "../config/colors";
+import StepToken from "../components/StepToken";
+
+import DailySteps from "../components/DailySteps";
 
 function WelcomeScreen({ navigation }) {
   return (
@@ -19,6 +24,8 @@ function WelcomeScreen({ navigation }) {
     >
       {/* Sets status bar to black */}
       <StatusBar barStyle="dark-content"></StatusBar>
+
+      <StepToken black="True" />
 
       {/* Title */}
       <View style={styles.heading}>
@@ -55,6 +62,11 @@ function WelcomeScreen({ navigation }) {
         >
           <Text style={styles.buttonText}>Play</Text>
         </TouchableOpacity>
+      </View>
+
+      {/* Steps for day */}
+      <View style={styles.dailystep}>
+        <DailySteps />
       </View>
 
       {/* Activity Button */}
@@ -117,8 +129,11 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 30
   },
+  dailystep: {
+    flex: 1
+  },
   heading: {
-    flex: 1,
+    flex: 2,
     alignItems: "center",
     justifyContent: "center",
     top: -60
