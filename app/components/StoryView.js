@@ -14,7 +14,6 @@ import BlinkCursor from "../components/BlinkCursor";
 import DecisionButton from "../components/DecisionButton";
 import colors from "../config/colors";
 import StepToken from "./StepToken";
-import StepText from "./StepText";
 import AwesomeAlert from "react-native-awesome-alerts";
 
 export default class StoryView extends React.Component {
@@ -34,7 +33,6 @@ export default class StoryView extends React.Component {
     global.text = "";
     global.tokenCnt = 0;
     global.decisionChosen = -1;
-    global.stepsPerToken = 25;
     global.reset = false;
 
     this.state = {
@@ -343,7 +341,7 @@ export default class StoryView extends React.Component {
   tokenChosen = (decisionDistance, val) => {
     try {
       this.getData("tokens").then(tokenCnt => {
-        if (tokenCnt < Math.floor(decisionDistance / 25)) {
+        if (tokenCnt < decisionDistance) {
           this.setState({ showErrorAlert: true });
         } else {
           this.skipProgressBar(decisionDistance, val);
@@ -365,12 +363,10 @@ export default class StoryView extends React.Component {
     }
     try {
       this.getData("tokens").then(tokenCnt => {
-        this.setStorage("tokens", tokenCnt - Math.floor(decisionDist / 25));
+        this.setStorage("tokens", tokenCnt - decisionDist);
         this.setState({ token: true });
         this.setState({ token: false });
-        console.log(
-          tokenCnt - Math.floor(decisionDist / 25) + "   - async save"
-        );
+        console.log(tokenCnt - decisionDist + "   - async save");
       });
 
       this.getData("tokens").then(tokenCont => {
@@ -403,13 +399,8 @@ export default class StoryView extends React.Component {
         style={{ flex: 1 }}
         onPress={() => this.setText()}
       >
-        {!this.state.token ? (
-          !this.state.barVisible ? (
-            <StepToken />
-          ) : (
-            <StepText />
-          )
-        ) : null}
+        <StepToken />
+
         <View style={styles.story}>
           {this.state.textVisible ? (
             <Text style={styles.text}>{global.text}</Text>
@@ -455,10 +446,7 @@ export default class StoryView extends React.Component {
             {this.state.button1Visible ? (
               <View style={styles.costBox}>
                 <Text style={styles.distText}>
-                  {"Cost: " +
-                    Math.floor(
-                      this.state.decision1Distance / global.stepsPerToken
-                    )}
+                  {"Cost: " + Math.floor(this.state.decision1Distance)}
                 </Text>
                 <Image
                   style={styles.tokenImage}
@@ -503,10 +491,7 @@ export default class StoryView extends React.Component {
             {this.state.button2Visible ? (
               <View style={styles.costBox}>
                 <Text style={styles.distText}>
-                  {"Cost: " +
-                    Math.floor(
-                      this.state.decision2Distance / global.stepsPerToken
-                    )}
+                  {"Cost: " + Math.floor(this.state.decision2Distance)}
                 </Text>
                 <Image
                   style={styles.tokenImage}
@@ -551,10 +536,7 @@ export default class StoryView extends React.Component {
             {this.state.button3Visible ? (
               <View style={styles.costBox}>
                 <Text style={styles.distText}>
-                  {"Cost: " +
-                    Math.floor(
-                      this.state.decision3Distance / global.stepsPerToken
-                    )}
+                  {"Cost: " + Math.floor(this.state.decision3Distance)}
                 </Text>
                 <Image
                   style={styles.tokenImage}
@@ -599,10 +581,7 @@ export default class StoryView extends React.Component {
             {this.state.button4Visible ? (
               <View style={styles.costBox}>
                 <Text style={styles.distText}>
-                  {"Cost: " +
-                    Math.floor(
-                      this.state.decision4Distance / global.stepsPerToken
-                    )}
+                  {"Cost: " + Math.floor(this.state.decision4Distance)}
                 </Text>
                 <Image
                   style={styles.tokenImage}
