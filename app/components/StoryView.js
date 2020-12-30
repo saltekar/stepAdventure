@@ -5,7 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Button,
-  Image
+  Image,
 } from "react-native";
 import { AsyncStorage } from "react-native";
 
@@ -21,7 +21,6 @@ export default class StoryView extends React.Component {
   constructor() {
     super();
 
-    // Create map
     let JSON = require("../storyMechanics/storyDialogue.json");
     const graph = new Graph(JSON);
     graph.createMap();
@@ -42,6 +41,7 @@ export default class StoryView extends React.Component {
 
       blinkingCursor: true,
 
+      // Indicator variables for decision buttons. There are four decisions max.
       button1Visible: false,
       button2Visible: false,
       button3Visible: false,
@@ -72,26 +72,28 @@ export default class StoryView extends React.Component {
       showErrorAlert: false,
 
       tokens: 0,
-      token: false
+      token: false,
     };
 
     this.initialVals();
   }
 
+  // Async method that clears all stored data. Allows user to restart game.
   clearStorage = async () => {
     const asyncStorageKeys = await AsyncStorage.getAllKeys();
     if (asyncStorageKeys.length > 0) {
       AsyncStorage.clear();
     }
-
+    // EXISTS FOR TESTING PURPOSES
     console.log("cleared");
   };
 
+  // Function to initialize line, node, and screen text everytime app is run.
   initialVals = async () => {
     try {
-      // intialize line number on
-
-      this.getData("line").then(currLine => {
+      // Keep track of current line number based on user progress.
+      // If game has not yet started, initialize with root node.
+      this.getData("line").then((currLine) => {
         if (!isNaN(currLine)) {
           global.line = currLine;
         } else {
@@ -99,7 +101,9 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("node").then(currNode => {
+      // Keep track of current story node based on user progress.
+      // If no story progress has been made, initialize with root node.
+      this.getData("node").then((currNode) => {
         if (currNode != undefined) {
           global.node = currNode;
         } else {
@@ -107,32 +111,40 @@ export default class StoryView extends React.Component {
         }
       });
 
-      this.getData("screenText").then(currText => {
+      // Keep track of current story text on screen based on user story progress.
+      this.getData("screenText").then((currText) => {
         if (currText != null) {
           // Display text on screen
           global.text = currText;
           this.setState({ textVisible: true });
 
+          // save current node content locally
           global.currentContent = global.node.content.split("\n");
           let decisions = global.node.decisions;
           let distances = global.node.decisionDistances;
 
           // Display buttons
+          // If all node content is visible to the user and it is a decision node
           if (
             global.node.type == "DECISION" &&
             global.line == global.currentContent.length
           ) {
             this.setState({ blinkingCursor: false });
 
-            this.getData("barVisible").then(visible => {
+            // QUESTION: Why is progress bar still being referred to?
+            this.getData("barVisible").then((visible) => {
               if (visible != null && visible == "true") {
-                this.getData("decisionChosen").then(chosen => {
+                // Get decision chosen
+                this.getData("decisionChosen").then((chosen) => {
+                  // save distance of chosen decision
                   this.setState({ distanceChosen: distances[chosen - 1] });
+                  // set button text with chosen decision's content
                   this.setState({
-                    ["button" + chosen + "Text"]: decisions[chosen - 1]
+                    ["button" + chosen + "Text"]: decisions[chosen - 1],
                   });
+                  // save distance of chosen decision
                   this.setState({
-                    ["decision" + chosen + "Distance"]: distances[chosen - 1]
+                    ["decision" + chosen + "Distance"]: distances[chosen - 1],
                   });
                   this.tokenChosen(distances[chosen - 1], chosen);
                 });
@@ -152,7 +164,8 @@ export default class StoryView extends React.Component {
     }
   };
 
-  getData = async val => {
+  // Function that gets a value from Async Storage, as specified by val
+  getData = async (val) => {
     try {
       if (val == "line") {
         const curLine = await AsyncStorage.getItem(val);
@@ -178,11 +191,14 @@ export default class StoryView extends React.Component {
     }
   };
 
+  // Function
   setText = () => {
     global.currentContent = global.node.content.split("\n");
 
+    // Exit function if all text of current content is displayed
     if (global.line >= global.currentContent.length) return;
 
+    // If a node specified a reset, clear previously displayed text so current text can take its place
     if (global.reset == true) {
       global.text = "";
       this.setStorage("screenText", global.text);
@@ -198,16 +214,19 @@ export default class StoryView extends React.Component {
       this.setStorage("screenText", global.text);
       this.incrementLine();
     } else {
+      // If text has been reset, make it equal to current content
       if (global.text == "") {
         global.text = global.currentContent[global.line];
       } else {
+        // If there is existing text, add current content to it
         global.text = global.text + "\n" + global.currentContent[global.line];
       }
 
       // Save text
       this.setStorage("screenText", global.text);
 
-      // Disable blinking cursor decision next
+      // Disable blinking cursor if all current content has been displayed
+      // Display decision buttons
       if (
         global.node.type == "DECISION" &&
         global.line == global.currentContent.length - 1
@@ -223,6 +242,8 @@ export default class StoryView extends React.Component {
         this.displayHiddenButton();
       }
 
+      // If all content of a CONTINUE node is displayed,
+      // reset text and move on to its next node.
       if (
         global.node.type == "CONTINUE" &&
         global.line == global.currentContent.length - 1 &&
@@ -231,6 +252,7 @@ export default class StoryView extends React.Component {
         if (global.node.reset == true) {
           global.reset = true;
         }
+        // Mark node as visited, for the sake of displaying hidden buttons later.
         global.node.setVisited(true);
         global.node = global.node.nextNodes[0];
         this.setStorage("node", global.node);
@@ -243,6 +265,8 @@ export default class StoryView extends React.Component {
     }
   };
 
+  // This function stores data, specified as val, in Async Storage
+  // using the specified type.
   setStorage = async (type, val) => {
     try {
       if (type == "line") {
@@ -269,8 +293,9 @@ export default class StoryView extends React.Component {
     this.setStorage("line", global.line);
   }
 
-  // Creates val number of buttons on screen for decisions
+  // This function creates buttons for each decision with its corresponding distance.
   buttonsCreate = (dec, dist) => {
+    // length of the decisions array == number of buttons to create
     for (let i = 0; i < dec.length; i++) {
       this.setState({ ["button" + (i + 1) + "Visible"]: true });
       this.setState({ ["button" + (i + 1) + "Text"]: dec[i] });
@@ -292,16 +317,17 @@ export default class StoryView extends React.Component {
       }
     }
 
+    // Display hidden button
     if (visitedCount == global.node.nextNodes.length) {
       this.setState({ ["button" + 4 + "Visible"]: true });
       this.setState({
-        ["button" + 4 + "Text"]: global.node.hiddenButtonContent
+        ["button" + 4 + "Text"]: global.node.hiddenButtonContent,
       });
 
       // Display dist if present
       if (global.node.hiddenButtonDist != 0) {
         this.setState({
-          ["decision" + 4 + "Distance"]: global.node.hiddenButtonDist
+          ["decision" + 4 + "Distance"]: global.node.hiddenButtonDist,
         });
         this.setState({ ["dist" + 4 + "Visible"]: true });
       }
@@ -313,25 +339,35 @@ export default class StoryView extends React.Component {
     }
   };
 
+  // This function resets decision distances to 0, clears the screen from current content,
+  // and progresses the user to the next story node.
+  //
+  // NOTE: function was originally created to execute after a
+  // progress bar for steps was completed, BUT the progress bar feature has been
+  // removed so this function executes everytime a user buys a decision with tokens
   hideBar = () => {
+    // DONT NEED THIS RIGHT?
     this.setState({ barVisible: false });
     this.setStorage("barVisible", "false");
 
-    // set distances back to 0
+    // Set distances back to 0
     for (let i = 1; i < 5; i++) {
       this.setState({
-        ["decision" + this.state.decisionChosen + "Distance"]: 0
+        ["decision" + this.state.decisionChosen + "Distance"]: 0,
       });
     }
 
+    // Clear screen text
     global.text = "";
     this.setStorage("screenText", global.text);
 
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
 
-    // Set next node
+    // Mark the current node as visited
     global.node.setVisited(true);
+
+    // Replace current node with next node
     global.node = global.node.nextNodes[global.decisionChosen - 1];
 
     this.setStorage("node", global.node);
@@ -340,9 +376,11 @@ export default class StoryView extends React.Component {
     this.setStorage("line", global.line);
   };
 
+  // Function that allows a user to progress in the story by using tokens
+  // Shows an error message to user if not enough tokens are available.
   tokenChosen = (decisionDistance, val) => {
     try {
-      this.getData("tokens").then(tokenCnt => {
+      this.getData("tokens").then((tokenCnt) => {
         if (tokenCnt < Math.floor(decisionDistance / 25)) {
           this.setState({ showErrorAlert: true });
         } else {
@@ -354,18 +392,25 @@ export default class StoryView extends React.Component {
     }
   };
 
+  // Function that clears currently displayed content and buttons,
+  // and prepares for the next story node to be displayed.
+  // Also updates a user's token count based on the cost of the chosen decision.
   skipProgressBar = (decisionDist, decisionChos) => {
     this.hideAlert();
     this.setStorage("decisionChosen", decisionChos);
     global.decisionChosen = decisionChos;
 
+    // Removes all buttons and associated distances from screen.
     for (let i = 1; i < 5; i++) {
       this.setState({ ["button" + i + "Visible"]: false });
       this.setState({ ["dist" + i + "Visible"]: false });
     }
     try {
-      this.getData("tokens").then(tokenCnt => {
+      // Gets a user's token count.
+      this.getData("tokens").then((tokenCnt) => {
+        // Update token count based how many were just used.
         this.setStorage("tokens", tokenCnt - Math.floor(decisionDist / 25));
+        // QUESTION: WHY IS TOKEN SET TO TRUE THEN FALSE...DOES THAT TRIGGER ANYTHING?
         this.setState({ token: true });
         this.setState({ token: false });
         console.log(
@@ -373,25 +418,26 @@ export default class StoryView extends React.Component {
         );
       });
 
-      this.getData("tokens").then(tokenCont => {
+      // exists for testing purposes
+      this.getData("tokens").then((tokenCont) => {
         console.log(tokenCont + "  - count");
       });
     } catch (err) {
       console.log(err);
     }
-
+    // clear the rest of the screen and
     this.hideBar();
   };
 
   showAlert = () => {
     this.setState({
-      showAlert: true
+      showAlert: true,
     });
   };
 
   hideAlert = () => {
     this.setState({
-      showAlert: false
+      showAlert: false,
     });
   };
 
@@ -410,6 +456,8 @@ export default class StoryView extends React.Component {
             <StepText />
           )
         ) : null}
+
+        {/* Story content portion of screen */}
         <View style={styles.story}>
           {this.state.textVisible ? (
             <Text style={styles.text}>{global.text}</Text>
@@ -418,6 +466,7 @@ export default class StoryView extends React.Component {
           {this.state.blinkingCursor ? <BlinkCursor content="|" /> : null}
         </View>
 
+        {/* Decision buttons portion of screen */}
         <View style={styles.buttons}>
           <View>
             <View style={styles.decisionButtonsContainer}>
@@ -447,7 +496,7 @@ export default class StoryView extends React.Component {
                 confirmButtonColor="#9DB4C0"
                 onConfirmPressed={() => {
                   this.setState({
-                    showErrorAlert: false
+                    showErrorAlert: false,
                   });
                 }}
               />
@@ -495,7 +544,7 @@ export default class StoryView extends React.Component {
                 confirmButtonColor="#9DB4C0"
                 onConfirmPressed={() => {
                   this.setState({
-                    showErrorAlert: false
+                    showErrorAlert: false,
                   });
                 }}
               />
@@ -543,7 +592,7 @@ export default class StoryView extends React.Component {
                 confirmButtonColor="#9DB4C0"
                 onConfirmPressed={() => {
                   this.setState({
-                    showErrorAlert: false
+                    showErrorAlert: false,
                   });
                 }}
               />
@@ -591,7 +640,7 @@ export default class StoryView extends React.Component {
                 confirmButtonColor="#9DB4C0"
                 onConfirmPressed={() => {
                   this.setState({
-                    showErrorAlert: false
+                    showErrorAlert: false,
                   });
                 }}
               />
@@ -626,7 +675,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 2,
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   button: {
     width: "80%",
@@ -634,45 +683,45 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   costBox: {
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   decisionButtonsContainer: {
     alignItems: "center",
     justifyContent: "space-evenly",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   distText: {
     color: colors.white,
     fontSize: 15,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   story: {
     flex: 2,
     top: 40,
     left: 20,
     paddingRight: 25,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   text: {
     color: colors.white,
     fontSize: 18,
     lineHeight: 25,
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
   token: {
     color: colors.white,
     top: 40,
     right: 10,
     fontSize: 20,
-    position: "absolute"
+    position: "absolute",
   },
   tokenImage: {
     width: 18,
-    height: 19
-  }
+    height: 19,
+  },
 });
