@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View, Text, AsyncStorage, Image } from "react-native";
-
+import { useIsFocused } from "@react-navigation/native";
 import colors from "../config/colors";
 
-export default class StepToken extends React.Component {
+class StepToken extends React.Component {
   constructor(props) {
     super(props);
 
@@ -43,10 +43,15 @@ export default class StepToken extends React.Component {
 
   componentWillUnmount() {}
 
-  componentDidUpdate() {
-    this.initialize();
-  }
+  componentDidUpdate() {}
+
   render() {
+    const { isFocused } = this.props;
+
+    if (isFocused) {
+      console.log("focused");
+      this.initialize();
+    }
     return (
       <View style={styles.tokenContainer}>
         {this.props.black == "True" ? (
@@ -91,3 +96,9 @@ const styles = StyleSheet.create({
     right: 10
   }
 });
+
+export default function(props) {
+  const isFocused = useIsFocused();
+
+  return <StepToken {...props} isFocused={isFocused} />;
+}

@@ -6,9 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   StatusBar,
-  Image,
-  Button,
-  AsyncStorage
+  Image
 } from "react-native";
 
 import colors from "../config/colors";
@@ -57,7 +55,9 @@ function WelcomeScreen({ navigation }) {
       <View style={styles.buttons}>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => navigation.navigate("StoryScreen")}
+          onPress={() => {
+            navigation.navigate("StoryScreen");
+          }}
           style={styles.actionButton}
         >
           <Text style={styles.buttonText}>Play</Text>
