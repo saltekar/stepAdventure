@@ -3,19 +3,19 @@
     "type": "DECISION",
     "content": "Dad: \"Go long Felix!\"\nYou take off running down the field and see the ball racing past you.\n\"I got it, I got it!\"\nYou look down at the puddle of mud beneath you.",
     "decisions": [
-      ["Dive for the ball", "b1-1", 0],
-      ["Let the ball go", "b1-2", 0]
+      ["Dive for the ball", "b1-1", 1],
+      ["Let the ball go", "b1-2", 2]
     ]
   },
   "b1-1": {
     "type": "DECISION",
     "content": "You dive for the ball and land in the mud.\nThe ball lands in front of you, missing your glove.\nDad: \"Oh, so close! Good effort though!\"\nDad: \"Lets head back for dinner, but you better wash before your mom sees you all muddy!\"",
-    "decisions": [["Walk back to Dad", "b1-3", 0]]
+    "decisions": [["Walk back to Dad", "b1-3", 2]]
   },
   "b1-2": {
     "type": "DECISION",
     "content": "You let the ball go and it falls in the mud.\nDad: \"That's alright, you’ll get it next time!\"\nDad: \"It's getting late, let's head back for dinner.\"",
-    "decisions": [["Walk back to Dad", "b1-3", 0]]
+    "decisions": [["Walk back to Dad", "b1-3", 1]]
   },
   "b1-3": {
     "type": "CONTINUE",
