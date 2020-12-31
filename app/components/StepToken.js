@@ -40,18 +40,20 @@ class StepToken extends React.Component {
       console.log(err);
     }
   };
-
-  componentWillUnmount() {}
-
-  componentDidUpdate() {}
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
 
   render() {
     const { isFocused } = this.props;
 
     if (isFocused) {
-      console.log("focused");
       this.initialize();
     }
+
     return (
       <View style={styles.tokenContainer}>
         {this.props.black == "True" ? (
