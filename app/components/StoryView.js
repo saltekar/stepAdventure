@@ -273,7 +273,6 @@ export default class StoryView extends React.Component {
       this.setState({ ["button" + (i + 1) + "Visible"]: true });
       this.setState({ ["button" + (i + 1) + "Text"]: dec[i] });
 
-      console.log(dist[i] + "<-- dist");
       this.setState({ ["decision" + (i + 1) + "Distance"]: dist[i] });
       this.setState({ ["dist" + (i + 1) + "Visible"]: true });
     }
@@ -366,11 +365,6 @@ export default class StoryView extends React.Component {
         this.setStorage("tokens", tokenCnt - decisionDist);
         this.setState({ token: true });
         this.setState({ token: false });
-        console.log(tokenCnt - decisionDist + "   - async save");
-      });
-
-      this.getData("tokens").then(tokenCont => {
-        console.log(tokenCont + "  - count");
       });
     } catch (err) {
       console.log(err);

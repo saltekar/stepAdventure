@@ -90,8 +90,6 @@ class DailySteps extends React.Component {
         }.bind(this)
       );
     }
-
-    console.log(this.state.tokens);
   };
 
   saveTokens = () => {
