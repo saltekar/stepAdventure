@@ -8,7 +8,8 @@ class StepToken extends React.Component {
     super(props);
 
     this.state = {
-      tokens: 0
+      tokens: 0,
+      first: true
     };
 
     this.initialize();
@@ -40,6 +41,9 @@ class StepToken extends React.Component {
       console.log(err);
     }
   };
+
+  componentDidMount() {}
+
   componentWillUnmount() {
     // fix Warning: Can't perform a React state update on an unmounted component
     this.setState = (state, callback) => {
