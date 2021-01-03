@@ -8,6 +8,8 @@ import {
   AsyncStorage
 } from "react-native";
 import { Pedometer } from "expo-sensors";
+import { useNavigation, CommonActions } from "@react-navigation/native";
+import StepToken from "../components/StepToken";
 
 import colors from "../config/colors";
 
@@ -88,8 +90,6 @@ class DailySteps extends React.Component {
         }.bind(this)
       );
     }
-
-    console.log(this.state.tokens);
   };
 
   saveTokens = () => {
@@ -131,12 +131,52 @@ class DailySteps extends React.Component {
     }
   };
 
-  componentWillUnmount() {}
+  componentDidMount() {}
 
   render() {
     this.getWalkingDataToday();
+    const { navigation } = this.props;
     return (
       <View>
+        <StepToken black="True" />
+        {/* Title */}
+        <View style={styles.heading}>
+          <Text
+            style={{
+              fontSize: 80,
+              color: "#253237",
+              textAlign: "center",
+              fontFamily: "Cochin-Bold",
+              marginTop: 50
+            }}
+          >
+            Step Adventure
+          </Text>
+          <Text
+            style={{
+              fontSize: 30,
+              color: "#253237",
+              textAlign: "center",
+              fontFamily: "Cochin",
+              marginTop: 15
+            }}
+          >
+            Project Sahaya
+          </Text>
+        </View>
+        {/* Play Button */}
+        <View style={styles.buttons}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+              navigation.navigate("StoryScreen");
+            }}
+            style={styles.actionButton}
+          >
+            <Text style={styles.buttonText2}>Play</Text>
+          </TouchableOpacity>
+        </View>
+
         <Text style={styles.steps}>
           {this.state.steps - this.state.subtraction}
         </Text>
@@ -160,18 +200,42 @@ class DailySteps extends React.Component {
   }
 }
 
-export default DailySteps;
+export default function(props) {
+  const navigation = useNavigation();
 
+  return <DailySteps {...props} navigation={navigation} />;
+}
 const styles = StyleSheet.create({
+  actionButton: {
+    backgroundColor: colors.primary,
+    height: 60,
+    width: "40%",
+    borderRadius: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "60%"
+  },
   buttonText: {
     color: colors.white,
     fontSize: 20,
     right: 10
   },
+  buttons: {
+    alignItems: "center"
+  },
+  buttonText2: {
+    color: colors.white,
+    fontSize: 30
+  },
+  heading: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
   steps: {
     fontSize: 30,
     color: colors.white,
-    alignSelf: "center"
+    alignSelf: "center",
+    marginTop: "10%"
   },
   stepsButton: {
     backgroundColor: "#5C6B73",
@@ -180,7 +244,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "5%",
+    marginTop: "2%",
     alignSelf: "center"
   },
   tokenImage: {

@@ -10,7 +10,6 @@ import {
 } from "react-native";
 
 import colors from "../config/colors";
-import StepToken from "../components/StepToken";
 
 import DailySteps from "../components/DailySteps";
 
@@ -22,47 +21,6 @@ function WelcomeScreen({ navigation }) {
     >
       {/* Sets status bar to black */}
       <StatusBar barStyle="dark-content"></StatusBar>
-
-      <StepToken black="True" />
-
-      {/* Title */}
-      <View style={styles.heading}>
-        <Text
-          style={{
-            fontSize: 80,
-            color: "#253237",
-            textAlign: "center",
-            fontFamily: "Cochin-Bold",
-            marginTop: 50
-          }}
-        >
-          Step Adventure
-        </Text>
-        <Text
-          style={{
-            fontSize: 30,
-            color: "#253237",
-            textAlign: "center",
-            fontFamily: "Cochin",
-            marginTop: 15
-          }}
-        >
-          Project Sahaya
-        </Text>
-      </View>
-
-      {/* Play Button */}
-      <View style={styles.buttons}>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            navigation.navigate("StoryScreen");
-          }}
-          style={styles.actionButton}
-        >
-          <Text style={styles.buttonText}>Play</Text>
-        </TouchableOpacity>
-      </View>
 
       {/* Steps for day */}
       <View style={styles.dailystep}>

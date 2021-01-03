@@ -8,7 +8,8 @@ class StepToken extends React.Component {
     super(props);
 
     this.state = {
-      tokens: 0
+      tokens: 0,
+      first: true
     };
 
     this.initialize();
@@ -41,17 +42,22 @@ class StepToken extends React.Component {
     }
   };
 
-  componentWillUnmount() {}
+  componentDidMount() {}
 
-  componentDidUpdate() {}
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
 
   render() {
     const { isFocused } = this.props;
 
     if (isFocused) {
-      console.log("focused");
       this.initialize();
     }
+
     return (
       <View style={styles.tokenContainer}>
         {this.props.black == "True" ? (
