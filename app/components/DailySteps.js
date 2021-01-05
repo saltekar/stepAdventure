@@ -137,32 +137,18 @@ class DailySteps extends React.Component {
     this.getWalkingDataToday();
     const { navigation } = this.props;
     return (
-      <View>
+      <View style={styles.background}>
         <StepToken black="True" />
         {/* Title */}
         <View style={styles.heading}>
           <Text
-            style={{
-              fontSize: 80,
-              color: "#253237",
-              textAlign: "center",
-              fontFamily: "Cochin-Bold",
-              marginTop: 50
-            }}
+            style={styles.title}
+            adjustsFontSizeToFit={true}
+            numberOfLines={2}
           >
             Step Adventure
           </Text>
-          <Text
-            style={{
-              fontSize: 30,
-              color: "#253237",
-              textAlign: "center",
-              fontFamily: "Cochin",
-              marginTop: 15
-            }}
-          >
-            Project Sahaya
-          </Text>
+          <Text style={styles.subtitle}>Project Sahaya</Text>
         </View>
         {/* Play Button */}
         <View style={styles.buttons}>
@@ -177,22 +163,47 @@ class DailySteps extends React.Component {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.steps}>
-          {this.state.steps - this.state.subtraction}
-        </Text>
-
         {/* Steps to Tokens button */}
+        <View style={styles.steps2tokens}>
+          <Text style={styles.steps}>
+            {this.state.steps - this.state.subtraction}
+          </Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+              this.stepsToTokens();
+            }}
+            style={styles.stepsButton}
+          >
+            <Text style={styles.buttonText}>Steps &#8594; </Text>
+            <Image
+              style={styles.tokenImage}
+              source={require("../assets/coin.png")}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Activity Button */}
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => {
-            this.stepsToTokens();
-          }}
-          style={styles.stepsButton}
+          onPress={() => navigation.navigate("ActivityScreen")}
+          style={styles.activityButton}
         >
-          <Text style={styles.buttonText}>Steps &#8594;</Text>
           <Image
-            style={styles.tokenImage}
-            source={require("../assets/coin.png")}
+            style={styles.walkingPerson}
+            source={require("../assets/activity-person.png")}
+          />
+        </TouchableOpacity>
+
+        {/* Settings Button */}
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => navigation.navigate("SettingScreen")}
+          style={styles.settingButton}
+        >
+          <Image
+            style={styles.settingsIcon}
+            source={require("../assets/settingsIcon.png")}
           />
         </TouchableOpacity>
       </View>
@@ -213,7 +224,22 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "60%"
+    marginTop: "20%"
+  },
+  activityButton: {
+    backgroundColor: colors.primary,
+    height: 50,
+    width: 50,
+    borderRadius: 50 / 2,
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-start",
+    bottom: 5,
+    left: 5
+  },
+  background: {
+    flex: 1
   },
   buttonText: {
     color: colors.white,
@@ -221,6 +247,7 @@ const styles = StyleSheet.create({
     right: 10
   },
   buttons: {
+    flex: 1,
     alignItems: "center"
   },
   buttonText2: {
@@ -228,14 +255,28 @@ const styles = StyleSheet.create({
     fontSize: 30
   },
   heading: {
+    flex: 1.5,
     alignItems: "center",
     justifyContent: "center"
+  },
+  settingButton: {
+    backgroundColor: colors.primary,
+    height: 50,
+    width: 50,
+    borderRadius: 50 / 2,
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-end",
+    bottom: 5,
+    right: 5
   },
   steps: {
     fontSize: 30,
     color: colors.white,
     alignSelf: "center",
-    marginTop: "10%"
+    marginTop: "14%",
+    marginBottom: "2%"
   },
   stepsButton: {
     backgroundColor: "#5C6B73",
@@ -244,8 +285,14 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "2%",
     alignSelf: "center"
+  },
+  steps2tokens: {
+    flex: 1.5
+  },
+  settingsIcon: {
+    aspectRatio: 0.6,
+    resizeMode: "contain"
   },
   tokenImage: {
     width: 30,
@@ -272,5 +319,24 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     top: 23,
     right: 10
+  },
+  title: {
+    fontSize: 80,
+    color: "#253237",
+    textAlign: "center",
+    fontFamily: "Cochin-Bold",
+    marginTop: 50
+  },
+  subtitle: {
+    fontSize: 30,
+    color: "#253237",
+    textAlign: "center",
+    fontFamily: "Cochin",
+    marginTop: 15
+  },
+  walkingPerson: {
+    flex: 1,
+    aspectRatio: 0.6,
+    resizeMode: "contain"
   }
 });
