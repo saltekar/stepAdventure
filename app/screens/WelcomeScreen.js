@@ -23,33 +23,7 @@ function WelcomeScreen({ navigation }) {
       <StatusBar barStyle="dark-content"></StatusBar>
 
       {/* Steps for day */}
-      <View style={styles.dailystep}>
-        <DailySteps />
-      </View>
-
-      {/* Activity Button */}
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => navigation.navigate("ActivityScreen")}
-        style={styles.activityButton}
-      >
-        <Image
-          style={styles.walkingPerson}
-          source={require("../assets/activity-person.png")}
-        />
-      </TouchableOpacity>
-
-      {/* Settings Button */}
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => navigation.navigate("SettingScreen")}
-        style={styles.settingButton}
-      >
-        <Image
-          style={styles.settingsIcon}
-          source={require("../assets/settingsIcon.png")}
-        />
-      </TouchableOpacity>
+      <DailySteps />
     </ImageBackground>
   );
 }
