@@ -1,3 +1,8 @@
+/**
+ * Purpose: This file contains logic for the back button displayed on multiple screens
+ * to navigate back to the home screen.
+ *
+ */
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import colors from "../config/colors";
@@ -23,6 +28,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     top: 46,
     left: 10,
-    position: "absolute"
-  }
+    position: "absolute",
+  },
 });

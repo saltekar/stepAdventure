@@ -1,13 +1,19 @@
+/**
+ * Purpose: This file contains logic for creating a graph of story nodes.
+ * The story used in this game, which is a JSON file, is broken down into nodes,
+ * and a graph is utilized for the sake of easily navigating between these nodes.
+ */
+
 import Node from "./storyNode";
 
 class Graph {
   constructor(json) {
     this.data = json;
-    this.createMap();
+    this.createGraph();
     this.root = new Node();
   }
 
-  createMap() {
+  createGraph() {
     let stack = [];
     let visited = [];
 

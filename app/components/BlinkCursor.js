@@ -1,3 +1,10 @@
+/**
+ * Purpose: This file contains logic for the blinking cursor that is visible
+ * when there is story text to be displayed. Once the current node's story text has been displayed,
+ * the blinking cursor dissapears.
+ *
+ */
+
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
@@ -8,11 +15,11 @@ class BlinkCursor extends React.Component {
     super(props);
     this.mounted = true;
     this.state = {
-      showText: true
+      showText: true,
     };
     setInterval(() => {
       if (this.mounted == true) {
-        this.setState(previousState => {
+        this.setState((previousState) => {
           return { showText: !previousState.showText };
         });
       }
@@ -39,6 +46,6 @@ export default BlinkCursor;
 const styles = StyleSheet.create({
   storyText: {
     color: colors.white,
-    fontSize: 25
-  }
+    fontSize: 25,
+  },
 });

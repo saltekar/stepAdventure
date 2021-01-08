@@ -1,3 +1,5 @@
+## This file contains logic for converting text we wrote in a Google doc into the correct format
+## for story nodes.
 file = open('stringify.txt', 'r')
 lines = file.readlines()
 
