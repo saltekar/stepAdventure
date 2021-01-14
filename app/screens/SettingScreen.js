@@ -1,3 +1,6 @@
+/**
+ * Purpose: This file creates the setting screen that can be accessed from the Welcome(home) screen.
+ */
 import React from "react";
 import { AsyncStorage } from "react-native";
 import {

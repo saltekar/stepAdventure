@@ -1,10 +1,15 @@
+/**
+ * Purpose: This component creates the Activity Center which displays step counts
+ * for the last previous 7 days, as well as an average daily step count.
+ *
+ */
 import React from "react";
 import {
   StyleSheet,
   TouchableOpacity,
   Text,
   View,
-  Animated
+  Animated,
 } from "react-native";
 import { Pedometer } from "expo-sensors";
 import Bar from "../components/Bar";
@@ -24,7 +29,7 @@ class ActivityCenter extends React.Component {
     this.state = {
       pastStepCount: 0,
       days: [],
-      dates: []
+      dates: [],
     };
 
     this.getWalkingData();
@@ -32,25 +37,30 @@ class ActivityCenter extends React.Component {
 
   // Gets walking data for past 7 days.
   getWalkingData() {
+    // loop through the days of the week
     for (var i = 0; i < 7; i++) {
       const end = new Date();
       const start = new Date();
+
+      // set start date to beginning of day, and end date to end of day
       start.setHours(0, 0, 0, 0);
       end.setHours(24, 0, 0, 0);
 
+      // Subtract i from current day to check previous days
       end.setDate(end.getDate() - i);
       start.setDate(start.getDate() - i);
 
       this.state.dates.push(start.getMonth() + 1 + "/" + start.getDate());
 
+      // store a past day's steps, specified by start and end dates.
       Pedometer.getStepCountAsync(start, end).then(
-        result => {
+        (result) => {
           this.state.days.push(result.steps);
           this.setState({ pastStepCount: result.steps });
         },
-        error => {
+        (error) => {
           this.setState({
-            pastStepCount: "Could not get stepCount: " + error
+            pastStepCount: "Could not get stepCount: " + error,
           });
         }
       );
@@ -59,6 +69,7 @@ class ActivityCenter extends React.Component {
 
   render() {
     if (this.state.days.length == 7) {
+      // Get max number of steps from previous 7 days for bar sizing
       global.max = Math.max.apply(Math, this.state.days);
 
       var total = 0;
@@ -120,24 +131,24 @@ const styles = StyleSheet.create({
   activity: {
     flex: 5,
     flexDirection: "column",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
 
   barTitle: {
-    marginTop: -20
+    marginTop: -20,
   },
   dailyAvg: {
     flex: 2,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   dailyStepsTitle: {
     fontSize: 38,
-    color: colors.primary
+    color: colors.primary,
   },
   steps: {
     fontSize: 30,
-    color: colors.primary
-  }
+    color: colors.primary,
+  },
 });

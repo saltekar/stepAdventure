@@ -1,3 +1,6 @@
+/**
+ * Purpose: This file contains the logic used for displaying a decision button.
+ */
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import colors from "../config/colors";
@@ -15,11 +18,11 @@ export default class DecisionButton extends React.Component {
     global.width = 0;
 
     this.state = {
-      width: 0
+      width: 0,
     };
   }
 
-  onLayout = e => {
+  onLayout = (e) => {
     this.setState({ width: e.nativeEvent.layout.width });
 
     if (this.state.width < 297) {
@@ -36,7 +39,7 @@ export default class DecisionButton extends React.Component {
         onLayout={this.onLayout}
         style={[
           styles.button,
-          global.buttonWrap ? { height: 70 } : { height: 45 }
+          global.buttonWrap ? { height: 70 } : { height: 45 },
         ]}
         onPress={this.props.onPress}
       >
@@ -55,14 +58,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     paddingRight: 15,
     paddingLeft: 15,
-    maxWidth: 300
+    maxWidth: 300,
   },
   text: {
     color: colors.white,
-    fontSize: 20
+    fontSize: 20,
   },
   tokenImage: {
     width: 20,
-    height: 21
-  }
+    height: 21,
+  },
 });

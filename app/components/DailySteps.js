@@ -1,3 +1,8 @@
+/**
+ * Purpose: This file renders the components visible on the welcome screen.
+ * It also contains functionality for retrieving a user's daily step count,
+ * and updating it when a user converts their steps to tokens.
+ */
 import React from "react";
 import {
   StyleSheet,
@@ -5,7 +10,7 @@ import {
   Text,
   View,
   Image,
-  AsyncStorage
+  AsyncStorage,
 } from "react-native";
 import { Pedometer } from "expo-sensors";
 import { useNavigation } from "@react-navigation/native";
@@ -27,7 +32,7 @@ class DailySteps extends React.Component {
     this.state = {
       steps: 0,
       tokens: 0,
-      subtraction: 0
+      subtraction: 0,
     };
 
     this.initialize();
@@ -37,7 +42,7 @@ class DailySteps extends React.Component {
   // Initializes tokens based on async storage.
   initialize() {
     try {
-      this.loadS().then(sub => {
+      this.loadS().then((sub) => {
         if (!isNaN(sub)) {
           this.setState({ subtraction: sub });
         } else {
@@ -45,7 +50,7 @@ class DailySteps extends React.Component {
         }
       });
 
-      this.loadT().then(tok => {
+      this.loadT().then((tok) => {
         if (!isNaN(tok)) {
           this.setState({ tokens: tok });
         } else {
@@ -57,7 +62,8 @@ class DailySteps extends React.Component {
     }
   }
 
-  // Gets today's step count
+  // This function retrieves and locally saves a user's daily step count.
+
   getWalkingDataToday() {
     const end = new Date();
     const start = new Date();
@@ -68,24 +74,23 @@ class DailySteps extends React.Component {
     start.setDate(start.getDate());
 
     Pedometer.getStepCountAsync(start, end).then(
-      result => {
+      (result) => {
         this.setState({
-          steps: result.steps
+          steps: result.steps,
         });
       },
-      error => {
+      (error) => {
         this.setState({
-          steps: "Could not get steps"
+          steps: "Could not get steps",
         });
       }
     );
   }
 
-  /*
-  Translates the number of steps into tokens. While
-  also showing correct number of steps by keeping track
-  of steps translated with 'subtraction'.
-  */
+  // This function calculates the steps-to-tokens conversion.
+  // The current daily step count is subtracted by the number of steps converted to tokens so far.
+  // The substraction variable must be set to zero each day, since the pedometer data resets to 0 everyday.
+
   stepsToTokens = () => {
     let varTokens = Math.floor(
       (this.state.steps - this.state.subtraction) / global.stepsPerToken
@@ -95,9 +100,10 @@ class DailySteps extends React.Component {
       this.setState(
         {
           tokens: this.state.tokens + varTokens,
-          subtraction: this.state.subtraction + varTokens * global.stepsPerToken
+          subtraction:
+            this.state.subtraction + varTokens * global.stepsPerToken,
         },
-        function() {
+        function () {
           this.saveTokens();
         }.bind(this)
       );
@@ -109,7 +115,7 @@ class DailySteps extends React.Component {
     this.saveS(this.state.subtraction);
   };
 
-  saveT = async val => {
+  saveT = async (val) => {
     try {
       await AsyncStorage.setItem("tokens", val + "");
     } catch (err) {
@@ -126,7 +132,7 @@ class DailySteps extends React.Component {
     }
   };
 
-  saveS = async val => {
+  saveS = async (val) => {
     try {
       await AsyncStorage.setItem("subtraction", val + "");
     } catch (err) {
@@ -223,7 +229,7 @@ class DailySteps extends React.Component {
   }
 }
 
-export default function(props) {
+export default function (props) {
   const navigation = useNavigation();
 
   return <DailySteps {...props} navigation={navigation} />;
@@ -236,7 +242,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "20%"
+    marginTop: "20%",
   },
   activityButton: {
     backgroundColor: colors.primary,
@@ -248,28 +254,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "flex-start",
     bottom: 5,
-    left: 5
+    left: 5,
   },
   background: {
-    flex: 1
+    flex: 1,
   },
   buttonText: {
     color: colors.white,
     fontSize: 20,
-    right: 10
+    right: 10,
   },
   buttons: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
   },
   buttonText2: {
     color: colors.white,
-    fontSize: 30
+    fontSize: 30,
   },
   heading: {
     flex: 1.5,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   settingButton: {
     backgroundColor: colors.primary,
@@ -281,14 +287,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "flex-end",
     bottom: 5,
-    right: 5
+    right: 5,
   },
   steps: {
     fontSize: 30,
     color: colors.white,
     alignSelf: "center",
     marginTop: "14%",
-    marginBottom: "2%"
+    marginBottom: "2%",
   },
   stepsButton: {
     backgroundColor: "#5C6B73",
@@ -297,58 +303,58 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   steps2tokens: {
-    flex: 1.5
+    flex: 1.5,
   },
   settingsIcon: {
     aspectRatio: 0.6,
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
   tokenImage: {
     width: 30,
     height: 30,
     position: "absolute",
-    right: 15
+    right: 15,
   },
   tokenContainer: {
     flexDirection: "column",
     justifyContent: "flex-end",
     position: "absolute",
-    left: 100
+    left: 100,
   },
   token: {
     color: colors.white,
     top: 45,
     right: 30,
     fontSize: 20,
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
   },
   tokenImage2: {
     width: 20,
     height: 21,
     alignSelf: "flex-end",
     top: 23,
-    right: 10
+    right: 10,
   },
   title: {
     fontSize: 80,
     color: "#253237",
     textAlign: "center",
     fontFamily: "Cochin-Bold",
-    marginTop: 50
+    marginTop: 50,
   },
   subtitle: {
     fontSize: 30,
     color: "#253237",
     textAlign: "center",
     fontFamily: "Cochin",
-    marginTop: 15
+    marginTop: 15,
   },
   walkingPerson: {
     flex: 1,
     aspectRatio: 0.6,
-    resizeMode: "contain"
-  }
+    resizeMode: "contain",
+  },
 });
