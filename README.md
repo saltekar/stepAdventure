@@ -1,3 +1,2 @@
 <h1>Step Adventure App</h1>
-<hr>
-<p></p>
+<p>This app ...</p>
