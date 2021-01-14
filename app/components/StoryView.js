@@ -16,6 +16,10 @@ import colors from "../config/colors";
 import StepToken from "./StepToken";
 import AwesomeAlert from "react-native-awesome-alerts";
 
+/*
+This component shows the story section of the app.
+View for all text and decisions of story.
+*/
 export default class StoryView extends React.Component {
   constructor() {
     super();
@@ -25,7 +29,7 @@ export default class StoryView extends React.Component {
     graph.createMap();
     let root = graph.getRoot();
 
-    //global variables
+    // global variables
     global.line = 0;
     global.currentContent = [];
     global.node = root;
@@ -39,7 +43,8 @@ export default class StoryView extends React.Component {
 
       blinkingCursor: true,
 
-      // Indicator variables for decision buttons. There are four decisions max.
+      // Indicator variables for decision buttons.
+      // There are four decisions max.
       button1Visible: false,
       button2Visible: false,
       button3Visible: false,
@@ -82,15 +87,13 @@ export default class StoryView extends React.Component {
     if (asyncStorageKeys.length > 0) {
       AsyncStorage.clear();
     }
-    // EXISTS FOR TESTING PURPOSES
-    console.log("cleared");
   };
 
   // Function to initialize line, node, and screen text everytime app is run.
   initialVals = async () => {
     try {
-      // Keep track of current line number based on user progress.
-      // If game has not yet started, initialize with root node.
+      // Keeps track of current line number based on user progress.
+      // If game has not yet started, initializes with root node.
       this.getData("line").then(currLine => {
         if (!isNaN(currLine)) {
           global.line = currLine;
@@ -99,8 +102,8 @@ export default class StoryView extends React.Component {
         }
       });
 
-      // Keep track of current story node based on user progress.
-      // If no story progress has been made, initialize with root node.
+      // Keeps track of current story node based on user progress.
+      // If no story progress has been made, initializes with root node.
       this.getData("node").then(currNode => {
         if (currNode != undefined) {
           global.node = currNode;
@@ -109,38 +112,37 @@ export default class StoryView extends React.Component {
         }
       });
 
-      // Keep track of current story text on screen based on user story progress.
+      // Keeps track of current story text on screen based on user story progress.
       this.getData("screenText").then(currText => {
         if (currText != null) {
           // Display text on screen
           global.text = currText;
           this.setState({ textVisible: true });
 
-          // save current node content locally
+          // Saves current node content locally.
           global.currentContent = global.node.content.split("\n");
           let decisions = global.node.decisions;
           let distances = global.node.decisionDistances;
 
-          // Display buttons
-          // If all node content is visible to the user and it is a decision node
+          // Displays buttons.
+          // If all node content is visible to the user and it is a decision node.
           if (
             global.node.type == "DECISION" &&
             global.line == global.currentContent.length
           ) {
             this.setState({ blinkingCursor: false });
 
-            // QUESTION: Why is progress bar still being referred to?
             this.getData("barVisible").then(visible => {
               if (visible != null && visible == "true") {
-                // Get decision chosen
+                // Gets decision chosen
                 this.getData("decisionChosen").then(chosen => {
-                  // save distance of chosen decision
+                  // Saves distance of chosen decision.
                   this.setState({ distanceChosen: distances[chosen - 1] });
-                  // set button text with chosen decision's content
+                  // Sets button text with chosen decision's content.
                   this.setState({
                     ["button" + chosen + "Text"]: decisions[chosen - 1]
                   });
-                  // save distance of chosen decision
+                  // Saves distance of chosen decision.
                   this.setState({
                     ["decision" + chosen + "Distance"]: distances[chosen - 1]
                   });
@@ -162,7 +164,7 @@ export default class StoryView extends React.Component {
     }
   };
 
-  // Function that gets a value from Async Storage, as specified by val
+  // Gets a value from Async Storage, as specified by val.
   getData = async val => {
     try {
       if (val == "line") {
@@ -189,42 +191,41 @@ export default class StoryView extends React.Component {
     }
   };
 
-  // Function
+  // Sets the text.
   setText = () => {
     global.currentContent = global.node.content.split("\n");
 
-    // Exit function if all text of current content is displayed
+    // Exits function if all text of current content is displayed.
     if (global.line >= global.currentContent.length) return;
 
-    // If a node specified a reset, clear previously displayed text so current text can take its place
+    // If a node specified a reset, clears previously displayed text so current text can take its place.
     if (global.reset == true) {
       global.text = "";
       this.setStorage("screenText", global.text);
       global.reset = false;
     }
 
-    // Text visible
     this.setState({ textVisible: true });
 
-    // Adds lines to story view component
+    // Adds lines to story view component.
     if (global.line == 0 && global.node.name == "root") {
       global.text = global.currentContent[global.line];
       this.setStorage("screenText", global.text);
       this.incrementLine();
     } else {
-      // If text has been reset, make it equal to current content
+      // If text has been reset, makes it equal to current content.
       if (global.text == "") {
         global.text = global.currentContent[global.line];
       } else {
-        // If there is existing text, add current content to it
+        // If there is existing text, add current content to it.
         global.text = global.text + "\n" + global.currentContent[global.line];
       }
 
-      // Save text
+      // Saves text
       this.setStorage("screenText", global.text);
 
-      // Disable blinking cursor if all current content has been displayed
-      // Display decision buttons
+      // Disable blinking cursor if all current content has been displayed.
+      // Displays decision buttons.
       if (
         global.node.type == "DECISION" &&
         global.line == global.currentContent.length - 1
@@ -233,15 +234,17 @@ export default class StoryView extends React.Component {
         let decisions = global.node.decisions;
         let distances = global.node.decisionDistances;
 
-        // Create 'decisions' number of buttons
+        // Creates 'decisions' number of buttons.
         this.buttonsCreate(decisions, distances);
 
-        // Check if hidden button should be displayed
+        // Check if hidden button should be displayed.
         this.displayHiddenButton();
       }
 
-      // If all content of a CONTINUE node is displayed,
-      // reset text and move on to its next node.
+      /*
+      If all content of a CONTINUE node is displayed,
+      resets text and move on to its next node.
+      */
       if (
         global.node.type == "CONTINUE" &&
         global.line == global.currentContent.length - 1 &&
@@ -250,7 +253,7 @@ export default class StoryView extends React.Component {
         if (global.node.reset == true) {
           global.reset = true;
         }
-        // Mark node as visited, for the sake of displaying hidden buttons later.
+        // Marks node as visited, for the sake of displaying hidden buttons later.
         global.node.setVisited(true);
         global.node = global.node.nextNodes[0];
         this.setStorage("node", global.node);
@@ -263,8 +266,10 @@ export default class StoryView extends React.Component {
     }
   };
 
-  // This function stores data, specified as val, in Async Storage
-  // using the specified type.
+  /*
+  This function stores data, specified as val, in Async Storage
+  using the specified type.
+  */
   setStorage = async (type, val) => {
     try {
       if (type == "line") {
@@ -285,7 +290,7 @@ export default class StoryView extends React.Component {
     }
   };
 
-  // Increments current line number
+  // Increments current line number.
   incrementLine() {
     global.line += 1;
     this.setStorage("line", global.line);
@@ -293,7 +298,7 @@ export default class StoryView extends React.Component {
 
   // This function creates buttons for each decision with its corresponding distance.
   buttonsCreate = (dec, dist) => {
-    // length of the decisions array == number of buttons to create
+    // length of the decisions array == number of buttons to create.
     for (let i = 0; i < dec.length; i++) {
       this.setState({ ["button" + (i + 1) + "Visible"]: true });
       this.setState({ ["button" + (i + 1) + "Text"]: dec[i] });
@@ -303,7 +308,7 @@ export default class StoryView extends React.Component {
     }
   };
 
-  // Displays hidden button if all next nodes visited
+  // Displays hidden button if all next nodes visited.
   displayHiddenButton = () => {
     if (global.node.hiddenButtonContent == undefined) return;
 
@@ -314,14 +319,14 @@ export default class StoryView extends React.Component {
       }
     }
 
-    // Display hidden button
+    // Displays hidden button.
     if (visitedCount == global.node.nextNodes.length) {
       this.setState({ ["button" + 4 + "Visible"]: true });
       this.setState({
         ["button" + 4 + "Text"]: global.node.hiddenButtonContent
       });
 
-      // Display dist if present
+      // Displays dist if present.
       if (global.node.hiddenButtonDist != 0) {
         this.setState({
           ["decision" + 4 + "Distance"]: global.node.hiddenButtonDist
@@ -341,9 +346,8 @@ export default class StoryView extends React.Component {
   //
   // NOTE: function was originally created to execute after a
   // progress bar for steps was completed, BUT the progress bar feature has been
-  // removed so this function executes everytime a user buys a decision with tokens
+  // removed so this function executes everytime a user buys a decision with tokens.
   hideBar = () => {
-    // DONT NEED THIS RIGHT?
     this.setState({ barVisible: false });
     this.setStorage("barVisible", "false");
 
@@ -354,17 +358,17 @@ export default class StoryView extends React.Component {
       });
     }
 
-    // Clear screen text
+    // Clears screen text
     global.text = "";
     this.setStorage("screenText", global.text);
 
     this.setState({ blinkingCursor: true });
     this.setState({ textVisible: false });
 
-    // Mark the current node as visited
+    // Marks the current node as visited
     global.node.setVisited(true);
 
-    // Replace current node with next node
+    // Replace scurrent node with next node
     global.node = global.node.nextNodes[global.decisionChosen - 1];
 
     this.setStorage("node", global.node);
@@ -373,7 +377,7 @@ export default class StoryView extends React.Component {
     this.setStorage("line", global.line);
   };
 
-  // Function that allows a user to progress in the story by using tokens
+  // Allows a user to progress in the story by using tokens.
   // Shows an error message to user if not enough tokens are available.
   tokenChosen = (decisionDistance, val) => {
     try {
@@ -389,9 +393,11 @@ export default class StoryView extends React.Component {
     }
   };
 
-  // Function that clears currently displayed content and buttons,
-  // and prepares for the next story node to be displayed.
-  // Also updates a user's token count based on the cost of the chosen decision.
+  /*
+  Function that clears currently displayed content and buttons,
+  and prepares for the next story node to be displayed.
+  Also updates a user's token count based on the cost of the chosen decision.
+  */
   skipProgressBar = (decisionDist, decisionChos) => {
     this.hideAlert();
     this.setStorage("decisionChosen", decisionChos);
@@ -405,7 +411,7 @@ export default class StoryView extends React.Component {
     try {
       // Gets a user's token count.
       this.getData("tokens").then(tokenCnt => {
-        // Update token count based how many were just used.
+        // Updates token count based how many were just used.
         this.setStorage("tokens", tokenCnt - decisionDist);
         this.setState({ token: true });
         this.setState({ token: false });
@@ -413,16 +419,18 @@ export default class StoryView extends React.Component {
     } catch (err) {
       console.log(err);
     }
-    // clear the rest of the screen and
+    // Clears the rest of the screen.
     this.hideBar();
   };
 
+  // Shows alert for not enough tokens.
   showAlert = () => {
     this.setState({
       showAlert: true
     });
   };
 
+  // Hides alert for not enough tokens
   hideAlert = () => {
     this.setState({
       showAlert: false

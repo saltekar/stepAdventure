@@ -1,17 +1,13 @@
-import React, { useState } from "react";
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  StatusBar
-} from "react-native";
+import React from "react";
+import { ImageBackground, StyleSheet, StatusBar } from "react-native";
 
 import StoryView from "../components/StoryView";
-
-import colors from "../config/colors";
 import BackButton from "../components/BackButton";
 
+/*
+Story screen of app. Contains all components related 
+to displaying text and user decision making.
+*/
 function StoryScreen({ navigation }) {
   return (
     <ImageBackground

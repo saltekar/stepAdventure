@@ -1,7 +1,10 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import colors from "../config/colors";
 
+/*
+Creates bars of varying lenghts for activity center.
+*/
 export default function Bar(props) {
   const ratio = 9 / (props.max * 10);
 

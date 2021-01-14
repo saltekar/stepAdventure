@@ -1,19 +1,13 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  StatusBar,
-  Image
-} from "react-native";
+import { StyleSheet, ImageBackground, StatusBar } from "react-native";
 
 import colors from "../config/colors";
-
 import DailySteps from "../components/DailySteps";
 
-function WelcomeScreen({ navigation }) {
+/*
+Home screen of app. 
+*/
+function WelcomeScreen() {
   return (
     <ImageBackground
       source={require("../assets/creepy.jpg")}

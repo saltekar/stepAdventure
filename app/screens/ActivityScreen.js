@@ -1,16 +1,12 @@
 import React from "react";
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { ImageBackground, StyleSheet } from "react-native";
 import ActivityCenter from "../components/ActivityCenter";
 import BackButton from "../components/BackButton";
 
-import colors from "../config/colors";
-
+/*
+Activity screen that shows user's step counts for last week.
+Contains Activity center component.
+*/
 function ActivityScreen({ navigation }) {
   return (
     <ImageBackground
