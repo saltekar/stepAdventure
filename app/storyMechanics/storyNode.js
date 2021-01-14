@@ -1,3 +1,9 @@
+/**
+ * Purpose: This file creates the Node class, which is the building block of
+ * the story graph. Each node contains story text, a list of decisions, and pointers to
+ * next nodes in the story.
+ */
+
 global.nodeMap = {};
 
 /*
