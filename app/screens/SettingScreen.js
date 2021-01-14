@@ -15,9 +15,6 @@ import BackButton from "../components/BackButton";
 import colors from "../config/colors";
 import AwesomeAlert from "react-native-awesome-alerts";
 
-/*
-Settings screen. Contains all settings for the app.
-*/
 export default class SettingScreen extends React.Component {
   constructor() {
     super();

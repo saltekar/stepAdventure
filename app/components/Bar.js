@@ -8,9 +8,6 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import colors from "../config/colors";
 
-/*
-Creates bars of varying lenghts for activity center.
-*/
 export default function Bar(props) {
   // ratio used to size bars in ActivityCenter using max step data
   const ratio = 9 / (props.max * 10);
@@ -26,7 +23,7 @@ export default function Bar(props) {
         justifyContent: "flex-end",
         alignItems: "center",
         borderRadius: 40,
-        top: -40,
+        top: -40
       }}
     >
       <Text style={styles.barTitle}>{props.title}</Text>
@@ -40,6 +37,6 @@ const styles = StyleSheet.create({
     marginTop: -20,
     alignSelf: "flex-start",
     position: "absolute",
-    left: 0,
-  },
+    left: 0
+  }
 });

@@ -7,24 +7,20 @@ import { StyleSheet, View, Text, AsyncStorage, Image } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import colors from "../config/colors";
 
-/*
-Component for step token. Shows current amount of
-step tokens user has.
-*/
 class StepToken extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       tokens: 0,
-      first: true,
+      first: true
     };
 
     this.initialize();
   }
 
   initialize() {
-    this.loadT().then((tokensT) => {
+    this.loadT().then(tokensT => {
       if (!isNaN(tokensT)) {
         this.setState({ tokens: tokensT });
       } else {
@@ -33,7 +29,7 @@ class StepToken extends React.Component {
     });
   }
 
-  saveT = async (val) => {
+  saveT = async val => {
     try {
       await AsyncStorage.setItem("tokens", val + "");
     } catch (err) {
@@ -86,32 +82,32 @@ class StepToken extends React.Component {
 const styles = StyleSheet.create({
   tokenContainer: {
     flexDirection: "column",
-    justifyContent: "flex-end",
+    justifyContent: "flex-end"
   },
   token: {
     color: "black",
     top: 45,
     right: 30,
     fontSize: 20,
-    alignSelf: "flex-end",
+    alignSelf: "flex-end"
   },
   token2: {
     color: colors.white,
     top: 45,
     right: 30,
     fontSize: 20,
-    alignSelf: "flex-end",
+    alignSelf: "flex-end"
   },
   tokenImage: {
     width: 20,
     height: 21,
     alignSelf: "flex-end",
     top: 23,
-    right: 10,
-  },
+    right: 10
+  }
 });
 
-export default function (props) {
+export default function(props) {
   const isFocused = useIsFocused();
 
   return <StepToken {...props} isFocused={isFocused} />;

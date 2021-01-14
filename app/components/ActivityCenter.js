@@ -7,13 +7,8 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Pedometer } from "expo-sensors";
 import Bar from "../components/Bar";
-
 import colors from "../config/colors";
 
-/*
-Activity Center shows user's steps counts for past week.
-Located from home screen.
-*/
 class ActivityCenter extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +18,7 @@ class ActivityCenter extends React.Component {
     this.state = {
       pastStepCount: 0,
       days: [],
-      dates: [],
+      dates: []
     };
 
     this.getWalkingData();
@@ -48,13 +43,13 @@ class ActivityCenter extends React.Component {
 
       // store a past day's steps, specified by start and end dates.
       Pedometer.getStepCountAsync(start, end).then(
-        (result) => {
+        result => {
           this.state.days.push(result.steps);
           this.setState({ pastStepCount: result.steps });
         },
-        (error) => {
+        error => {
           this.setState({
-            pastStepCount: "Could not get stepCount: " + error,
+            pastStepCount: "Could not get stepCount: " + error
           });
         }
       );
@@ -125,24 +120,24 @@ const styles = StyleSheet.create({
   activity: {
     flex: 5,
     flexDirection: "column",
-    justifyContent: "space-evenly",
+    justifyContent: "space-evenly"
   },
 
   barTitle: {
-    marginTop: -20,
+    marginTop: -20
   },
   dailyAvg: {
     flex: 2,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
 
   dailyStepsTitle: {
     fontSize: 38,
-    color: colors.primary,
+    color: colors.primary
   },
   steps: {
     fontSize: 30,
-    color: colors.primary,
-  },
+    color: colors.primary
+  }
 });
