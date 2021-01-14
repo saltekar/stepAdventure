@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  View,
-  Animated
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Pedometer } from "expo-sensors";
 import Bar from "../components/Bar";
 
