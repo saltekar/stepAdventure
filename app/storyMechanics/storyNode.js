@@ -6,11 +6,6 @@
 
 global.nodeMap = {};
 
-/*
- Creates a story node. Each node represents a part
- in the story. Next nodes for a node are the possible
- nodes that it may lead to depending on user's decision.
-*/
 class Node {
   constructor(content, name, type, reset = false) {
     this.content = content;

@@ -28,8 +28,8 @@ function StoryScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   background: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });
 
 export default StoryScreen;
