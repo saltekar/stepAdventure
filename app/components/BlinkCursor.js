@@ -3,6 +3,11 @@ import { StyleSheet, View, Text } from "react-native";
 
 import colors from "../config/colors";
 
+/*
+Creates a blinking cursor that indicates when more text 
+still needs to be shown on screen. This prompts users to 
+keep pressing screen to continue story.
+*/
 class BlinkCursor extends React.Component {
   constructor(props) {
     super(props);

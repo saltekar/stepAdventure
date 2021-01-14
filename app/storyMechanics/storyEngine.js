@@ -1,5 +1,11 @@
 import Node from "./storyNode";
 
+/*
+Class creates a directed node graph.
+This graph contains nodes that connect different
+parts of the story. Help link one user decision
+to another.
+*/
 class Graph {
   constructor(json) {
     this.data = json;
@@ -7,6 +13,7 @@ class Graph {
     this.root = new Node();
   }
 
+  // Loops through nodes and creates graph.
   createMap() {
     let stack = [];
     let visited = [];
