@@ -2,9 +2,14 @@
  * Purpose: This file contains the logic used for displaying a decision button.
  */
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text, Image } from "react-native";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import colors from "../config/colors";
 
+/*
+Decision button for story. Displays different text to 
+present the user with different choices. Also has 
+step token cost associated with each button.
+*/
 export default class DecisionButton extends React.Component {
   constructor() {
     super();

@@ -16,6 +16,10 @@ import Bar from "../components/Bar";
 
 import colors from "../config/colors";
 
+/*
+Activity Center shows user's steps counts for past week.
+Located from home screen.
+*/
 class ActivityCenter extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +35,7 @@ class ActivityCenter extends React.Component {
     this.getWalkingData();
   }
 
+  // Gets walking data for past 7 days.
   getWalkingData() {
     // loop through the days of the week
     for (var i = 0; i < 7; i++) {

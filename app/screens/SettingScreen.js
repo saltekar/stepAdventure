@@ -8,44 +8,39 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  Button,
-  Image,
+  View
 } from "react-native";
-import ActivityCenter from "../components/ActivityCenter";
 import BackButton from "../components/BackButton";
 
 import colors from "../config/colors";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import AwesomeAlert from "react-native-awesome-alerts";
 
+/*
+Settings screen. Contains all settings for the app.
+*/
 export default class SettingScreen extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      showAlert: false,
-      showAlert2: false,
+      showAlert: false
     };
   }
+
+  // Clears all async data.
   clearStorage = async () => {
     const asyncStorageKeys = await AsyncStorage.getAllKeys();
     if (asyncStorageKeys.length > 0) {
       AsyncStorage.clear();
     }
     this.hideAlert();
-    console.log("cleared from settings");
   };
 
+  // Hides alert.
   hideAlert = () => {
     this.setState({
-      showAlert: false,
-      showAlert2: false,
+      showAlert: false
     });
-  };
-
-  triggerAwesomeAlert = () => {
-    this.setState({ showAlert2: true });
   };
 
   render() {
@@ -69,6 +64,7 @@ export default class SettingScreen extends React.Component {
             <Text style={styles.restartText}>Restart Game</Text>
           </TouchableOpacity>
 
+          {/* Alert to confirm reset of all story variables. */}
           <AwesomeAlert
             contentContainerStyle={{ backgroundColor: colors.primary }}
             show={this.state.showAlert}
@@ -89,33 +85,7 @@ export default class SettingScreen extends React.Component {
             onConfirmPressed={() => {
               this.clearStorage();
             }}
-            // onConfirmPressed={() => {
-            //   this.setState({ showAlert: false });
-            //   this.triggerAwesomeAlert();
-            // }}
           />
-
-          {/* <AwesomeAlert
-            contentContainerStyle={{ backgroundColor: colors.primary }}
-            show={this.state.showAlert2}
-            showProgress={false}
-            message={"Are you really really sure u wanna restart?"}
-            messageStyle={{ color: colors.white }}
-            closeOnTouchOutside={true}
-            closeOnHardwareBackPress={false}
-            showCancelButton={true}
-            showConfirmButton={true}
-            cancelText="No"
-            confirmText="Yes"
-            confirmButtonColor="#9DB4C0"
-            cancelButtonColor="#9DB4C0"
-            onCancelPressed={() => {
-              this.hideAlert();
-            }}
-            onConfirmPressed={() => {
-              this.clearStorage();
-            }}
-          /> */}
         </View>
 
         <BackButton nav={this.props.navigation} />
@@ -126,7 +96,7 @@ export default class SettingScreen extends React.Component {
 
 const styles = StyleSheet.create({
   background: {
-    flex: 1,
+    flex: 1
   },
   restartButton: {
     backgroundColor: colors.primary,
@@ -138,28 +108,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     left: 35,
     paddingLeft: 8,
-    paddingRight: 8,
+    paddingRight: 8
   },
   restartIcon: {
     flex: 1,
     resizeMode: "contain",
     width: 30,
-    height: 30,
+    height: 30
   },
   restartText: {
     fontSize: 20,
-    color: colors.white,
+    color: colors.white
   },
   settingsContent: {
-    flex: 4,
+    flex: 4
   },
   settingsText: {
     fontSize: 38,
-    color: colors.primary,
+    color: colors.primary
   },
   title: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });

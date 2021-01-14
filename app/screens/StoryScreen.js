@@ -2,18 +2,11 @@
  * Purpose: This file creates the screen that contains the playable story.
  * It is used for the entirety of the story game.
  */
-import React, { useState } from "react";
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  StatusBar,
-} from "react-native";
+
+import React from "react";
+import { ImageBackground, StyleSheet, StatusBar } from "react-native";
 
 import StoryView from "../components/StoryView";
-
-import colors from "../config/colors";
 import BackButton from "../components/BackButton";
 
 function StoryScreen({ navigation }) {

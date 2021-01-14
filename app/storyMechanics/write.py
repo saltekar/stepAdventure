@@ -1,5 +1,10 @@
-## This file contains logic for converting text we wrote in a Google doc into the correct format
-## for story nodes.
+
+'''
+This file takes in story text and translates it into 
+text for story dialogue. This text contains quotes and
+things like new line character.
+'''
+
 file = open('stringify.txt', 'r')
 lines = file.readlines()
 

@@ -13,6 +13,7 @@ class Graph {
     this.root = new Node();
   }
 
+  // Loops through nodes and creates graph.
   createGraph() {
     let stack = [];
     let visited = [];

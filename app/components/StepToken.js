@@ -7,6 +7,10 @@ import { StyleSheet, View, Text, AsyncStorage, Image } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import colors from "../config/colors";
 
+/*
+Component for step token. Shows current amount of
+step tokens user has.
+*/
 class StepToken extends React.Component {
   constructor(props) {
     super(props);

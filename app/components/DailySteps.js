@@ -13,11 +13,16 @@ import {
   AsyncStorage,
 } from "react-native";
 import { Pedometer } from "expo-sensors";
-import { useNavigation, CommonActions } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import StepToken from "../components/StepToken";
 
 import colors from "../config/colors";
 
+/*
+Shows the daily step count for the user. 
+Also, gives a button that translates user steps into
+step tokens that can be used to progress story.
+*/
 class DailySteps extends React.Component {
   constructor(props) {
     super(props);
@@ -34,6 +39,7 @@ class DailySteps extends React.Component {
     this.getWalkingDataToday();
   }
 
+  // Initializes tokens based on async storage.
   initialize() {
     try {
       this.loadS().then((sub) => {
@@ -57,6 +63,7 @@ class DailySteps extends React.Component {
   }
 
   // This function retrieves and locally saves a user's daily step count.
+
   getWalkingDataToday() {
     const end = new Date();
     const start = new Date();
@@ -83,6 +90,7 @@ class DailySteps extends React.Component {
   // This function calculates the steps-to-tokens conversion.
   // The current daily step count is subtracted by the number of steps converted to tokens so far.
   // The substraction variable must be set to zero each day, since the pedometer data resets to 0 everyday.
+
   stepsToTokens = () => {
     let varTokens = Math.floor(
       (this.state.steps - this.state.subtraction) / global.stepsPerToken
@@ -141,11 +149,11 @@ class DailySteps extends React.Component {
     }
   };
 
-  componentDidMount() {}
-
   render() {
+    // Continously running to keep step count updated
     this.getWalkingDataToday();
     const { navigation } = this.props;
+
     return (
       <View style={styles.background}>
         <StepToken black="True" />

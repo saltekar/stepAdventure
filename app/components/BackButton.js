@@ -7,6 +7,9 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import colors from "../config/colors";
 
+/*
+Back button navigates back to home screen.
+*/
 export default function BackButton(props) {
   return (
     <TouchableOpacity
