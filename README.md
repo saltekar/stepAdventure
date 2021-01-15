@@ -21,7 +21,7 @@ nodes, into a organized mapping of each possible path a user can follow.
 <p>
 We will be running the app using Expo CLI.
 
-Make sure Expo is installed on your device. It can be installed with the command
+Make sure Expo is installed. It can be installed with the command
 below.
 
 ```
@@ -41,7 +41,7 @@ Scan the QR code shown in the new tab opened or in the terminal itself.
 This will automatically open the Expo app and display Step Adventure.
 
 <h3>Running On an IOS Simulator (macOS Only)</h3>
-Make sure Xcode is isntalled on your device.
+Make sure Xcode is installed on your device.
 
 Go the preferences on Xcode menu and double check the most recent version of the
 Command Lines Tools is chosen from the dropdown.
