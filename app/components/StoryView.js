@@ -639,11 +639,6 @@ export default class StoryView extends React.Component {
             ) : null}
           </View>
         </View>
-        <Button
-          title="clear"
-          color="white"
-          onPress={() => this.clearStorage()}
-        />
       </TouchableOpacity>
     );
   }
