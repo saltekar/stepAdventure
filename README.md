@@ -35,6 +35,8 @@ Now simply run the command below from the root directory.
 ```
 npm start
 ```
+Scan the QR code shown in the new tab opened or in the terminal itself.
+This will automatically open the Expo app and display Step Adventure.
 
 <h3>Running On an IOS Simulator (macOS Only)</h3>
 Make sure Xcode is isntalled on your device.
@@ -50,4 +52,6 @@ Run app from root directory using command below.
 npm start
 ```
 Press ```i``` from the command line to run on IOS simulator.
+This will automatically open the Expo app and display Step Adventure.
+(Note: If Expo app not on simulator it will first be downloaded)
 </p>
