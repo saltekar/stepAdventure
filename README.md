@@ -29,7 +29,7 @@ npm install --global expo-cli
 ```
 
 <h3>Running On a Physical Device</h3>
-
+<hr>
 Download the Expo client app on your IOS or Android device.
 
 Now simply run the command below from the root directory.
@@ -42,7 +42,7 @@ Scan the QR code shown in the new tab opened or in the terminal itself.
 This will automatically open the Expo app and display Step Adventure.
 
 <h3>Running On an IOS Simulator (macOS Only)</h3>
-
+<hr>
 Make sure Xcode is installed on your device.
 
 Go the preferences on Xcode menu and double check the most recent version of the
