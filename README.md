@@ -19,7 +19,7 @@ nodes, into a organized mapping of each possible path a user can follow.
 
 <h2>Demo</h2>
 
-![Step Adventure Demo](demo/stepAdventureDemoVid.gif)
+![Step Adventure Demo](demo/stepAdventure.gif)
 
 <h2>Instructions To Run App</h2>
 <p>
