@@ -2,7 +2,7 @@
  * Purpose: This file creates the home screen of this app.
  * All content displayed on this screen comes from the DailySteps component.
  */
-
+import React from "react";
 import { StyleSheet, ImageBackground, StatusBar } from "react-native";
 import colors from "../config/colors";
 import DailySteps from "../components/DailySteps";
