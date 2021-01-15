@@ -56,6 +56,5 @@ npm start
 Press ```i``` from the command line to run on IOS simulator.
 
 This will automatically open the Expo app and display Step Adventure.
-
-(Note: If Expo app not on simulator it will first be downloaded)
+If Expo app not on simulator it will first be downloaded.
 </p>
