@@ -17,6 +17,9 @@ a story engine that was built to convert a JSON file containing story
 nodes, into a organized mapping of each possible path a user can follow.
 </p>
 
+<h2>Demo</h2>
+![Step Adventure Demo](demo/StepAdventureDemo.gif)
+
 <h2>Instructions To Run App</h2>
 <p>
 We will be running the app using Expo CLI.

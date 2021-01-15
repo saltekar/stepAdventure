@@ -246,8 +246,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "flex-start",
-    bottom: 5,
-    left: 5
+    bottom: 11,
+    left: 11
   },
   background: {
     flex: 1
@@ -279,8 +279,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "flex-end",
-    bottom: 5,
-    right: 5
+    bottom: 11,
+    right: 11
   },
   steps: {
     fontSize: 30,
