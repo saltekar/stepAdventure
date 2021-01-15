@@ -30,7 +30,8 @@ npm install --global expo-cli
 
 <h3>Running On a Physical Device</h3>
 Download the Expo client app on your IOS or Android device.
-<br />
+
+
 Now simply run the command below from the root directory.
 
 ```
@@ -42,6 +43,7 @@ This will automatically open the Expo app and display Step Adventure.
 
 <h3>Running On an IOS Simulator (macOS Only)</h3>
 Make sure Xcode is installed on your device.
+
 
 Go the preferences on Xcode menu and double check the most recent version of the
 Command Lines Tools is chosen from the dropdown.
