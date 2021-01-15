@@ -18,14 +18,14 @@ a story engine that was built to convert a JSON file containing story
 nodes, into a organized mapping of each possible path a user can follow.
 </p>
 
-<h3>Instructions To Run App</h3>
-
+<h2>Instructions To Run App</h2>
+<hr>
 <p>
 We will be running the app using Expo CLI.
 
 Make sure Expo is installed on your device. It can be installed as follows:
 
-'''console
+```
 npm install --global expo-cli
-'''
+```
 </p>
